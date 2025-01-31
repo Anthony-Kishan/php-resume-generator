@@ -1,0 +1,39 @@
+I am wanting to build a system to generate resumes according to some prebuilt templates which users can choose and generate. 
+The user can view and generate their resumes even if they aren't logged in, but their generated resumes will not be stored to the dashboard. If the users registers and logs in they can generate their resumes and can also view their generated resumes into the dashboard. One more thing when a user is logged in on the navbar their will be only the dashboard button. And when the user isn't logged in then on the navbar their will be login and register buttons. Do you understood what I am trying to achieve?
+
+Here is my project's folder structure. Please now rewrite all the codes what I am trying to achieve for the specific files. 
+Here is the folder structure:
+
+php-resume-generator 
+	-assets
+		-css
+			-styles.css
+			-modern_template.css
+
+		-images
+			-template_1.png
+		js
+			-script.js
+
+	-controller
+		-generate.php
+
+	-template
+		-modern_template.html
+
+	-users
+		-login.php
+		-logout.php
+		-register.php
+
+	-vendor
+	composer.json
+	composer.lock
+
+	config.php
+	dashboard.php
+	download.php
+	index.html
+	resume.php
+
+I am providing all my project codes accordingly after you say yes I understood it send me the codes. Don't change the styles or functions like that generates the resume. Use these styles and functions please.
