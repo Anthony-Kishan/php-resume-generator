@@ -32,22 +32,60 @@ if (isset($_GET['id'])) {
     $template = str_replace('{{summary}}', $personal_info['summary'], $template);
 
 
-    // Convert education array to list
+
+    // EDUCATION SECTION
     $eduList = "";
     foreach ($education as $edu) {
-        $eduList .= "<li><strong>{$edu['degree']}</strong> at {$edu['institution']}</li><p>{$edu['startDate']} to {$edu['endDate']}</p>";
+        // $startDate = DateTime::createFromFormat('Y-m', $edu['startDate']);
+        $endDate = DateTime::createFromFormat('Y-m', $edu['endDate']);
+
+        // $startFormatted = $startDate->format('M Y');  // E.g., "June 2024"
+        $endFormatted = $endDate->format('M Y');     // E.g., "Aug 2024"
+
+        // $formattedDateRange = strtoupper($startFormatted) . ' - ' . strtoupper($endFormatted);
+        $formattedDateRange = strtoupper($endFormatted);
+
+        $eduList .= "
+            <h5 class='text-uppercase fw-bold'>{$edu['institution']}</h5>
+            <h5 class='text-uppercase fw-lighter'>{$edu['degree']}</h5>";
+
+        // Check if the 'endDate' is not empty and add the corresponding graduation text
+        if (!empty($edu['endDate'])) {
+            $eduList .= "<p>Grad. {$formattedDateRange}</p>";
+        } else {
+            $eduList .= "<p>Expected Grad</p>";
+        }
     }
+
     $template = str_replace('{{education}}', $eduList, $template);
 
-    // Convert experience array to list
+
+
+    // EXPERIENCE SECTION
     $expList = "";
     foreach ($experience as $exp) {
+        $startDate = DateTime::createFromFormat('Y-m', $exp['startDate']);
+        $endDate = DateTime::createFromFormat('Y-m', $exp['endDate']);
+
+        $startFormatted = $startDate->format('M Y');  // E.g., "June 2024"
+        $endFormatted = $endDate->format('M Y');     // E.g., "Aug 2024"
+
+        $formattedDateRange = strtoupper($startFormatted) . ' - ' . strtoupper($endFormatted);
+
         if ($exp['endDate'] == '') {
             $exp['endDate'] = "Present";
         }
-        $expList .= "<li><strong>{$exp['jobTitle']}</strong> at {$exp['company']}</li><p>{$exp['startDate']} to {$exp['endDate']}</p>";
+        // $totalMonths = (int) $exp['endDate'] - (int) $exp['endDate'];
+        // <li>{$totalMonths}</li>
+        $expList .= "
+        <h5 class='text-uppercase fw-bold'>{$exp['jobTitle']} | <span class='fs-6'>{$formattedDateRange}</span></h5>
+        <h5 class='text-capitalize'>{$exp['company']}</h5>
+        <li class='ms-4'>{$exp['responsibilities']}</li>
+        ";
     }
     $template = str_replace('{{experience}}', $expList, $template);
+
+
 
     $template = str_replace('{{skills}}', $skills['skills'], $template);
     $template = str_replace('{{languages}}', $skills['languages'], $template);

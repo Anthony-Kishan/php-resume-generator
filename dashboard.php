@@ -24,6 +24,7 @@ $resumes = $stmt->get_result();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Resumes</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -34,8 +35,8 @@ $resumes = $stmt->get_result();
                 <tr>
                     <th>Name</th>
                     <th>Template</th>
-                    <th>Action</th>
                     <th>Created Time</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -48,11 +49,12 @@ $resumes = $stmt->get_result();
                             ?>
                         </td>
                         <td><?php echo htmlspecialchars($resume['template_type']); ?></td>
-                        <td>
-                            <a href="resume.php?id=<?php echo $resume['id']; ?>" target="_blank" class="btn btn-info">Preview</a>
-                            <a href="download.php?id=<?php echo $resume['id']; ?>" class="btn btn-success">Download</a>
-                        </td>
                         <td><?php echo htmlspecialchars($resume['created_at']); ?></td>
+                        <td>
+                            <a href="resume.php?id=<?php echo $resume['id']; ?>" target="_blank" class="btn btn-info"><i class="fa-solid fa-eye"></i></a>
+                            <a href="download.php?id=<?php echo $resume['id']; ?>" class="btn btn-success"><i class="fa-solid fa-download"></i></a>
+                            <a href="delete.php?id=<?php echo $resume['id']; ?>" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
+                        </td>
                     </tr>
                 <?php } ?>
             </tbody>

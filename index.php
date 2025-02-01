@@ -14,6 +14,15 @@ $is_logged_in = isset($_SESSION['user_id']);
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            /* max-width: 800px; */
+            margin: 0 auto;
+            /* padding: 20px; */
+        }
+
         .template-card {
             cursor: pointer;
             transition: transform 0.3s;
