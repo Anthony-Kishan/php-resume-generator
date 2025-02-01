@@ -6,25 +6,21 @@ $id = $_GET['id'];
 
 if (isset($_GET['id'])) {
     $resume_id = $_GET['id'];
-    $user_id = $_SESSION['user_id']; // Logged-in user's ID
+    $user_id = $_SESSION['user_id'];
 
-    // Fetch resume details
     $stmt = $conn->prepare("SELECT * FROM resumes WHERE id = ? AND user_id = ?");
     $stmt->bind_param("ii", $resume_id, $user_id);
     $stmt->execute();
     $result = $stmt->get_result();
     $resume = $result->fetch_assoc();
 
-    // Decode JSON
     $personal_info = json_decode($resume['personal_info'], true);
     $education = json_decode($resume['education'], true);
     $experience = json_decode($resume['experience'], true);
     $skills = json_decode($resume['skills'], true);
 
-    // Load template
-    $template = file_get_contents('./template/modern_template.html');
+    $template = file_get_contents('./template/modern_template.php');
 
-    // Replace placeholders with actual data
     $template = str_replace('{{fullName}}', $personal_info['fullName'], $template);
     $template = str_replace('{{email}}', $personal_info['email'], $template);
     $template = str_replace('{{phone}}', $personal_info['phone'], $template);
@@ -36,29 +32,20 @@ if (isset($_GET['id'])) {
     // EDUCATION SECTION
     $eduList = "";
     foreach ($education as $edu) {
-        // $startDate = DateTime::createFromFormat('Y-m', $edu['startDate']);
         $endDate = DateTime::createFromFormat('Y-m', $edu['endDate']);
+        $endFormatted = $endDate->format('M Y');
+        $EduformattedDateRange = strtoupper($endFormatted);
 
-        // $startFormatted = $startDate->format('M Y');  // E.g., "June 2024"
-        $endFormatted = $endDate->format('M Y');     // E.g., "Aug 2024"
-
-        // $formattedDateRange = strtoupper($startFormatted) . ' - ' . strtoupper($endFormatted);
-        $formattedDateRange = strtoupper($endFormatted);
-
-        $eduList .= "
-            <h5 class='text-uppercase fw-bold'>{$edu['institution']}</h5>
-            <h5 class='text-uppercase fw-lighter'>{$edu['degree']}</h5>";
-
-        // Check if the 'endDate' is not empty and add the corresponding graduation text
         if (!empty($edu['endDate'])) {
-            $eduList .= "<p>Grad. {$formattedDateRange}</p>";
+            $template = str_replace('{{endDate}}', $edu['endDate'], $template);
+            $template = str_replace('{{EduformattedDateRange}}', $EduformattedDateRange, $template);
         } else {
-            $eduList .= "<p>Expected Grad</p>";
+            $template = str_replace('{{endDate}}', "Expected", $template);
         }
+        $template = str_replace('{{institution}}', $edu['institution'], $template);
+        $template = str_replace('{{degree}}', $edu['degree'], $template);
+        $template = str_replace('{{startDate}}', $edu['startDate'], $template);
     }
-
-    $template = str_replace('{{education}}', $eduList, $template);
-
 
 
     // EXPERIENCE SECTION
@@ -66,31 +53,29 @@ if (isset($_GET['id'])) {
     foreach ($experience as $exp) {
         $startDate = DateTime::createFromFormat('Y-m', $exp['startDate']);
         $endDate = DateTime::createFromFormat('Y-m', $exp['endDate']);
-
         $startFormatted = $startDate->format('M Y');  // E.g., "June 2024"
         $endFormatted = $endDate->format('M Y');     // E.g., "Aug 2024"
-
-        $formattedDateRange = strtoupper($startFormatted) . ' - ' . strtoupper($endFormatted);
+        $ExpformattedDateRange = strtoupper($startFormatted) . ' - ' . strtoupper($endFormatted);
 
         if ($exp['endDate'] == '') {
             $exp['endDate'] = "Present";
         }
         // $totalMonths = (int) $exp['endDate'] - (int) $exp['endDate'];
         // <li>{$totalMonths}</li>
-        $expList .= "
-        <h5 class='text-uppercase fw-bold'>{$exp['jobTitle']} | <span class='fs-6'>{$formattedDateRange}</span></h5>
-        <h5 class='text-capitalize'>{$exp['company']}</h5>
-        <li class='ms-4'>{$exp['responsibilities']}</li>
-        ";
-    }
-    $template = str_replace('{{experience}}', $expList, $template);
 
+        $template = str_replace('{{jobTitle}}', $exp['jobTitle'], $template);
+        $template = str_replace('{{company}}', $exp['company'], $template);
+        $template = str_replace('{{responsibilities}}', $exp['responsibilities'], $template);
+        $template = str_replace('{{startDate}}', $exp['startDate'], $template);
+        $template = str_replace('{{endDate}}', $exp['endDate'], $template);
+        $template = str_replace('{{ExpformattedDateRange}}', $ExpformattedDateRange, $template);
+
+    }
 
 
     $template = str_replace('{{skills}}', $skills['skills'], $template);
     $template = str_replace('{{languages}}', $skills['languages'], $template);
     $template = str_replace('{{certifications}}', $skills['certifications'], $template);
 
-    // Display in browser for preview
     echo $template;
 }

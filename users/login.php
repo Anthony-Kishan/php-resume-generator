@@ -1,4 +1,4 @@
-<?php include('../config.php'); ?>
+<?php include('../config.php'); session_start();?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,6 +12,12 @@
 <body>
     <div class="container mt-5">
         <h2>Login</h2>
+        <?php
+        if (isset($_SESSION['message'])) {
+            echo "<div class='alert alert-success mt-3'>" . $_SESSION['message'] . "</div>";
+            unset($_SESSION['message']);
+        }
+        ?>
         <form action="login.php" method="POST">
             <div class="form-group">
                 <label for="email">Email:</label>
@@ -39,10 +45,9 @@
         if ($result->num_rows > 0) {
             $user = $result->fetch_assoc();
             if (password_verify($password, $user['password'])) {
-                session_start();
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['username'] = $user['username'];
-                header('Location: ../index.php?user_id=' . $_SESSION['user_id']); // Return to home page
+                header('Location: ../index.php?user_id=' . base64_encode($_SESSION['user_id'])); // Return to home page
                 exit();
             } else {
                 echo "<div class='alert alert-danger mt-3'>Incorrect password.</div>";

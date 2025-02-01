@@ -23,7 +23,6 @@
         h2,
         h3 {
             color: #000000;
-            font-weight: lighter;
         }
 
         .section {
@@ -89,13 +88,19 @@
             <!-- EXPERIENCE -->
             <div class='section'>
                 <h3 class='fw-lighter text-uppercase'>Experience</h3>
-                {{experience}}
+                <h5 class='text-uppercase fw-bold'>{{jobTitle}} | <span class='fs-6'>{{ExpformattedDateRange}}</span>
+                </h5>
+                <h5 class='text-capitalize'>{{company}}</h5>
+                <li class='ms-4'>{{responsibilities}}</li>
             </div>
+
 
             <!-- EDUCATION SECTION -->
             <div class='section'>
                 <h3 class='fw-lighter text-uppercase'>Education</h3>
-                {{education}}
+                <h5 class='text-uppercase fw-bold'>{{institution}}</h5>
+                <h5 class='text-uppercase fw-lighter'>{{degree}}</h5>
+                <p>Grad. {{EduformattedDateRange}}</p>
             </div>
         </div>
     </div>
