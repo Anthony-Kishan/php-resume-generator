@@ -1,6 +1,3 @@
-// Assuming jQuery is included in your HTML file.  If not, include it before this script:
-// <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
 $(document).ready(function () {
     let currentStep = 1;
     const totalSteps = 4;
@@ -53,6 +50,9 @@ $(document).ready(function () {
 
     // Generate Resume
     $('#generateResume').click(function () {
+        $generateResumeValue = $('#generateResume').val();
+        // console.log($generateResumeValue);
+        // exit();
         const selectedTemplate = $('.template-card.selected').data('template');
         if (!selectedTemplate) {
             alert('Please select a template first');
@@ -103,7 +103,7 @@ $(document).ready(function () {
 
         // Send AJAX request
         $.ajax({
-            url: 'generate.php',
+            url: './controller/generate.php',
             method: 'POST',
             contentType: 'application/json',
             dataType: 'json',

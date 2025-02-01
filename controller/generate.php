@@ -1,4 +1,11 @@
+
+
+
+
+
+
 <?php
+session_start(); // Start session to access user_id
 include '../config.php';
 
 header('Content-Type: application/json');
@@ -10,10 +17,18 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
+// Check if user is logged in
+if (!isset($_SESSION['user_id'])) {
+    http_response_code(401);
+    echo json_encode(['error' => 'Unauthorized. Please log in.']);
+    exit;
+}
+
+$userId = $_SESSION['user_id']; // Get user_id from session
+
 // Decode the incoming JSON data
 $data = json_decode(file_get_contents('php://input'), true);
 
-// If no data is sent, return an error
 if (!$data) {
     http_response_code(400);
     echo json_encode(['error' => 'Invalid data']);
@@ -21,8 +36,7 @@ if (!$data) {
 }
 
 // Function to generate resume HTML
-function generateResume($data)
-{
+function generateResume($data) {
     $template = $data['template'];
     $personalInfo = $data['personalInfo'];
     $education = $data['education'];
@@ -30,7 +44,7 @@ function generateResume($data)
     $skills = $data['skills'];
 
     // Load the HTML template
-    $html = file_get_contents('resume_template.html');
+    $html = file_get_contents('../template/modern_template.html');
 
     // Replace placeholders with actual data
     $html = str_replace("{{fullName}}", $personalInfo['fullName'], $html);
@@ -92,7 +106,7 @@ $generatedResume = generateResume($data);
 
 // Prepare the SQL query to insert the resume data into the database
 $stmt = $conn->prepare("INSERT INTO resumes (user_id, template_type, personal_info, education, experience, skills) VALUES (?, ?, ?, ?, ?, ?)");
-$userId = $_SESSION['id']; // Replace with actual user ID from session
+
 $templateType = $data['template'];
 $personalInfo = json_encode($data['personalInfo']);
 $education = json_encode($data['education']);

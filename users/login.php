@@ -1,12 +1,14 @@
 <?php include('../config.php'); ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
 <body>
     <div class="container mt-5">
         <h2>Login</h2>
@@ -23,7 +25,7 @@
         </form>
     </div>
 
-    <?php 
+    <?php
     // Login logic
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $email = $_POST['email'];
@@ -40,8 +42,8 @@
                 session_start();
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['username'] = $user['username'];
-                header('Location: ../index.html'); // Redirect to the dashboard
-                exit;
+                header('Location: ../index.php?user_id=' . $_SESSION['user_id']); // Return to home page
+                exit();
             } else {
                 echo "<div class='alert alert-danger mt-3'>Incorrect password.</div>";
             }
@@ -51,5 +53,5 @@
     }
     ?>
 </body>
-</html>
 
+</html>

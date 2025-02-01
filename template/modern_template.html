@@ -5,7 +5,58 @@
     <meta charset='UTF-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
     <title>{{fullName}} - Resume</title>
-    <link rel="stylesheet" href="../assets/css/modern_template.css">
+    <!-- <link rel="stylesheet" href="../assets/css/modern_template.css"> -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1,
+        h2 {
+            color: #2c3e50;
+        }
+
+        .section {
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+        }
+
+        .entry {
+            margin-bottom: 15px;
+        }
+
+        .entry-title {
+            font-weight: bold;
+        }
+
+        .entry-details {
+            font-style: italic;
+        }
+
+        .skills-list {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .skills-list li {
+            background-color: #ecf0f1;
+            margin: 5px;
+            padding: 5px 10px;
+            border-radius: 3px;
+        }
+    </style>
 </head>
 
 <body>
@@ -34,8 +85,10 @@
         </ul>
     </div>
 
-    {{languages}}
-    {{certifications}}
+    <strong>{{languages}} </strong><br>
+    <strong>{{certifications}}</strong><br>
+
+
 
 </body>
 

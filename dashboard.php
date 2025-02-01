@@ -1,9 +1,9 @@
 <?php
 session_start();
-include('../config.php');
+include('./config.php');
 
 if (!isset($_SESSION['user_id'])) {
-    header('Location: login.php');
+    header('Location: ./users/login.php');
     exit;
 }
 
@@ -38,8 +38,8 @@ $resumes = $stmt->get_result();
                     <tr>
                         <td><?php echo htmlspecialchars($resume['template_type']); ?></td>
                         <td>
-                            <a href="resume.php?id=<?php echo $resume['id']; ?>" target="_blank" class="btn btn-info">Preview</a>
-                            <a href="download.php?id=<?php echo $resume['id']; ?>" class="btn btn-success">Download</a>
+                            <a href="resume.php?id=<?php echo $resume['user_id']; ?>" target="_blank" class="btn btn-info">Preview</a>
+                            <a href="download.php?id=<?php echo $resume['user_id']; ?>" class="btn btn-success">Download</a>
                         </td>
                     </tr>
                 <?php } ?>

@@ -1,12 +1,18 @@
+<?php
+session_start();
+$is_logged_in = isset($_SESSION['user_id']);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Resume Generator</title>
+    <title>Resume Generator</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
     <style>
         .template-card {
             cursor: pointer;
@@ -37,17 +43,24 @@
 </head>
 
 <body class="bg-light">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
             <a class="navbar-brand" href="#">
                 <i class="fas fa-file-alt me-2"></i>
                 Resume Generator
             </a>
-            <a class="btn btn-danger" href="./users/login.php">Login</a>
-            <a class="btn btn-danger" href="./users/register.php">Register</a>
-            <a class="btn btn-danger" href="./dashboard.php">Dashboard</a>
+            <div class="ms-auto">
+                <?php if (!$is_logged_in): ?>
+                    <a class="btn btn-success" href="./users/login.php"><i class="fa-solid fa-arrow-right-to-bracket"></i> Login</a>
+                    <a class="btn btn-danger" href="./users/register.php"><i class="fa-solid fa-user-plus"></i> Register</a>
+                <?php else: ?>
+                    <a class="btn btn-danger" href="./dashboard.php"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+                    <a class="btn btn-danger" href="./users/logout.php"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
+                <?php endif; ?>
+            </div>
         </div>
     </nav>
+
 
     <div class="container py-5">
         <div class="row mb-5">
@@ -67,8 +80,7 @@
                     <!-- Template 2 -->
                     <div class="col-md-4">
                         <div class="card template-card h-100" data-template="creative">
-                            <img src="./assets/images/template_2.jpeg" class="card-img-top"
-                                alt="Creative Template">
+                            <img src="./assets/images/template_2.jpeg" class="card-img-top" alt="Creative Template">
                             <div class="card-body">
                                 <h5 class="card-title">Creative Template</h5>
                                 <p class="card-text">Stand out with this creative and unique design.</p>
@@ -78,8 +90,7 @@
                     <!-- Template 3 -->
                     <div class="col-md-4">
                         <div class="card template-card h-100" data-template="classic">
-                            <img src="./assets/images/template_3.jpeg" class="card-img-top"
-                                alt="Classic Template">
+                            <img src="./assets/images/template_3.jpeg" class="card-img-top" alt="Classic Template">
                             <div class="card-body">
                                 <h5 class="card-title">Classic Template</h5>
                                 <p class="card-text">Traditional and elegant design for formal applications.</p>
@@ -252,7 +263,9 @@
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="./assets/js/script.js"></script>
 </body>
