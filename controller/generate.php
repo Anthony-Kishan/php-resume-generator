@@ -1,32 +1,23 @@
-
-
-
-
-
-
 <?php
-session_start(); // Start session to access user_id
+session_start();
 include '../config.php';
 
 header('Content-Type: application/json');
 
-// Check if the request method is POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
     echo json_encode(['error' => 'Method not allowed']);
     exit;
 }
 
-// Check if user is logged in
 if (!isset($_SESSION['user_id'])) {
     http_response_code(401);
     echo json_encode(['error' => 'Unauthorized. Please log in.']);
     exit;
 }
 
-$userId = $_SESSION['user_id']; // Get user_id from session
+$userId = $_SESSION['user_id'];
 
-// Decode the incoming JSON data
 $data = json_decode(file_get_contents('php://input'), true);
 
 if (!$data) {
@@ -35,18 +26,22 @@ if (!$data) {
     exit;
 }
 
-// Function to generate resume HTML
-function generateResume($data) {
+function generateResume($data)
+{
     $template = $data['template'];
     $personalInfo = $data['personalInfo'];
     $education = $data['education'];
     $experience = $data['experience'];
     $skills = $data['skills'];
 
-    // Load the HTML template
-    $html = file_get_contents('../template/modern_template.html');
+    if ($template == "modern") {
+        $html = file_get_contents('../template/modern_template.html');
+    } elseif ($template == "creative") {
+        $html = file_get_contents('../template/creative_template.html');
+    } elseif ($template == "classic") {
+        $html = file_get_contents('../template/classic_template.html');
+    }
 
-    // Replace placeholders with actual data
     $html = str_replace("{{fullName}}", $personalInfo['fullName'], $html);
     $html = str_replace("{{email}}", $personalInfo['email'], $html);
     $html = str_replace("{{phone}}", $personalInfo['phone'], $html);
@@ -122,4 +117,3 @@ echo json_encode([
     'success' => true,
     'resume' => $generatedResume
 ]);
-?>

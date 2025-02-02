@@ -1,6 +1,6 @@
 $(document).ready(function () {
     let currentStep = 1;
-    const totalSteps = 4;
+    const totalSteps = 5;
 
     // Template selection
     $('.template-card').click(function () {
@@ -48,6 +48,13 @@ $(document).ready(function () {
         $('#experienceContainer').append(experienceEntry);
     });
 
+    // Add skills entry
+    $('#addSkills').click(function () {
+        const skillsEntry = $('.skills-entry').first().clone();
+        skillsEntry.find('input, textarea').val('');
+        $('#skillsContainer').append(skillsEntry);
+    });
+
     // Generate Resume
     $('#generateResume').click(function () {
         $generateResumeValue = $('#generateResume').val();
@@ -70,11 +77,14 @@ $(document).ready(function () {
             },
             education: [],
             experience: [],
-            skills: {
-                skills: $('textarea[name="skills"]').val(),
-                languages: $('textarea[name="languages"]').val(),
-                certifications: $('textarea[name="certifications"]').val()
-            }
+            // skills: [],
+            // skills: {
+            //     skills: $('option[name="python"]').val(),
+            //     category: $('option[name="Django"]').val(),
+            //     // skills: $('textarea[name="skills"]').val(),
+            //     // languages: $('textarea[name="languages"]').val(),
+            //     // certifications: $('textarea[name="certifications"]').val()
+            // }
         };
 
         // Collect education entries
@@ -97,6 +107,23 @@ $(document).ready(function () {
                 responsibilities: $(this).find('textarea[name="responsibilities[]"]').val()
             });
         });
+
+
+        // Collect skills entries
+        // $('.skills-entry').each(function () {
+        //     var skill = $(this).find('select[name="skills"]').val(); // Get selected skill
+        //     var category = $(this).find('select[name="category[]"]').val(); // Get selected category
+
+        //     formData.skills.push({
+        //         skills: skill,
+        //         category: category,
+        //         // If you have startDate, endDate, and responsibilities fields, use similar jQuery selectors:
+        //         // startDate: $(this).find('input[name="expStartDate[]"]').val(),
+        //         // endDate: $(this).find('input[name="expEndDate[]"]').val(),
+        //         // responsibilities: $(this).find('textarea[name="responsibilities[]"]').val()
+        //     });
+        // });
+
 
         // Show loading state
         $('#generateResume').prop('disabled', true).html('<i class="fas fa-spinner fa-spin me-2"></i>Generating...');

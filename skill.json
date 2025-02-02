@@ -1,0 +1,17 @@
+{
+    "python": [
+        { "value": "python_frameworks", "text": "Python Frameworks" },
+        { "value": "ai", "text": "AI" },
+        { "value": "ml", "text": "ML" },
+        { "value": "orm", "text": "ORM" }
+    ],
+    "web_design": [
+        { "value": "bootstrap", "text": "Bootstrap" },
+        { "value": "tailwind", "text": "Tailwind CSS" },
+        { "value": "javascript", "text": "JavaScript" }
+    ],
+    "java": [
+        { "value": "spring", "text": "Spring Framework" },
+        { "value": "hibernate", "text": "Hibernate" }
+    ]
+}

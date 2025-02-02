@@ -227,24 +227,68 @@ $is_logged_in = isset($_SESSION['user_id']);
                             </div>
 
                             <!-- Skills Section -->
-                            <div class="form-section" data-step="4">
+                            <!-- <div class="form-section" data-step="4">
                                 <h4 class="mb-4">Skills</h4>
-                                <div class="mb-3">
-                                    <label class="form-label">Skills (comma-separated)</label>
-                                    <textarea class="form-control" name="skills" rows="3" required
-                                        placeholder="e.g., Project Management, Team Leadership, Strategic Planning"></textarea>
+                                <div id="skillsContainer">
+                                    <div class="row g-3">
+                                        <div class="skills-entry mb-3 p-3 border rounded">
+                                            <label class="form-label">Skills (comma-separated)</label>
+                                            <textarea class="form-control" name="skills" rows="3" required
+                                                placeholder="e.g., Project Management, Team Leadership, Strategic Planning"></textarea>
+
+                                            <select name="skills" id="skills">
+                                                <option value=""></option>
+                                            </select>
+
+                                            <div class="ms-4 mb-3">
+                                                <label class="form-label">Categories</label>
+                                                <textarea class="form-control" name="categories[]" rows="3" required
+                                                    placeholder="e.g., Project Management, Team Leadership, Strategic Planning"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Languages</label>
-                                    <textarea class="form-control" name="languages" rows="2"
-                                        placeholder="e.g., English (Native), Spanish (Intermediate)"></textarea>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Certifications</label>
-                                    <textarea class="form-control" name="certifications" rows="2"
-                                        placeholder="e.g., PMP Certification, Scrum Master"></textarea>
+                                <button type="button" class="btn btn-outline-primary" id="addSkills">
+                                    <i class="fas fa-plus me-2"></i>Add Skills
+                                </button>
+                            </div> -->
+
+
+                            <!-- Skills Section -->
+                            <div class="form-section" data-step="5">
+                                <div class="skills-entry mb-3 p-3 border rounded">
+                                    <div class="mb-3">
+                                        <label for="skills" class="form-label">Select Skill</label>
+                                        <select class="form-control skills" name="skills[]" onchange="updateCategories(this)">
+                                            <option value="">Select a Skill</option>
+                                            <option value="python">Python Development</option>
+                                            <option value="web_design">Web Design</option>
+                                            <option value="java">Java Development</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="category" class="form-label">Select Category</label>
+                                        <select class="form-control category" name="category[]">
+                                            <option value="">Select a category</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
+
+
+
+
+                            <!-- <div class="mb-3">
+                                <label class="form-label">Languages</label>
+                                <textarea class="form-control" name="languages" rows="2"
+                                    placeholder="e.g., English (Native), Spanish (Intermediate)"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Certifications</label>
+                                <textarea class="form-control" name="certifications" rows="2"
+                                    placeholder="e.g., PMP Certification, Scrum Master"></textarea>
+                            </div> -->
                         </form>
                     </div>
                 </div>
@@ -279,6 +323,66 @@ $is_logged_in = isset($_SESSION['user_id']);
         integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="./assets/js/script.js"></script>
+
+    <script>
+        // Global variable to store skills and categories data
+        let skillData = {};
+
+        // Fetch the skill data from the JSON file once on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('skills.json')
+                .then(response => response.json())
+                .then(data => {
+                    skillData = data; // Store the fetched data globally
+                })
+                .catch(error => {
+                    console.error('Error fetching skills data:', error);
+                });
+        });
+
+        // Update the category dropdown based on selected skill
+        function updateCategories(selectElement) {
+            const skill = selectElement.value;
+            const categorySelect = selectElement.closest('.skills-entry').querySelector('.category');
+
+            // Clear previous categories
+            categorySelect.innerHTML = "<option value=''>Select a category</option>";
+
+            if (skill && skillData[skill]) {
+                // Add new categories based on selected skill
+                skillData[skill].forEach(function(category) {
+                    const option = document.createElement("option");
+                    option.value = category.value;
+                    option.text = category.text;
+                    categorySelect.appendChild(option);
+                });
+            }
+        }
+
+        // Collect form data (skills and categories)
+        function collectFormData() {
+            const formData = {
+                skills: []
+            };
+
+            // Loop through each skills-entry div and collect selected values
+            document.querySelectorAll('.skills-entry').forEach(function(entry) {
+                const skill = entry.querySelector('.skills').value;
+                const category = entry.querySelector('.category').value;
+
+                if (skill && category) {
+                    formData.skills.push({
+                        skill: skill,
+                        category: category
+                    });
+                }
+            });
+
+            console.log('Collected Form Data:', formData);
+
+            // Here you can send formData to the server or process it further
+        }
+    </script>
 </body>
 
 </html>
