@@ -1,4 +1,80 @@
+<?php
+session_start();
+include('../config.php');
+
+if (isset($_GET['id'])) {
+    $id = $_GET['id'];
+    $resume_id = $_GET['id'];
+    $user_id = $_SESSION['user_id'];
+
+    $stmt = $conn->prepare("SELECT * FROM resumes WHERE id = ? AND user_id = ?");
+    $stmt->bind_param("ii", $resume_id, $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $resume = $result->fetch_assoc();
+
+    $personal_info = json_decode($resume['personal_info'], true);
+    $education = json_decode($resume['education'], true);
+    $experience = json_decode($resume['experience'], true);
+    $skills = json_decode($resume['skills'], true);
+
+    // EDUCATION SECTION
+    $eduList = '';
+    foreach ($education as $edu) {
+        $endDate = DateTime::createFromFormat('Y-m', $edu['endDate']);
+        $endFormatted = $endDate->format('M Y');
+        $EduformattedDateRange = strtoupper($endFormatted);
+
+        $eduBlock = "
+                <div class='education'>
+                <h5 class='text-uppercase fw-bold'>" . $edu['institution'] . "</h5>
+                    <h5 class='text-uppercase fw-lighter'>" . $edu['degree'] . "</h5>
+                    <p>Grad." . $EduformattedDateRange . "</p>
+                </div>";
+
+        $eduList .= $eduBlock;
+    }
+
+    // EXPERIENCE SECTION
+    $expList = '';
+    foreach ($experience as $exp) {
+        $startDate = DateTime::createFromFormat('Y-m', $exp['startDate']);
+        $endDate = DateTime::createFromFormat('Y-m', $exp['endDate']);
+        $startFormatted = $startDate->format('M Y');  // E.g., "June 2024"
+
+        if (!empty($exp['endDate'])) {
+            $endFormatted = $endDate->format('M Y');  // E.g., "Aug 2024"
+        } else {
+            $endFormatted = "Present";
+        }
+        $ExpformattedDateRange = strtoupper($startFormatted) . ' - ' . strtoupper($endFormatted);
+
+        $expBlock = "
+                    <div class='experience mb-3'>
+                        <h5 class='text-uppercase fw-bold'>" . $exp['jobTitle'] . " | <span class='fs-6'>" . $ExpformattedDateRange . "</span></h5>
+                        <h5 class='text-capitalize'>" . $exp['company'] . "</h5>
+                        <li class='ms-4'>" . $exp['responsibilities'] . "</li>
+                    </div>";
+
+        $expList .= $expBlock;
+    }
+
+    // SKILLS SECTION
+    $skillsList = '';
+    foreach ($skills as $skill) {
+        $skillBlock = '<div class="skill">
+                            <h5 class="text-uppercase fw-bold">' . htmlspecialchars($skill['skills']) . '</h5>
+                            <h5 class="text-muted">Categories:</h5>
+                            <p>' . htmlspecialchars($skill['categories']) . '</p>
+                        </div>';
+
+        $skillsList .= $skillBlock;
+    }
+}
+
+?>
 <!DOCTYPE html>
+
 <html lang='en'>
 
 <head>
@@ -65,40 +141,35 @@
 
 <body>
     <header class="text-center">
-        <h1>{{fullName}}</h1>
-        <p>{{email}} | {{phone}} | {{location}}</p>
+        <h1><?= $personal_info['fullName'] ?></h1>
+        <p><?= $personal_info['email'] ?> | <?= $personal_info['phone'] ?> | <?= $personal_info['location'] ?></p>
     </header>
     <div class="section-title"></div>
     <div class='section'>
         <h3 class="fw-lighter text-uppercase">Summary</h3>
-        <p>{{summary}}</p>
+        <p><?= $personal_info['summary'] ?></p>
     </div>
 
     <div class="row">
+        <!-- SKILLS -->
         <div class="col-5">
             <div class='section'>
-                <h3 class='fw-lighter text-uppercase'>Skills</h3>
-                {{skillBlock}}
+                <h3 class='fw-lighter text-uppercase mb-3'>Skills</h3>
+                <?= $skillsList ?>
             </div>
         </div>
-        
-        <div class="col-7">
-            <!-- EXPERIENCE -->
-            <div class='section'>
-                <h3 class='fw-lighter text-uppercase'>Experience</h3>
-                <h5 class='text-uppercase fw-bold'>{{jobTitle}} | <span class='fs-6'>{{ExpformattedDateRange}}</span>
-                </h5>
-                <h5 class='text-capitalize'>{{company}}</h5>
-                <li class='ms-4'>{{responsibilities}}</li>
-            </div>
 
+        <!-- EXPERIENCE -->
+        <div class="col-7">
+            <div class='section'>
+                <h3 class='fw-lighter text-uppercase mb-3'>Experience</h3>
+                <?= $expList ?>
+            </div>
 
             <!-- EDUCATION SECTION -->
             <div class='section'>
-                <h3 class='fw-lighter text-uppercase'>Education</h3>
-                <h5 class='text-uppercase fw-bold'>{{institution}}</h5>
-                <h5 class='text-uppercase fw-lighter'>{{degree}}</h5>
-                <p>Grad. {{EduformattedDateRange}}</p>
+                <h3 class='fw-lighter text-uppercase mb-3'>Education</h3>
+                <?= $eduList ?>
             </div>
         </div>
     </div>
