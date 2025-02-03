@@ -178,4 +178,37 @@ if (isset($_GET['id'])) {
     } elseif ($templateType == 'classic') {
         $template = file_get_contents('./template/classic_template.php');
     }
+
+
+    // EXPERIENCE SECTION
+    $expList = "";
+    foreach ($experience as $exp) {
+        $startDate = DateTime::createFromFormat('Y-m', $exp['startDate']);
+        $endDate = DateTime::createFromFormat('Y-m', $exp['endDate']);
+        $startFormatted = $startDate->format('M Y');  // E.g., "June 2024"
+        $endFormatted = $endDate->format('M Y');     // E.g., "Aug 2024"
+        $ExpformattedDateRange = strtoupper($startFormatted) . ' - ' . strtoupper($endFormatted);
+
+        if ($exp['endDate'] == '') {
+            $exp['endDate'] = "Present";
+        }
+        // $totalMonths = (int) $exp['endDate'] - (int) $exp['endDate'];
+        // <li>{$totalMonths}</li>
+
+        $template = str_replace('{{jobTitle}}', $exp['jobTitle'], $template);
+        $template = str_replace('{{company}}', $exp['company'], $template);
+        $template = str_replace('{{responsibilities}}', $exp['responsibilities'], $template);
+        $template = str_replace('{{startDate}}', $exp['startDate'], $template);
+        $template = str_replace('{{endDate}}', $exp['endDate'], $template);
+        $template = str_replace('{{ExpformattedDateRange}}', $ExpformattedDateRange, $template);
+
+    }
+
+
+
+    $template = str_replace('{{skills}}', $skills['skills'], $template);
+    $template = str_replace('{{languages}}', $skills['languages'], $template);
+    $template = str_replace('{{certifications}}', $skills['certifications'], $template);
+
+    echo $template;
 }
