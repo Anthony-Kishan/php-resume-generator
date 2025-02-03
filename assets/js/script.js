@@ -1,6 +1,6 @@
 $(document).ready(function () {
     let currentStep = 1;
-    const totalSteps = 5;
+    const totalSteps = 4;
 
     // Template selection
     $('.template-card').click(function () {
@@ -58,8 +58,7 @@ $(document).ready(function () {
     // Generate Resume
     $('#generateResume').click(function () {
         $generateResumeValue = $('#generateResume').val();
-        // console.log($generateResumeValue);
-        // exit();
+        
         const selectedTemplate = $('.template-card.selected').data('template');
         if (!selectedTemplate) {
             alert('Please select a template first');
@@ -77,14 +76,7 @@ $(document).ready(function () {
             },
             education: [],
             experience: [],
-            // skills: [],
-            // skills: {
-            //     skills: $('option[name="python"]').val(),
-            //     category: $('option[name="Django"]').val(),
-            //     // skills: $('textarea[name="skills"]').val(),
-            //     // languages: $('textarea[name="languages"]').val(),
-            //     // certifications: $('textarea[name="certifications"]').val()
-            // }
+            skills: []
         };
 
         // Collect education entries
@@ -108,25 +100,19 @@ $(document).ready(function () {
             });
         });
 
-
         // Collect skills entries
-        // $('.skills-entry').each(function () {
-        //     var skill = $(this).find('select[name="skills"]').val(); // Get selected skill
-        //     var category = $(this).find('select[name="category[]"]').val(); // Get selected category
-
-        //     formData.skills.push({
-        //         skills: skill,
-        //         category: category,
-        //         // If you have startDate, endDate, and responsibilities fields, use similar jQuery selectors:
-        //         // startDate: $(this).find('input[name="expStartDate[]"]').val(),
-        //         // endDate: $(this).find('input[name="expEndDate[]"]').val(),
-        //         // responsibilities: $(this).find('textarea[name="responsibilities[]"]').val()
-        //     });
-        // });
+        $('.skills-entry').each(function () {
+            formData.skills.push({
+                skills: $(this).find('input[name="skills[]"]').val(),
+                categories: $(this).find('input[name="categories[]"]').val()
+            });
+        });
 
 
         // Show loading state
         $('#generateResume').prop('disabled', true).html('<i class="fas fa-spinner fa-spin me-2"></i>Generating...');
+
+        console.log(formData);
 
         // Send AJAX request
         $.ajax({

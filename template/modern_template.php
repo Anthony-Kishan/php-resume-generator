@@ -76,14 +76,12 @@
 
     <div class="row">
         <div class="col-5">
-            <!-- SKILLS SECTION -->
             <div class='section'>
                 <h3 class='fw-lighter text-uppercase'>Skills</h3>
-                <ul class='skills-list'>
-                    {{skills}}
-                </ul>
+                {{skillBlock}}
             </div>
         </div>
+        
         <div class="col-7">
             <!-- EXPERIENCE -->
             <div class='section'>

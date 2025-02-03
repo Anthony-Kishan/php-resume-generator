@@ -71,27 +71,30 @@ function generateResume($data)
 
     // Process Skills
     $skillsHtml = "";
-    $skillsList = explode(',', $skills['skills']);
-    foreach ($skillsList as $skill) {
-        $skillsHtml .= "<li>" . trim($skill) . "</li>";
+    // $skillsList = explode(',', $skills['skills']);
+    foreach ($skills as $skill) {
+        $skillsHtml .= "<div class='entry'>
+            <div class='entry-title'>{$skill['skills']}</div>
+            <div class='entry-details'>{$skill['categories']}</div>
+        </div>";
     }
     $html = str_replace("{{skills}}", $skillsHtml, $html);
 
-    // Process Languages
-    if (!empty($skills['languages'])) {
-        $html = str_replace("{{languages}}", "<div class='section'>
-            <h2 class='section-title'>Languages</h2>
-            <p>{$skills['languages']}</p>
-        </div>", $html);
-    }
+    // // Process Languages
+    // if (!empty($skills['languages'])) {
+    //     $html = str_replace("{{languages}}", "<div class='section'>
+    //         <h2 class='section-title'>Languages</h2>
+    //         <p>{$skills['languages']}</p>
+    //     </div>", $html);
+    // }
 
-    // Process Certifications
-    if (!empty($skills['certifications'])) {
-        $html = str_replace("{{certifications}}", "<div class='section'>
-            <h2 class='section-title'>Certifications</h2>
-            <p>{$skills['certifications']}</p>
-        </div>", $html);
-    }
+    // // Process Certifications
+    // if (!empty($skills['certifications'])) {
+    //     $html = str_replace("{{certifications}}", "<div class='section'>
+    //         <h2 class='section-title'>Certifications</h2>
+    //         <p>{$skills['certifications']}</p>
+    //     </div>", $html);
+    // }
 
     return $html;
 }

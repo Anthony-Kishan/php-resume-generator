@@ -227,23 +227,23 @@ $is_logged_in = isset($_SESSION['user_id']);
                             </div>
 
                             <!-- Skills Section -->
-                            <!-- <div class="form-section" data-step="4">
+                            <div class="form-section" data-step="4">
                                 <h4 class="mb-4">Skills</h4>
                                 <div id="skillsContainer">
                                     <div class="row g-3">
                                         <div class="skills-entry mb-3 p-3 border rounded">
                                             <label class="form-label">Skills (comma-separated)</label>
-                                            <textarea class="form-control" name="skills" rows="3" required
-                                                placeholder="e.g., Project Management, Team Leadership, Strategic Planning"></textarea>
-
-                                            <select name="skills" id="skills">
-                                                <option value=""></option>
-                                            </select>
+                                            <!-- <textarea class="form-control" name="skills[]" rows="3" required
+                                                placeholder="e.g., Project Management, Team Leadership, Strategic Planning"></textarea> -->
+                                            <input class="form-control" name="skills[]" rows="3" required
+                                                placeholder="e.g., Project Management, Team Leadership, Strategic Planning">
 
                                             <div class="ms-4 mb-3">
                                                 <label class="form-label">Categories</label>
-                                                <textarea class="form-control" name="categories[]" rows="3" required
-                                                    placeholder="e.g., Project Management, Team Leadership, Strategic Planning"></textarea>
+                                                <!-- <textarea class="form-control" name="categories[]" rows="3" required
+                                                    placeholder="e.g., Project Management, Team Leadership, Strategic Planning"></textarea> -->
+                                                <input class="form-control" name="categories[]" rows="3" required
+                                                    placeholder="e.g., Project Management, Team Leadership, Strategic Planning">
                                             </div>
                                         </div>
                                     </div>
@@ -251,33 +251,7 @@ $is_logged_in = isset($_SESSION['user_id']);
                                 <button type="button" class="btn btn-outline-primary" id="addSkills">
                                     <i class="fas fa-plus me-2"></i>Add Skills
                                 </button>
-                            </div> -->
-
-
-                            <!-- Skills Section -->
-                            <div class="form-section" data-step="5">
-                                <div class="skills-entry mb-3 p-3 border rounded">
-                                    <div class="mb-3">
-                                        <label for="skills" class="form-label">Select Skill</label>
-                                        <select class="form-control skills" name="skills[]" onchange="updateCategories(this)">
-                                            <option value="">Select a Skill</option>
-                                            <option value="python">Python Development</option>
-                                            <option value="web_design">Web Design</option>
-                                            <option value="java">Java Development</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="category" class="form-label">Select Category</label>
-                                        <select class="form-control category" name="category[]">
-                                            <option value="">Select a category</option>
-                                        </select>
-                                    </div>
-                                </div>
                             </div>
-
-
-
 
                             <!-- <div class="mb-3">
                                 <label class="form-label">Languages</label>
@@ -322,9 +296,10 @@ $is_logged_in = isset($_SESSION['user_id']);
     <script src="https://code.jquery.com/jquery-3.7.1.js"
         integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
     <script src="./assets/js/script.js"></script>
 
-    <script>
+    <!-- <script>
         // Global variable to store skills and categories data
         let skillData = {};
 
@@ -382,7 +357,7 @@ $is_logged_in = isset($_SESSION['user_id']);
 
             // Here you can send formData to the server or process it further
         }
-    </script>
+    </script> -->
 </body>
 
 </html>

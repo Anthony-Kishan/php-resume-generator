@@ -14,12 +14,20 @@ if (isset($_GET['id'])) {
     $result = $stmt->get_result();
     $resume = $result->fetch_assoc();
 
+    $templateType = $resume['template_type'];
+
     $personal_info = json_decode($resume['personal_info'], true);
     $education = json_decode($resume['education'], true);
     $experience = json_decode($resume['experience'], true);
     $skills = json_decode($resume['skills'], true);
 
-    $template = file_get_contents('./template/modern_template.php');
+    if ($templateType == 'modern') {
+        $template = file_get_contents('./template/modern_template.php');
+    } elseif ($templateType == 'creative') {
+        $template = file_get_contents('./template/creative_template.php');
+    } elseif ($templateType == 'classic') {
+        $template = file_get_contents('./template/classic_template.php');
+    }
 
     $template = str_replace('{{fullName}}', $personal_info['fullName'], $template);
     $template = str_replace('{{email}}', $personal_info['email'], $template);
@@ -49,7 +57,6 @@ if (isset($_GET['id'])) {
 
 
     // EXPERIENCE SECTION
-    $expList = "";
     foreach ($experience as $exp) {
         $startDate = DateTime::createFromFormat('Y-m', $exp['startDate']);
         $endDate = DateTime::createFromFormat('Y-m', $exp['endDate']);
@@ -69,13 +76,27 @@ if (isset($_GET['id'])) {
         $template = str_replace('{{startDate}}', $exp['startDate'], $template);
         $template = str_replace('{{endDate}}', $exp['endDate'], $template);
         $template = str_replace('{{ExpformattedDateRange}}', $ExpformattedDateRange, $template);
+    }
 
+    if ($templateType == 'modern') {
+        // SKILLS SECTION
+        $skillsList = '';
+        foreach ($skills as $skill) {
+            $skillBlock = '<div class="skill">
+                        <h5 class="text-uppercase fw-bold">' . htmlspecialchars($skill['skills']) . '</h5>
+                        <h5 class="text-muted">Categories:</h5>
+                        <p>' . htmlspecialchars($skill['categories']) . '</p>
+                    </div>';
+
+            $skillsList .= $skillBlock;
+        }
+        $template = str_replace('{{skillBlock}}', $skillsList, $template);
     }
 
 
-    $template = str_replace('{{skills}}', $skills['skills'], $template);
-    $template = str_replace('{{languages}}', $skills['languages'], $template);
-    $template = str_replace('{{certifications}}', $skills['certifications'], $template);
+
+    // $template = str_replace('{{languages}}', $skills['languages'], $template);
+    // $template = str_replace('{{certifications}}', $skills['certifications'], $template);
 
     echo $template;
 }
