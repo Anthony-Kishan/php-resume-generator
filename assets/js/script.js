@@ -58,7 +58,7 @@ $(document).ready(function () {
     // Generate Resume
     $('#generateResume').click(function () {
         $generateResumeValue = $('#generateResume').val();
-        
+
         const selectedTemplate = $('.template-card.selected').data('template');
         if (!selectedTemplate) {
             alert('Please select a template first');
@@ -114,7 +114,7 @@ $(document).ready(function () {
 
         console.log(formData);
 
-        // Send AJAX request
+        // // Send AJAX request
         $.ajax({
             url: './controller/generate.php',
             method: 'POST',
@@ -122,10 +122,10 @@ $(document).ready(function () {
             dataType: 'json',
             data: JSON.stringify(formData),
             success: function (response) {
-                if (response.success) {
-                    $('#resumePreview').html(response.resume);
+                if (response) {
+                    $('#resumePreview').html(response);
                 } else {
-                    alert('Failed to generate resume: ' + response.error);
+                    alert('Failed to generate resume: ' + response);
                 }
             },
             error: function () {
