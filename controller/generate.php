@@ -18,8 +18,11 @@ if (!isset($_SESSION['user_id'])) {
 
 $userId = $_SESSION['user_id'];
 
+
+// Get the raw JSON data sent by AJAX
 $data = json_decode(file_get_contents('php://input'), true);
 
+// Validate that the data is present
 if (!$data) {
     http_response_code(400);
     echo json_encode(['error' => 'Invalid data']);
@@ -38,18 +41,13 @@ $skills = json_encode($data['skills']);
 $stmt->bind_param("isssss", $userId, $templateType, $personalInfo, $education, $experience, $skills);
 $stmt->execute();
 
-echo $html = file_get_contents("template/modern_template.php");
+ob_start();
+include("../template/modern_template.php");  // This template will now use the passed variables
+$html = ob_get_clean();
 
 // echo json_encode([
 //     'success' => true,
-//     'resume' => $generatedResume
+//     'html' => $html
 // ]);
 
-echo $html =
-    '<div id="htmlPreviewContainer">
-    <iframe src="./template/modern_template.php"></iframe>
-    <?php
-    // Include the contents of the HTML file
-    include("template/modern_template.php");
-    ?>
-</div>';
+echo json_encode(['html' => $html]);

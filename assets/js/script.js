@@ -115,6 +115,29 @@ $(document).ready(function () {
         console.log(formData);
 
         // // Send AJAX request
+        // $.ajax({
+        //     url: './controller/generate.php',
+        //     method: 'POST',
+        //     contentType: 'application/json',
+        //     dataType: 'json',
+        //     data: JSON.stringify(formData),
+        //     success: function (response) {
+        //         if (response) {
+        //             $('#resumePreview').html(response);
+        //         } else {
+        //             alert('Failed to generate resume: ' + response);
+        //         }
+        //     },
+        //     error: function () {
+        //         alert('An error occurred while generating the resume');
+        //     },
+        //     complete: function () {
+        //         $('#generateResume').prop('disabled', false).html('<i class="fas fa-magic me-2"></i>Generate Resume');
+        //     }
+        // });
+
+
+        // Send AJAX request
         $.ajax({
             url: './controller/generate.php',
             method: 'POST',
@@ -122,10 +145,8 @@ $(document).ready(function () {
             dataType: 'json',
             data: JSON.stringify(formData),
             success: function (response) {
-                if (response) {
-                    $('#resumePreview').html(response);
-                } else {
-                    alert('Failed to generate resume: ' + response);
+                if (response && response.html) {
+                    $('#resumePreview').html(response.html);
                 }
             },
             error: function () {
