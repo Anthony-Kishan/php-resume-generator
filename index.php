@@ -276,6 +276,7 @@ $is_logged_in = isset($_SESSION['user_id']);
                             <i class="fas fa-file-alt fa-3x text-muted mb-3"></i>
                             <h5>Resume Preview</h5>
                             <p class="text-muted">Your resume preview will appear here as you fill out the form.</p>
+                            <!-- <iframe src="./template/modern_template.php" width="100%"  height="100%" frameborder="0"></iframe> -->
                         </div>
                     </div>
                 </div>

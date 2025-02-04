@@ -51,15 +51,45 @@ $resumes = $stmt->get_result();
                         <td><?php echo htmlspecialchars($resume['template_type']); ?></td>
                         <td><?php echo htmlspecialchars($resume['created_at']); ?></td>
                         <td>
-                            <a href="resume.php?id=<?php echo $resume['id']; ?>" target="_blank" class="btn btn-info"><i class="fa-solid fa-eye"></i></a>
+                            <a href="resume.php?id=<?php echo base64_encode($resume['id']); ?>" target="_blank" class="btn btn-info"><i class="fa-solid fa-eye"></i></a>
                             <a href="download.php?id=<?php echo $resume['id']; ?>" class="btn btn-success"><i class="fa-solid fa-download"></i></a>
-                            <a href="delete.php?id=<?php echo $resume['id']; ?>" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
+                            <a href="javascript:void(0)" data-id="<?php echo base64_encode($resume['id']); ?>" class="btn btn-danger deleteBtn"><i class="fa-solid fa-trash"></i></a>
+
+                            <!-- <a href="delete.php?id=<?php echo base64_encode($resume['id']); ?>" value="base64_encode($resume['id']);" class="btn btn-danger" id="deleteBtn"><i class="fa-solid fa-trash"></i></a> -->
                         </td>
                     </tr>
                 <?php } ?>
             </tbody>
         </table>
     </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+
+    <script>
+        $(document).ready(function() {
+            $(document).on('click', '.deleteBtn', function() {
+                var deleteId = $(this).data('id');
+                var row = $(this).closest('tr');
+
+                $.ajax({
+                    url: './delete.php',
+                    method: 'POST',
+                    data: {
+                        id: deleteId
+                    },
+                    success: function(response) {
+                        row.remove();
+                    },
+                    error: function() {
+                        alert("An error occurred while deleting the resume.");
+                    }
+                });
+            });
+        });
+    </script>
+
 </body>
 
 </html>

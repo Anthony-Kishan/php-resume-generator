@@ -3,8 +3,8 @@ session_start();
 include('../config.php');
 
 if (isset($_GET['id'])) {
-    $id = $_GET['id'];
-    $resume_id = $_GET['id'];
+    $id = ($_GET['id']);
+    $resume_id = base64_decode($_GET['id']);
     $user_id = $_SESSION['user_id'];
 
     $stmt = $conn->prepare("SELECT * FROM resumes WHERE id = ? AND user_id = ?");

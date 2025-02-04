@@ -145,8 +145,9 @@ $(document).ready(function () {
             dataType: 'json',
             data: JSON.stringify(formData),
             success: function (response) {
-                if (response && response.html) {
-                    $('#resumePreview').html(response.html);
+                if (response.success) {
+                    // $('#resumePreview').html(response.html);
+                    $('#resumePreview').html('<iframe srcdoc="' + response.html + '" width="100%" height="500px"></iframe>');
                 }
             },
             error: function () {

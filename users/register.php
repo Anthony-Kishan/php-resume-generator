@@ -44,12 +44,11 @@
         if ($stmt->execute()) {
             // Use a session variable to pass the message
             $_SESSION['message'] = "Registration successful.";
-            header('Location: ./login.php?user_id=' . $_SESSION['user_id']);
+            header('Location: ./login.php?user_id=' . base64_encode($_SESSION['user_id']));
             exit(); // Always call exit after a header redirect
         } else {
             echo "<div class='alert alert-danger mt-3'>Error: " . $conn->error . "</div>";
         }
-        
     }
     ?>
 </body>

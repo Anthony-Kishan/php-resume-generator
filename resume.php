@@ -156,10 +156,10 @@
 session_start();
 include('./config.php');
 
-$id = $_GET['id'];
+$id = ($_GET['id']);
 
 if (isset($_GET['id'])) {
-    $resume_id = $_GET['id'];
+    $resume_id = base64_decode($_GET['id']);
     $user_id = $_SESSION['user_id'];
 
     $stmt = $conn->prepare("SELECT * FROM resumes WHERE id = ? AND user_id = ?");
@@ -170,11 +170,13 @@ if (isset($_GET['id'])) {
 
     $templateType = $resume['template_type'];
 
-    if ($templateType == 'modern') {
-        header('location: ./template/modern_template.php' . '?id=' . $resume['id']);
-    } elseif ($templateType == 'creative') {
-        $template = file_get_contents('./template/creative_template.php');
-    } elseif ($templateType == 'classic') {
-        $template = file_get_contents('./template/classic_template.php');
-    }
+    // if ($templateType == 'modern') {
+    //     header('location: ./template/modern_template.php' . '?id=' . $resume['id']);
+    // } elseif ($templateType == 'creative') {
+    //     $template = file_get_contents('./template/creative_template.php');
+    // } elseif ($templateType == 'classic') {
+    //     $template = file_get_contents('./template/classic_template.php');
+    // }
+
+    header('location: ./template/' . $templateType . '_template.php' . '?id=' . base64_encode($resume['id']));
 }

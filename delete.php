@@ -8,8 +8,8 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-if (isset($_GET['id']) && !empty($_GET['id'])) {
-    $resume_id = $_GET['id'];
+if (isset($_POST['id']) && !empty($_POST['id'])) {
+    $resume_id = base64_decode($_POST['id']);
     $user_id = $_SESSION['user_id'];
 
     $stmt = $conn->prepare("DELETE FROM resumes WHERE id = ? AND user_id = ?");
