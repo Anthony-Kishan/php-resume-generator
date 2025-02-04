@@ -52,7 +52,9 @@ $is_logged_in = isset($_SESSION['user_id']);
 </head>
 
 <body class="bg-light">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <?php include('navbar.php'); ?>
+
+    <!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
             <a class="navbar-brand" href="#">
                 <i class="fas fa-file-alt me-2"></i>
@@ -70,7 +72,7 @@ $is_logged_in = isset($_SESSION['user_id']);
                 <?php endif; ?>
             </div>
         </div>
-    </nav>
+    </nav> -->
 
     <div class="modal fade" tabindex="-1" id="exampleModal">
         <div class="modal-dialog">
@@ -81,7 +83,7 @@ $is_logged_in = isset($_SESSION['user_id']);
                 </div>
 
                 <div class="modal-body text-center">
-                    <!--  -->
+                    <!-- MODAL BODY WILL POPULATE HERE FROM AJAX CALL -->
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

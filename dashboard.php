@@ -1,5 +1,7 @@
 <?php
 session_start();
+$is_logged_in = isset($_SESSION['user_id']);
+
 include('./config.php');
 
 if (!isset($_SESSION['user_id'])) {
@@ -28,6 +30,8 @@ $resumes = $stmt->get_result();
 </head>
 
 <body>
+    <?php include('navbar.php'); ?>
+
     <div class="container mt-5">
         <h2>Your Generated Resumes</h2>
         <table class="table">
@@ -51,9 +55,12 @@ $resumes = $stmt->get_result();
                         <td><?php echo htmlspecialchars($resume['template_type']); ?></td>
                         <td><?php echo htmlspecialchars($resume['created_at']); ?></td>
                         <td>
-                            <a href="resume.php?id=<?php echo base64_encode($resume['id']); ?>" target="_blank" class="btn btn-info"><i class="fa-solid fa-eye"></i></a>
-                            <a href="download.php?id=<?php echo $resume['id']; ?>" class="btn btn-success"><i class="fa-solid fa-download"></i></a>
-                            <a href="javascript:void(0)" data-id="<?php echo base64_encode($resume['id']); ?>" class="btn btn-danger deleteBtn"><i class="fa-solid fa-trash"></i></a>
+                            <a href="resume.php?id=<?php echo base64_encode($resume['id']); ?>" target="_blank"
+                                class="btn btn-info"><i class="fa-solid fa-eye"></i></a>
+                            <a href="download.php?id=<?php echo $resume['id']; ?>" class="btn btn-success"><i
+                                    class="fa-solid fa-download"></i></a>
+                            <a href="javascript:void(0)" data-id="<?php echo base64_encode($resume['id']); ?>"
+                                class="btn btn-danger deleteBtn"><i class="fa-solid fa-trash"></i></a>
 
                             <!-- <a href="delete.php?id=<?php echo base64_encode($resume['id']); ?>" value="base64_encode($resume['id']);" class="btn btn-danger" id="deleteBtn"><i class="fa-solid fa-trash"></i></a> -->
                         </td>
@@ -68,8 +75,8 @@ $resumes = $stmt->get_result();
         integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 
     <script>
-        $(document).ready(function() {
-            $(document).on('click', '.deleteBtn', function() {
+        $(document).ready(function () {
+            $(document).on('click', '.deleteBtn', function () {
                 var deleteId = $(this).data('id');
                 var row = $(this).closest('tr');
 
@@ -79,10 +86,10 @@ $resumes = $stmt->get_result();
                     data: {
                         id: deleteId
                     },
-                    success: function(response) {
+                    success: function (response) {
                         row.remove();
                     },
-                    error: function() {
+                    error: function () {
                         alert("An error occurred while deleting the resume.");
                     }
                 });
