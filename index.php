@@ -54,36 +54,18 @@ $is_logged_in = isset($_SESSION['user_id']);
 <body class="bg-light">
     <?php include('navbar.php'); ?>
 
-    <!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="#">
-                <i class="fas fa-file-alt me-2"></i>
-                Resume Generator
-            </a>
-            <div class="ms-auto">
-                <?php if (!$is_logged_in): ?>
-                    <a class="btn btn-success" href="./users/login.php"><i class="fa-solid fa-arrow-right-to-bracket"></i>
-                        Login</a>
-                    <a class="btn btn-danger" href="./users/register.php"><i class="fa-solid fa-user-plus"></i> Register</a>
-                <?php else: ?>
-                    <a class="btn btn-danger" href="./dashboard.php"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
-                    <a class="btn btn-danger" href="./users/logout.php"><i class="fa-solid fa-arrow-right-from-bracket"></i>
-                        Logout</a>
-                <?php endif; ?>
-            </div>
-        </div>
-    </nav> -->
 
-    <div class="modal fade" tabindex="-1" id="exampleModal">
+    <div class="modal fade" tabindex="-1" id="successModal">
         <div class="modal-dialog">
             <div class="modal-content" style="border: 2px solid rgb(4, 167, 78);">
                 <div class="modal-header">
-                    <h5 class="modal-title"><i class="fa-regular fa-circle-check" style="color:rgb(30, 249, 129);"></i></h5>
+                    <h5 class="modal-title"><i class="fa-regular fa-circle-check" style="color:rgb(30, 249, 129);"></i>
+                    </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
-                <div class="modal-body text-center">
-                    <!-- MODAL BODY WILL POPULATE HERE FROM AJAX CALL -->
+                <div class="modal-body success-modal-body text-center">
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -91,6 +73,30 @@ $is_logged_in = isset($_SESSION['user_id']);
             </div>
         </div>
     </div>
+
+
+    <div class="modal fade" tabindex="-1" id="errorModal">
+        <div class="modal-dialog">
+            <div class="modal-content" style="border: 2px solid rgb(167, 4, 4);">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fa-regular fa-circle-check" style="color:rgb(249, 30, 30);"></i>
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body error-modal-body text-center">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    </div>
+
 
     <div class="container py-5">
         <div class="row mb-5">
@@ -305,12 +311,14 @@ $is_logged_in = isset($_SESSION['user_id']);
         <!-- Generate Button -->
         <div class="row mt-4">
             <div class="col-12 text-center">
-                <button type="button" class="btn btn-success btn-lg" id="generateResume" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    <i class="fas fa-magic me-2"></i>Generate Resume
+                <button type="button" class="btn btn-success btn-lg" id="generateResume">
+                    <i class=" fas fa-magic me-2"></i>Generate Resume
                 </button>
             </div>
         </div>
     </div>
+
+
 
     <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
     <script src="https://code.jquery.com/jquery-3.7.1.js"

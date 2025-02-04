@@ -146,11 +146,21 @@ $(document).ready(function () {
             data: JSON.stringify(formData),
             success: function (response) {
                 if (response.success) {
-                    $(".modal-body").html(response.html);
+                    $(".success-modal-body").html(response.html);
+                    $('#successModal').modal('show');
+
+                    // setTimeout(function () {
+                    //     $('#exampleModal').modal('hide');
+                    // }, 3000);
+                }
+                else {
+                    $(".error-modal-body").html(response.message);
+                    $("#errorModal").modal('show');
+                    // alert(response.message);
                 }
             },
             error: function () {
-                alert('An error occurred while generating the resume');
+                alert('An error occurred while generating the resume'.response.message);
             },
             complete: function () {
                 $('#generateResume').prop('disabled', false).html('<i class="fas fa-magic me-2"></i>Generate Resume');

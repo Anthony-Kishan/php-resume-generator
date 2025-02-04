@@ -27,22 +27,66 @@ if (!$data) {
     exit;
 }
 
+// Check if the main fields (template, personalInfo, education, experience, skills) are present
+$requiredFields = ['template', 'personalInfo', 'education', 'experience', 'skills'];
 
+foreach ($requiredFields as $field) {
+    if (empty($data[$field])) {
+        echo json_encode([
+            'success' => false,
+            'message' => "Field '$field' is empty or missing."
+        ]);
+        exit;
+    }
+}
+
+// Validate 'personalInfo' subfields
+if (isset($data['personalInfo']) && is_array($data['personalInfo'])) {
+    foreach ($data['personalInfo'] as $key => $value) {
+        if (empty($value)) {
+            echo json_encode([
+                'success' => false,
+                'message' => "Personal information field '$key' is empty."
+            ]);
+            exit;
+        }
+    }
+} else {
+    echo json_encode([
+        'success' => false,
+        'message' => "Personal information is incomplete or invalid."
+    ]);
+    exit;
+}
+
+// Validate 'education', 'experience', 'skills' arrays
+$validArrayFields = ['education', 'experience', 'skills'];
+
+foreach ($validArrayFields as $field) {
+    if (!is_array($data[$field]) || empty($data[$field])) {
+        echo json_encode([
+            'success' => false,
+            'message' => ucfirst($field) . " field is incomplete or invalid."
+        ]);
+        exit;
+    }
+}
+
+// Proceed with the database insertion if all fields are valid
 $stmt = $conn->prepare("INSERT INTO resumes (user_id, template_type, personal_info, education, experience, skills) VALUES (?, ?, ?, ?, ?, ?)");
 
 $templateType = $data['template'];
-$personalInfo = json_encode($data['personalInfo']);
-$education = json_encode($data['education']);
-$experience = json_encode($data['experience']);
-$skills = json_encode($data['skills']);
+
+// Ensure no empty fields are being encoded
+$personalInfo = json_encode(array_filter($data['personalInfo'], fn($value) => !empty($value)));  // Remove empty fields
+$education = json_encode(array_filter($data['education'], fn($value) => !empty($value)));  // Remove empty fields
+$experience = json_encode(array_filter($data['experience'], fn($value) => !empty($value)));  // Remove empty fields
+$skills = json_encode(array_filter($data['skills'], fn($value) => !empty($value)));  // Remove empty fields
 
 $stmt->bind_param("isssss", $userId, $templateType, $personalInfo, $education, $experience, $skills);
 $stmt->execute();
 
-// ob_start();
-// include("../template/modern_template.php");  // This template will now use the passed variables
-// $html = ob_get_clean();
-
+// Success response
 $html = '
 <p class="alert alert-success" role="alert">Resume generated successfully!</p>
 <a href="./dashboard.php" type="button" class="btn btn-primary">View Resume</a>';
@@ -52,5 +96,4 @@ echo json_encode([
     'html' => $html
 ]);
 
-// echo json_encode(['html' => $html]);
-// echo $html;
+?>
