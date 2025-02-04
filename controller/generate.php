@@ -39,9 +39,13 @@ $skills = json_encode($data['skills']);
 $stmt->bind_param("isssss", $userId, $templateType, $personalInfo, $education, $experience, $skills);
 $stmt->execute();
 
-ob_start();
-include("../template/modern_template.php");  // This template will now use the passed variables
-$html = ob_get_clean();
+// ob_start();
+// include("../template/modern_template.php");  // This template will now use the passed variables
+// $html = ob_get_clean();
+
+$html = '
+<p class="alert alert-success" role="alert">Resume generated successfully!</p>
+<a href="./dashboard.php" type="button" class="btn btn-primary">View Resume</a>';
 
 echo json_encode([
     'success' => true,

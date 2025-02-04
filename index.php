@@ -72,6 +72,23 @@ $is_logged_in = isset($_SESSION['user_id']);
         </div>
     </nav>
 
+    <div class="modal fade" tabindex="-1" id="exampleModal">
+        <div class="modal-dialog">
+            <div class="modal-content" style="border: 2px solid rgb(4, 167, 78);">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fa-regular fa-circle-check" style="color:rgb(30, 249, 129);"></i></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body text-center">
+                    <!--  -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="container py-5">
         <div class="row mb-5">
@@ -286,7 +303,7 @@ $is_logged_in = isset($_SESSION['user_id']);
         <!-- Generate Button -->
         <div class="row mt-4">
             <div class="col-12 text-center">
-                <button type="button" class="btn btn-success btn-lg" id="generateResume">
+                <button type="button" class="btn btn-success btn-lg" id="generateResume" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     <i class="fas fa-magic me-2"></i>Generate Resume
                 </button>
             </div>

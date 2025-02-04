@@ -146,8 +146,7 @@ $(document).ready(function () {
             data: JSON.stringify(formData),
             success: function (response) {
                 if (response.success) {
-                    // $('#resumePreview').html(response.html);
-                    $('#resumePreview').html('<iframe srcdoc="' + response.html + '" width="100%" height="500px"></iframe>');
+                    $(".modal-body").html(response.html);
                 }
             },
             error: function () {
