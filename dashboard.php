@@ -25,7 +25,7 @@ $resumes = $stmt->get_result();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Resumes</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 
@@ -56,7 +56,7 @@ $resumes = $stmt->get_result();
                         <td><?php echo htmlspecialchars($resume['created_at']); ?></td>
                         <td>
                             <a href="resume.php?id=<?php echo base64_encode($resume['id']); ?>" target="_blank"
-                                class="btn btn-info"><i class="fa-solid fa-eye"></i></a>
+                                class="btn btn-info text-white"><i class="fa-solid fa-eye"></i></a>
                             <a href="download.php?id=<?php echo $resume['id']; ?>" class="btn btn-success"><i
                                     class="fa-solid fa-download"></i></a>
                             <a href="javascript:void(0)" data-id="<?php echo base64_encode($resume['id']); ?>"
@@ -75,8 +75,8 @@ $resumes = $stmt->get_result();
         integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 
     <script>
-        $(document).ready(function () {
-            $(document).on('click', '.deleteBtn', function () {
+        $(document).ready(function() {
+            $(document).on('click', '.deleteBtn', function() {
                 var deleteId = $(this).data('id');
                 var row = $(this).closest('tr');
 
@@ -86,10 +86,10 @@ $resumes = $stmt->get_result();
                     data: {
                         id: deleteId
                     },
-                    success: function (response) {
+                    success: function(response) {
                         row.remove();
                     },
-                    error: function () {
+                    error: function() {
                         alert("An error occurred while deleting the resume.");
                     }
                 });

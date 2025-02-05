@@ -54,10 +54,10 @@ $is_logged_in = isset($_SESSION['user_id']);
 <body class="bg-light">
     <?php include('navbar.php'); ?>
 
-
+    <!-- SUCCESS MODAL -->
     <div class="modal fade" tabindex="-1" id="successModal">
         <div class="modal-dialog">
-            <div class="modal-content" style="border: 2px solid rgb(4, 167, 78);">
+            <div class="modal-content" style="border: 2px solid rgb(4, 167, 78); background-color:rgb(165, 255, 206);">
                 <div class="modal-header">
                     <h5 class="modal-title"><i class="fa-regular fa-circle-check" style="color:rgb(30, 249, 129);"></i>
                     </h5>
@@ -65,21 +65,22 @@ $is_logged_in = isset($_SESSION['user_id']);
                 </div>
 
                 <div class="modal-body success-modal-body text-center">
-
+                    <p>Resume generated successfully!</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <a href="./dashboard.php" type="button" class="btn btn-primary">Go to Dashboard</a>
                 </div>
             </div>
         </div>
     </div>
 
-
+    <!-- ERROR MODAL -->
     <div class="modal fade" tabindex="-1" id="errorModal">
         <div class="modal-dialog">
             <div class="modal-content" style="border: 2px solid rgb(167, 4, 4);">
                 <div class="modal-header">
-                    <h5 class="modal-title"><i class="fa-regular fa-circle-check" style="color:rgb(249, 30, 30);"></i>
+                    <h5 class="modal-title"><i class="fa-regular fa-circle-xmark" style="color:rgb(249, 30, 30);"></i>
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>

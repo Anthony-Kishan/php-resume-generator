@@ -146,7 +146,7 @@ $(document).ready(function () {
             data: JSON.stringify(formData),
             success: function (response) {
                 if (response.success) {
-                    $(".success-modal-body").html(response.html);
+                    // $(".success-modal-body").html(response.html);
                     $('#successModal').modal('show');
 
                     // setTimeout(function () {
