@@ -124,6 +124,8 @@ $(document).ready(function () {
                 if (response.success === true) {
                     console.log('Success response received');
                     $('#successModal').modal('show');
+                    $('#resumePreview').html(response.html);
+
                 } else {
                     console.log('Error response:', response.message);
                     $(".error-modal-body").html(response.message);

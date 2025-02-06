@@ -97,8 +97,6 @@ $is_logged_in = isset($_SESSION['user_id']);
 
 
     <div class="container py-5">
-        
-
         <div class="row">
             <!-- Form Section -->
             <div class="col-lg-6">

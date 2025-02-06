@@ -62,7 +62,7 @@ $resumes = $stmt->get_result();
                             <a href="javascript:void(0)" data-id="<?php echo base64_encode($resume['id']); ?>"
                                 class="btn btn-danger deleteBtn"><i class="fa-solid fa-trash"></i></a>
 
-                            <a href="./view/edit_resume.php?id=<?php echo base64_encode($resume['id']); ?>" value="base64_encode($resume['id']);" class="btn btn-warning" id="editBtn"><i class="fa-solid fa-pen text-white"></i></a>
+                            <a href="./view/edit_resume.view.php?id=<?php echo base64_encode($resume['id']); ?>" value="base64_encode($resume['id']);" class="btn btn-warning" id="editBtn"><i class="fa-solid fa-pen text-white"></i></a>
                         </td>
                     </tr>
                 <?php } ?>
