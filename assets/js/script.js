@@ -59,14 +59,14 @@ $(document).ready(function () {
     $('#generateResume').click(function () {
         $generateResumeValue = $('#generateResume').val();
 
-        const selectedTemplate = $('.template-card.selected').data('template');
-        if (!selectedTemplate) {
-            alert('Please select a template first');
-            return;
-        }
+        // const selectedTemplate = $('.template-card.selected').data('template');
+        // if (!selectedTemplate) {
+        //     alert('Please select a template first');
+        //     return;
+        // }
 
         const formData = {
-            template: selectedTemplate,
+            // template: selectedTemplate,
             personalInfo: {
                 fullName: $('input[name="fullName"]').val(),
                 email: $('input[name="email"]').val(),
@@ -112,32 +112,6 @@ $(document).ready(function () {
         // Show loading state
         $('#generateResume').prop('disabled', true).html('<i class="fas fa-spinner fa-spin me-2"></i>Generating...');
 
-        console.log(formData);
-
-        // // Send AJAX request
-        // $.ajax({
-        //     url: './controller/generate.php',
-        //     method: 'POST',
-        //     contentType: 'application/json',
-        //     dataType: 'json',
-        //     data: JSON.stringify(formData),
-        //     success: function (response) {
-        //         if (response) {
-        //             $('#resumePreview').html(response);
-        //         } else {
-        //             alert('Failed to generate resume: ' + response);
-        //         }
-        //     },
-        //     error: function () {
-        //         alert('An error occurred while generating the resume');
-        //     },
-        //     complete: function () {
-        //         $('#generateResume').prop('disabled', false).html('<i class="fas fa-magic me-2"></i>Generate Resume');
-        //     }
-        // });
-
-
-        // Send AJAX request
         $.ajax({
             url: './controller/generate.php',
             method: 'POST',
@@ -145,22 +119,22 @@ $(document).ready(function () {
             dataType: 'json',
             data: JSON.stringify(formData),
             success: function (response) {
-                if (response.success) {
-                    // $(".success-modal-body").html(response.html);
-                    $('#successModal').modal('show');
+                console.log("AJAX Response:", response); // Inspect the response here
 
-                    // setTimeout(function () {
-                    //     $('#exampleModal').modal('hide');
-                    // }, 3000);
-                }
-                else {
+                if (response.success === true) {
+                    console.log('Success response received');
+                    $('#successModal').modal('show');
+                } else {
+                    console.log('Error response:', response.message);
                     $(".error-modal-body").html(response.message);
                     $("#errorModal").modal('show');
-                    // alert(response.message);
                 }
             },
-            error: function () {
-                alert('An error occurred while generating the resume'.response.message);
+            error: function (xhr, status, error) {
+                // console.log("AJAX Error: ", error);
+                console.log("AJAX Error: ", xhr.responseText); // Log the full response for debugging
+                console.log("Status: ", status);
+                console.log("Error: ", error);
             },
             complete: function () {
                 $('#generateResume').prop('disabled', false).html('<i class="fas fa-magic me-2"></i>Generate Resume');

@@ -9,20 +9,11 @@ $is_logged_in = isset($_SESSION['user_id']);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resume Generator</title>
+    <title>Edit Resume</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            /* max-width: 800px; */
-            margin: 0 auto;
-            /* padding: 20px; */
-        }
-
         .template-card {
             cursor: pointer;
             transition: transform 0.3s;
@@ -52,56 +43,13 @@ $is_logged_in = isset($_SESSION['user_id']);
 </head>
 
 <body class="bg-light">
-    <?php include('navbar.php'); ?>
+    <?php include('../navbar.php'); ?>
 
-    <!-- SUCCESS MODAL -->
-    <div class="modal fade" tabindex="-1" id="successModal">
-        <div class="modal-dialog">
-            <div class="modal-content" style="border: 2px solid rgb(4, 167, 78); background-color:rgb(165, 255, 206);">
-                <div class="modal-header">
-                    <h5 class="modal-title"><i class="fa-regular fa-circle-check" style="color:rgb(30, 249, 129);"></i>
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-
-                <div class="modal-body success-modal-body text-center">
-                    <p>Resume generated successfully!</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <a href="./dashboard.php" type="button" class="btn btn-primary">Go to Dashboard</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ERROR MODAL -->
-    <div class="modal fade" tabindex="-1" id="errorModal">
-        <div class="modal-dialog">
-            <div class="modal-content" style="border: 2px solid rgb(167, 4, 4);">
-                <div class="modal-header">
-                    <h5 class="modal-title"><i class="fa-regular fa-circle-xmark" style="color:rgb(249, 30, 30);"></i>
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-
-                <div class="modal-body error-modal-body text-center">
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="container py-5">
-        
-
-        <div class="row">
+    <div class="container py-3">
+        <div class="row mb-5">
             <!-- Form Section -->
-            <div class="col-lg-6">
+            <div class="col-4">
+                <h5>Update Your Resume Here</h5>
                 <div class="card shadow-sm">
                     <div class="card-body">
                         <form id="resumeForm" class="needs-validation" novalidate>
@@ -255,99 +203,71 @@ $is_logged_in = isset($_SESSION['user_id']);
                 </div>
             </div>
 
-            <!-- Preview Section -->
-            <div class="col-lg-6">
-                <div class="card shadow-sm">
-                    <div class="card-body preview-section" id="resumePreview">
-                        <div class="text-center py-5">
-                            <i class="fas fa-file-alt fa-3x text-muted mb-3"></i>
-                            <h5>Resume Preview</h5>
-                            <p class="text-muted">Your resume preview will appear here as you fill out the form.</p>
-                            <!-- <iframe src="./template/modern_template.php" width="100%"  height="100%" frameborder="0"></iframe> -->
+
+            <!-- TEMPLATE SECTION -->
+            <div class="col-8 text-center">
+                <h2 class="mb-4">Choose Your Resume Template</h2>
+                <div class="row justify-content-center g-2">
+                    <!-- Template 1 -->
+                    <div class="col-md-4">
+                        <div class="card template-card h-100" data-template="modern">
+                            <img src="../assets/images/template_1.jpeg" class="card-img-top" alt="Modern Template">
+                            <div class="card-body">
+                                <h5 class="card-title">Modern Template</h5>
+                                <p class="card-text">Clean and professional design with a modern touch.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Template 2 -->
+                    <div class="col-md-4">
+                        <div class="card template-card h-100" data-template="creative">
+                            <img src="../assets/images/template_2.jpeg" class="card-img-top" alt="Creative Template">
+                            <div class="card-body">
+                                <h5 class="card-title">Creative Template</h5>
+                                <p class="card-text">Stand out with this creative and unique design.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Template 3 -->
+                    <div class="col-md-4">
+                        <div class="card template-card h-100" data-template="classic">
+                            <img src="../assets/images/template_3.jpeg" class="card-img-top" alt="Classic Template">
+                            <div class="card-body">
+                                <h5 class="card-title">Classic Template</h5>
+                                <p class="card-text">Traditional and elegant design for formal applications.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Template 4 -->
+                    <div class="col-md-4">
+                        <div class="card template-card h-100" data-template="classic">
+                            <img src="../assets/images/template_3.jpeg" class="card-img-top" alt="Classic Template">
+                            <div class="card-body">
+                                <h5 class="card-title">Classic Template</h5>
+                                <p class="card-text">Traditional and elegant design for formal applications.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <!-- Generate Button -->
-        <div class="row mt-4">
-            <div class="col-12 text-center">
-                <button type="button" class="btn btn-success btn-lg" id="generateResume">
-                    <i class=" fas fa-magic me-2"></i>Generate Resume
-                </button>
             </div>
         </div>
     </div>
 
 
 
-    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+
+
+
+
+
+
+
     <script src="https://code.jquery.com/jquery-3.7.1.js"
         integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-    <script src="./assets/js/script.js"></script>
+    <script src="../assets/js/script.js"></script>
 
-    <!-- <script>
-        // Global variable to store skills and categories data
-        let skillData = {};
-
-        // Fetch the skill data from the JSON file once on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            fetch('skills.json')
-                .then(response => response.json())
-                .then(data => {
-                    skillData = data; // Store the fetched data globally
-                })
-                .catch(error => {
-                    console.error('Error fetching skills data:', error);
-                });
-        });
-
-        // Update the category dropdown based on selected skill
-        function updateCategories(selectElement) {
-            const skill = selectElement.value;
-            const categorySelect = selectElement.closest('.skills-entry').querySelector('.category');
-
-            // Clear previous categories
-            categorySelect.innerHTML = "<option value=''>Select a category</option>";
-
-            if (skill && skillData[skill]) {
-                // Add new categories based on selected skill
-                skillData[skill].forEach(function(category) {
-                    const option = document.createElement("option");
-                    option.value = category.value;
-                    option.text = category.text;
-                    categorySelect.appendChild(option);
-                });
-            }
-        }
-
-        // Collect form data (skills and categories)
-        function collectFormData() {
-            const formData = {
-                skills: []
-            };
-
-            // Loop through each skills-entry div and collect selected values
-            document.querySelectorAll('.skills-entry').forEach(function(entry) {
-                const skill = entry.querySelector('.skills').value;
-                const category = entry.querySelector('.category').value;
-
-                if (skill && category) {
-                    formData.skills.push({
-                        skill: skill,
-                        category: category
-                    });
-                }
-            });
-
-            console.log('Collected Form Data:', formData);
-
-            // Here you can send formData to the server or process it further
-        }
-    </script> -->
 </body>
 
 </html>

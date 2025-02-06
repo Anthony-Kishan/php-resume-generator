@@ -26,154 +26,81 @@ if (!$data) {
     exit;
 }
 
-// $requiredFields = ['template', 'personalInfo', 'education', 'experience', 'skills'];
+validateFormData($data);
 
-// foreach ($requiredFields as $field) {
-//     if (empty($data[$field])) {
-//         echo json_encode([
-//             'success' => false,
-//             'message' => "Field '$field' is empty or missing."
-//         ]);
-//         exit;
-//     }
-// }
-
-// if (isset($data['personalInfo']) && is_array($data['personalInfo'])) {
-//     foreach ($data['personalInfo'] as $key => $value) {
-//         if (empty($value)) {
-//             echo json_encode([
-//                 'success' => false,
-//                 'message' => "Personal information field '$key' is empty."
-//             ]);
-//             exit;
-//         }
-//     }
-// } else {
-//     echo json_encode([
-//         'success' => false,
-//         'message' => "Personal information is incomplete or invalid."
-//     ]);
-//     exit;
-// }
-
-// if (isset($data['education']) && is_array($data['education'])) {
-//     foreach ($data['education'] as $education) {
-//         if (empty($education['degree']) || empty($education['institution']) || empty($education['startDate']) || empty($education['endDate'])) {
-//             echo json_encode([
-//                 'success' => false,
-//                 'message' => "Education field is incomplete or missing a subfield."
-//             ]);
-//             exit;
-//         }
-//     }
-// } else {
-//     echo json_encode([
-//         'success' => false,
-//         'message' => "Education information is incomplete or invalid."
-//     ]);
-//     exit;
-// }
-
-// if (isset($data['experience']) && is_array($data['experience'])) {
-//     foreach ($data['experience'] as $experience) {
-//         if (empty($experience['jobTitle']) || empty($experience['company']) || empty($experience['responsibilities']) || empty($experience['startDate']) || empty($experience['endDate'])) {
-//             echo json_encode([
-//                 'success' => false,
-//                 'message' => "Experience field is incomplete or missing a subfield."
-//             ]);
-//             exit;
-//         }
-//     }
-// } else {
-//     echo json_encode([
-//         'success' => false,
-//         'message' => "Experience information is incomplete or invalid."
-//     ]);
-//     exit;
-// }
-
-// if (isset($data['skills']) && is_array($data['skills'])) {
-//     foreach ($data['skills'] as $skill) {
-//         if (empty($skill['skills']) || empty($skill['categories'])) {
-//             echo json_encode([
-//                 'success' => false,
-//                 'message' => "Skill field is incomplete or missing a subfield."
-//             ]);
-//             exit;
-//         }
-//     }
-// } else {
-//     echo json_encode([
-//         'success' => false,
-//         'message' => "Skills information is incomplete or invalid."
-//     ]);
-//     exit;
-// }
-
-
-
-
-
-
-
-function validateFields($data, $requiredFields)
+function validateFormData($data)
 {
-    foreach ($requiredFields as $field => $subfields) {
-        if (empty($data[$field])) {
+    // Validate personal info
+    $personalInfoFields = ['fullName', 'email', 'phone', 'location', 'summary'];
+    foreach ($personalInfoFields as $field) {
+        if (empty($data['personalInfo'][$field])) {
             echo json_encode([
                 'success' => false,
-                'message' => "Field '$field' is empty or missing."
+                'message' => "Personal Info field '$field' is empty."
             ]);
             exit;
         }
+    }
 
-        if (is_array($data[$field])) {
-            foreach ($data[$field] as $item) {
-                if (is_array($subfields)) {
-                    foreach ($subfields as $subfield) {
-                        if (empty($item[$subfield])) {
-                            echo json_encode([
-                                'success' => false,
-                                'message' => ucfirst($field) . " field subfield '$subfield' is empty."
-                            ]);
-                            exit;
-                        }
-                    }
+    // Validate education
+    if (isset($data['education']) && is_array($data['education'])) {
+        foreach ($data['education'] as $education) {
+            $educationFields = ['degree', 'institution', 'startDate', 'endDate'];
+            foreach ($educationFields as $field) {
+                if (empty($education[$field])) {
+                    echo json_encode([
+                        'success' => false,
+                        'message' => "Education field '$field' is empty."
+                    ]);
+                    exit;
                 }
             }
         }
     }
-    return true;
+
+    // Validate experience
+    if (isset($data['experience']) && is_array($data['experience'])) {
+        foreach ($data['experience'] as $experience) {
+            $experienceFields = ['jobTitle', 'company', 'startDate', 'endDate', 'responsibilities'];
+            foreach ($experienceFields as $field) {
+                if (empty($experience[$field])) {
+                    echo json_encode([
+                        'success' => false,
+                        'message' => "Experience field '$field' is empty."
+                    ]);
+                    exit;
+                }
+            }
+        }
+    }
+
+    // Validate skills
+    if (isset($data['skills']) && is_array($data['skills'])) {
+        foreach ($data['skills'] as $skill) {
+            $skillFields = ['skills', 'categories'];
+            foreach ($skillFields as $field) {
+                if (empty($skill[$field])) {
+                    echo json_encode([
+                        'success' => false,
+                        'message' => "Skills field '$field' is empty."
+                    ]);
+                    exit;
+                }
+            }
+        }
+    }
+
+    echo json_encode([
+        'success' => true
+    ]);
 }
 
-$requiredFields = [
-    'personal_info' => ['fullName', 'email', 'phone', 'location', 'summary'],
-    'education' => ['degree', 'institution', 'startDate', 'endDate'],
-    'experience' => ['jobTitle', 'company', 'responsibilities', 'startDate', 'endDate'],
-    'skills' => ['skills', 'categories']
-];
+$stmt = $conn->prepare("INSERT INTO resumes (user_id, personal_info, education, experience, skills) VALUES (?, ?, ?, ?, ?)");
 
-validateFields($data, $requiredFields);
+$personalInfo = json_encode(array_filter($data['personalInfo'], fn($value) => !empty($value)));
+$education = json_encode(array_filter($data['education'], fn($value) => !empty($value)));
+$experience = json_encode(array_filter($data['experience'], fn($value) => !empty($value)));
+$skills = json_encode(array_filter($data['skills'], fn($value) => !empty($value)));
 
-
-$stmt = $conn->prepare("INSERT INTO resumes (user_id, template_type, personal_info, education, experience, skills) VALUES (?, ?, ?, ?, ?, ?)");
-
-$templateType = $data['template'];
-
-$personalInfo = json_encode(array_filter($data['personalInfo'], fn($value) => !empty($value)));  // Remove empty fields
-$education = json_encode(array_filter($data['education'], fn($value) => !empty($value)));  // Remove empty fields
-$experience = json_encode(array_filter($data['experience'], fn($value) => !empty($value)));  // Remove empty fields
-$skills = json_encode(array_filter($data['skills'], fn($value) => !empty($value)));  // Remove empty fields
-
-$stmt->bind_param("isssss", $userId, $templateType, $personalInfo, $education, $experience, $skills);
+$stmt->bind_param("issss", $userId, $personalInfo, $education, $experience, $skills);
 $stmt->execute();
-
-// Success response
-$html = '
-
-';
-
-echo json_encode([
-    'success' => true,
-    'html' => $html
-]);
