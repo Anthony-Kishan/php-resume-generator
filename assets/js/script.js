@@ -34,6 +34,33 @@ $(document).ready(function () {
         $('.next-section').prop('disabled', currentStep === totalSteps);
     }
 
+
+
+    $(document).ready(function () {
+        $("input, textarea").on("input", function () {
+            let fieldId = $(this).attr("id");
+            let previewId = "#preview" + fieldId.charAt(0).toUpperCase() + fieldId.slice(1);
+            $(previewId).text($(this).val() || "Not provided");
+
+            // Send data to the server via AJAX
+            $.ajax({
+                url: "update_preview.php",
+                type: "POST",
+                data: { [fieldId]: $(this).val() },
+                success: function (response) {
+                    console.log("Preview updated:", response);
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error:", error);
+                }
+            });
+        });
+    });
+
+
+
+
+    
     // Add education entry
     $('#addEducation').click(function () {
         const educationEntry = $('.education-entry').first().clone();

@@ -12,43 +12,7 @@ $is_logged_in = isset($_SESSION['user_id']);
     <title>Resume Generator</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            /* max-width: 800px; */
-            margin: 0 auto;
-            /* padding: 20px; */
-        }
-
-        .template-card {
-            cursor: pointer;
-            transition: transform 0.3s;
-        }
-
-        .template-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .template-card.selected {
-            border: 3px solid #0d6efd;
-        }
-
-        .form-section {
-            display: none;
-        }
-
-        .form-section.active {
-            display: block;
-        }
-
-        .preview-section {
-            max-height: 800px;
-            overflow-y: auto;
-        }
-    </style>
+    <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 
 <body class="bg-light">
@@ -125,15 +89,15 @@ $is_logged_in = isset($_SESSION['user_id']);
                                 <div class="row g-3">
                                     <div class="col-md-6">
                                         <label class="form-label">Full Name</label>
-                                        <input type="text" class="form-control" name="fullName" required>
+                                        <input type="text" class="form-control" name="fullName" id="fullName" required>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label">Email</label>
-                                        <input type="email" class="form-control" name="email" required>
+                                        <input type="email" class="form-control" name="email" id="email" required>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label">Phone</label>
-                                        <input type="tel" class="form-control" name="phone" required>
+                                        <input type="tel" class="form-control" name="phone" id="phone" required>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label">Location</label>
@@ -141,7 +105,7 @@ $is_logged_in = isset($_SESSION['user_id']);
                                     </div>
                                     <div class="col-12">
                                         <label class="form-label">Professional Summary</label>
-                                        <textarea class="form-control" name="summary" rows="4" required></textarea>
+                                        <textarea class="form-control" name="summary" id="summary" rows="4" required></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -184,7 +148,7 @@ $is_logged_in = isset($_SESSION['user_id']);
                                         <div class="row g-3">
                                             <div class="col-md-6">
                                                 <label class="form-label">Job Title</label>
-                                                <input type="text" class="form-control" name="jobTitle[]" required>
+                                                <input type="text" class="form-control" name="jobTitle[]" id="jobTitle" required>
                                             </div>
                                             <div class="col-md-6">
                                                 <label class="form-label">Company</label>
@@ -220,14 +184,14 @@ $is_logged_in = isset($_SESSION['user_id']);
                                             <label class="form-label">Skills (comma-separated)</label>
                                             <!-- <textarea class="form-control" name="skills[]" rows="3" required
                                                 placeholder="e.g., Project Management, Team Leadership, Strategic Planning"></textarea> -->
-                                            <input class="form-control" name="skills[]" rows="3" required
+                                            <input class="form-control" name="skills[]" id="skills" rows="3" required
                                                 placeholder="e.g., Project Management, Team Leadership, Strategic Planning">
 
                                             <div class="ms-4 mb-3">
                                                 <label class="form-label">Categories</label>
                                                 <!-- <textarea class="form-control" name="categories[]" rows="3" required
                                                     placeholder="e.g., Project Management, Team Leadership, Strategic Planning"></textarea> -->
-                                                <input class="form-control" name="categories[]" rows="3" required
+                                                <input class="form-control" name="categories[]" id="categories" rows="3" required
                                                     placeholder="e.g., Project Management, Team Leadership, Strategic Planning">
                                             </div>
                                         </div>
@@ -257,11 +221,103 @@ $is_logged_in = isset($_SESSION['user_id']);
             <div class="col-lg-6">
                 <div class="card shadow-sm">
                     <div class="card-body preview-section" id="resumePreview">
-                        <div class="text-center py-5">
+                        <!-- <div class="text-center py-5">
                             <i class="fas fa-file-alt fa-3x text-muted mb-3"></i>
                             <h5>Resume Preview</h5>
                             <p class="text-muted">Your resume preview will appear here as you fill out the form.</p>
-                            <!-- <iframe src="./template/modern_template.php" width="100%"  height="100%" frameborder="0"></iframe> -->
+                        </div> -->
+
+
+                        <h5>Resume Preview</h5>
+                        <div class="py-5">
+                            <header style="text-align: center; margin-bottom: 30px;">
+                                <h1 style="margin: 0; font-size: 32px; font-weight: normal;">
+                                    <span style="font-weight: normal;" id="previewFullName">Your Name</span>
+                                    <!-- <span style="font-weight: bold;">' . htmlspecialchars($lastName) . '</span> -->
+                                </h1>
+                                <p style="margin: 10px 0; color: #666;">
+                                    DOB: 07 Feb 2003
+                                </p>
+                                <p style="margin: 5px 0;">
+                                    <a href="" id="previewEmail" style="color: #0066cc; text-decoration: none;">Email</a> |
+                                    <span id="previewPhone">Phone</span> |
+                                    <a href="#" style="color: #0066cc; text-decoration: none;">Portfolio</a> |
+                                    <a href="#" style="color: #0066cc; text-decoration: none;">LinkedIn</a> |
+                                    <a href="#" style="color: #0066cc; text-decoration: none;">GitHub</a>
+                                </p>
+                            </header>
+
+                            <!-- Summary Section -->
+                            <section style="margin-bottom: 30px;">
+                                <h2 style="font-size: 14px; text-transform: uppercase; color: #666; margin-bottom: 10px;">Summary</h2>
+                                <p style="margin: 0; text-align: justify;" id="previewSummary">Write your summary</p>
+                            </section>
+
+                            <div style="display: flex; gap: 40px;">
+                                <div style="flex: 1;">
+                                    <!-- Skills Section -->
+                                    <section style="margin-bottom: 30px;">
+                                        <h2 style="font-size: 14px; text-transform: uppercase; color: #666; margin-bottom: 10px;">Skills</h2>
+                                        <div style="margin-bottom: 20px;">
+                                            <h3 style="font-size: 13px; margin: 0 0 5px 0;" id="previewSkills"></h3>
+                                            <p style="margin: 0; color: #666; font-size: 12px;">Categories:</p>
+                                            <ul style="margin: 5px 0; padding-left: 20px; font-size: 12px;">
+                                                <li id="previewCategories"></li>
+                                            </ul>
+                                            <p style="margin: 5px 0; color: #666; font-size: 12px;">Tools:</p>
+                                            <p style="margin: 0; font-size: 12px;">• HTML & CSS • Bootstrap • JavaScript</p>
+                                        </div>
+
+
+                                        <div style="margin-bottom: 20px;">
+                                            <h3 style="font-size: 13px; margin: 0 0 5px 0;">TECHNOLOGIES</h3>
+                                            <ul style="margin: 5px 0; padding-left: 20px; font-size: 12px;">
+                                                <li>Git • VS Code • Windows OS • JSON</li>
+                                                <li>Docker</li>
+                                            </ul>
+                                        </div>
+
+                                        <div style="margin-bottom: 20px;">
+                                            <h3 style="font-size: 13px; margin: 0 0 5px 0;">OTHERS</h3>
+                                            <ul style="margin: 5px 0; padding-left: 20px; font-size: 12px;">
+                                                <li>Graphics Design • Video Editing</li>
+                                                <li>3D Design • Animation</li>
+                                                <li>Electronics Device Making</li>
+                                            </ul>
+                                        </div>
+                                    </section>
+                                </div>
+
+
+                                <div style="flex: 1;">
+                                    <!-- Experience Section -->
+                                    <section style="margin-bottom: 30px;">
+                                        <h2 style="font-size: 14px; text-transform: uppercase; color: #666; margin-bottom: 10px;">Experience
+                                        </h2>
+                                        <div style="margin-bottom: 20px;">
+                                            <h3 style="font-size: 13px; margin: 0 0 5px 0;" id="previewjobTitle">PYTHON DJANGO INTERN | June 2024 – Aug 2024 |</h3>
+                                            <p style="margin: 0 0 5px 0; font-size: 12px;">European IT Institute, Mirpur 10 DHAKA, BANGLADESH
+                                            </p>
+                                            <ul style="margin: 5px 0; padding-left: 20px; font-size: 12px;">
+                                                <li>Developed web applications using Python Django framework, focusing on building and managing
+                                                    backend functionality.</li>
+                                                <li>Implemented dynamic authentication and authorization systems ensuring secure user access and
+                                                    data protection.</li>
+                                                <li>Applied Object-Oriented Programming (OOP) principles to design scalable and maintainable
+                                                    code.</li>
+                                                <li>Utilized Python fundamentals to write efficient and clean code, ensuring robust application
+                                                    performance.</li>
+                                            </ul>
+                                        </div>
+                                    </section>
+
+                                    <!-- Education Section -->
+                                    <section>
+                                        <h2 style="font-size: 14px; text-transform: uppercase; color: #666; margin-bottom: 10px;">Education</h2>
+                                        ' . $eduList . '
+                                    </section>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -279,73 +335,11 @@ $is_logged_in = isset($_SESSION['user_id']);
     </div>
 
 
-
-    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
     <script src="https://code.jquery.com/jquery-3.7.1.js"
         integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <script src="./assets/js/script.js"></script>
-
-    <!-- <script>
-        // Global variable to store skills and categories data
-        let skillData = {};
-
-        // Fetch the skill data from the JSON file once on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            fetch('skills.json')
-                .then(response => response.json())
-                .then(data => {
-                    skillData = data; // Store the fetched data globally
-                })
-                .catch(error => {
-                    console.error('Error fetching skills data:', error);
-                });
-        });
-
-        // Update the category dropdown based on selected skill
-        function updateCategories(selectElement) {
-            const skill = selectElement.value;
-            const categorySelect = selectElement.closest('.skills-entry').querySelector('.category');
-
-            // Clear previous categories
-            categorySelect.innerHTML = "<option value=''>Select a category</option>";
-
-            if (skill && skillData[skill]) {
-                // Add new categories based on selected skill
-                skillData[skill].forEach(function(category) {
-                    const option = document.createElement("option");
-                    option.value = category.value;
-                    option.text = category.text;
-                    categorySelect.appendChild(option);
-                });
-            }
-        }
-
-        // Collect form data (skills and categories)
-        function collectFormData() {
-            const formData = {
-                skills: []
-            };
-
-            // Loop through each skills-entry div and collect selected values
-            document.querySelectorAll('.skills-entry').forEach(function(entry) {
-                const skill = entry.querySelector('.skills').value;
-                const category = entry.querySelector('.category').value;
-
-                if (skill && category) {
-                    formData.skills.push({
-                        skill: skill,
-                        category: category
-                    });
-                }
-            });
-
-            console.log('Collected Form Data:', formData);
-
-            // Here you can send formData to the server or process it further
-        }
-    </script> -->
 </body>
 
 </html>
