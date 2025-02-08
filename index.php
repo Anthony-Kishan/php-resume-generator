@@ -118,19 +118,19 @@ $is_logged_in = isset($_SESSION['user_id']);
                                         <div class="row g-3">
                                             <div class="col-md-6">
                                                 <label class="form-label">Degree</label>
-                                                <input type="text" class="form-control" name="degree[]" required>
+                                                <input type="text" class="form-control" name="degree" id="degree" required>
                                             </div>
                                             <div class="col-md-6">
                                                 <label class="form-label">Institution</label>
-                                                <input type="text" class="form-control" name="institution[]" required>
+                                                <input type="text" class="form-control" name="institution" id="institution" required>
                                             </div>
                                             <div class="col-md-6">
                                                 <label class="form-label">Start Date</label>
-                                                <input type="month" class="form-control" name="eduStartDate[]" required>
+                                                <input type="month" class="form-control" name="eduStartDate" id="eduStartDate" required>
                                             </div>
                                             <div class="col-md-6">
                                                 <label class="form-label">End Date</label>
-                                                <input type="month" class="form-control" name="eduEndDate[]" required>
+                                                <input type="month" class="form-control" name="eduEndDate" id="eduEndDate" required>
                                             </div>
                                         </div>
                                     </div>
@@ -148,23 +148,23 @@ $is_logged_in = isset($_SESSION['user_id']);
                                         <div class="row g-3">
                                             <div class="col-md-6">
                                                 <label class="form-label">Job Title</label>
-                                                <input type="text" class="form-control" name="jobTitle[]" id="jobTitle" required>
+                                                <input type="text" class="form-control" name="jobTitle" id="jobTitle" required>
                                             </div>
                                             <div class="col-md-6">
                                                 <label class="form-label">Company</label>
-                                                <input type="text" class="form-control" name="company[]" required>
+                                                <input type="text" class="form-control" name="company" id="company" required>
                                             </div>
                                             <div class="col-md-6">
                                                 <label class="form-label">Start Date</label>
-                                                <input type="month" class="form-control" name="expStartDate[]" required>
+                                                <input type="month" class="form-control" name="expStartDate" id="expStartDate" required>
                                             </div>
                                             <div class="col-md-6">
                                                 <label class="form-label">End Date</label>
-                                                <input type="month" class="form-control" name="expEndDate[]" required>
+                                                <input type="month" class="form-control" name="expEndDate" id="expEndDate" required>
                                             </div>
                                             <div class="col-12">
                                                 <label class="form-label">Responsibilities</label>
-                                                <textarea class="form-control" name="responsibilities[]" rows="3"
+                                                <textarea class="form-control" name="responsibilities" id="responsibilities" rows="3"
                                                     required></textarea>
                                             </div>
                                         </div>
@@ -184,14 +184,14 @@ $is_logged_in = isset($_SESSION['user_id']);
                                             <label class="form-label">Skills (comma-separated)</label>
                                             <!-- <textarea class="form-control" name="skills[]" rows="3" required
                                                 placeholder="e.g., Project Management, Team Leadership, Strategic Planning"></textarea> -->
-                                            <input class="form-control" name="skills[]" id="skills" rows="3" required
+                                            <input class="form-control" name="skills" id="skills" rows="3" required
                                                 placeholder="e.g., Project Management, Team Leadership, Strategic Planning">
 
                                             <div class="ms-4 mb-3">
                                                 <label class="form-label">Categories</label>
                                                 <!-- <textarea class="form-control" name="categories[]" rows="3" required
                                                     placeholder="e.g., Project Management, Team Leadership, Strategic Planning"></textarea> -->
-                                                <input class="form-control" name="categories[]" id="categories" rows="3" required
+                                                <input class="form-control" name="categories" id="categories" rows="3" required
                                                     placeholder="e.g., Project Management, Team Leadership, Strategic Planning">
                                             </div>
                                         </div>
@@ -232,15 +232,15 @@ $is_logged_in = isset($_SESSION['user_id']);
                         <div class="py-5">
                             <header style="text-align: center; margin-bottom: 30px;">
                                 <h1 style="margin: 0; font-size: 32px; font-weight: normal;">
-                                    <span style="font-weight: normal;" id="previewFullName">Your Name</span>
+                                    <span style="font-weight: normal;" data-preview="fullName">Your Name</span>
                                     <!-- <span style="font-weight: bold;">' . htmlspecialchars($lastName) . '</span> -->
                                 </h1>
                                 <p style="margin: 10px 0; color: #666;">
                                     DOB: 07 Feb 2003
                                 </p>
                                 <p style="margin: 5px 0;">
-                                    <a href="" id="previewEmail" style="color: #0066cc; text-decoration: none;">Email</a> |
-                                    <span id="previewPhone">Phone</span> |
+                                    <a href="" data-preview="email" style="color: #0066cc; text-decoration: none;">Email</a> |
+                                    <span data-preview="phone">Phone</span> |
                                     <a href="#" style="color: #0066cc; text-decoration: none;">Portfolio</a> |
                                     <a href="#" style="color: #0066cc; text-decoration: none;">LinkedIn</a> |
                                     <a href="#" style="color: #0066cc; text-decoration: none;">GitHub</a>
@@ -250,7 +250,7 @@ $is_logged_in = isset($_SESSION['user_id']);
                             <!-- Summary Section -->
                             <section style="margin-bottom: 30px;">
                                 <h2 style="font-size: 14px; text-transform: uppercase; color: #666; margin-bottom: 10px;">Summary</h2>
-                                <p style="margin: 0; text-align: justify;" id="previewSummary">Write your summary</p>
+                                <p style="margin: 0; text-align: justify;" data-preview="summary">Write your summary</p>
                             </section>
 
                             <div style="display: flex; gap: 40px;">
@@ -258,18 +258,22 @@ $is_logged_in = isset($_SESSION['user_id']);
                                     <!-- Skills Section -->
                                     <section style="margin-bottom: 30px;">
                                         <h2 style="font-size: 14px; text-transform: uppercase; color: #666; margin-bottom: 10px;">Skills</h2>
-                                        <div style="margin-bottom: 20px;">
-                                            <h3 style="font-size: 13px; margin: 0 0 5px 0;" id="previewSkills"></h3>
-                                            <p style="margin: 0; color: #666; font-size: 12px;">Categories:</p>
-                                            <ul style="margin: 5px 0; padding-left: 20px; font-size: 12px;">
-                                                <li id="previewCategories"></li>
-                                            </ul>
-                                            <p style="margin: 5px 0; color: #666; font-size: 12px;">Tools:</p>
-                                            <p style="margin: 0; font-size: 12px;">• HTML & CSS • Bootstrap • JavaScript</p>
+
+                                        <div id="skillsPreviewContainer">
+                                            <div class="skills-preview" style="margin-bottom: 20px;">
+                                                <h3 style="font-size: 13px; margin: 0 0 5px 0;" data-preview="skills"></h3>
+                                                <p style="margin: 0; color: #666; font-size: 12px;">Categories:</p>
+                                                <ul style="margin: 5px 0; padding-left: 20px; font-size: 12px;">
+                                                    <li data-preview="categories"></li>
+                                                </ul>
+                                                <!-- <p style="margin: 5px 0; color: #666; font-size: 12px;">Tools:</p>
+                                                <p style="margin: 0; font-size: 12px;">• HTML & CSS • Bootstrap • JavaScript</p> -->
+                                            </div>
                                         </div>
 
 
-                                        <div style="margin-bottom: 20px;">
+
+                                        <!-- <div style="margin-bottom: 20px;">
                                             <h3 style="font-size: 13px; margin: 0 0 5px 0;">TECHNOLOGIES</h3>
                                             <ul style="margin: 5px 0; padding-left: 20px; font-size: 12px;">
                                                 <li>Git • VS Code • Windows OS • JSON</li>
@@ -284,37 +288,36 @@ $is_logged_in = isset($_SESSION['user_id']);
                                                 <li>3D Design • Animation</li>
                                                 <li>Electronics Device Making</li>
                                             </ul>
-                                        </div>
+                                        </div> -->
                                     </section>
                                 </div>
-
 
                                 <div style="flex: 1;">
                                     <!-- Experience Section -->
                                     <section style="margin-bottom: 30px;">
                                         <h2 style="font-size: 14px; text-transform: uppercase; color: #666; margin-bottom: 10px;">Experience
                                         </h2>
-                                        <div style="margin-bottom: 20px;">
-                                            <h3 style="font-size: 13px; margin: 0 0 5px 0;" id="previewjobTitle">PYTHON DJANGO INTERN | June 2024 – Aug 2024 |</h3>
-                                            <p style="margin: 0 0 5px 0; font-size: 12px;">European IT Institute, Mirpur 10 DHAKA, BANGLADESH
-                                            </p>
-                                            <ul style="margin: 5px 0; padding-left: 20px; font-size: 12px;">
-                                                <li>Developed web applications using Python Django framework, focusing on building and managing
-                                                    backend functionality.</li>
-                                                <li>Implemented dynamic authentication and authorization systems ensuring secure user access and
-                                                    data protection.</li>
-                                                <li>Applied Object-Oriented Programming (OOP) principles to design scalable and maintainable
-                                                    code.</li>
-                                                <li>Utilized Python fundamentals to write efficient and clean code, ensuring robust application
-                                                    performance.</li>
-                                            </ul>
+                                        <div id="experiencePreviewContainer">
+                                            <div class="experience-preview" style="margin-bottom: 20px;">
+                                                <span style="font-size: 13px; margin: 0 0 5px 0;" data-preview="jobTitle">Your Job Title</span> | <span style="font-size: 13px; margin: 0 0 5px 0;" data-preview="expStartDate">Start Date</span> – <span style="font-size: 13px; margin: 0 0 5px 0;" data-preview="expEndDate">End Date</span> |
+                                                <p style="margin: 0 0 5px 0; font-size: 12px;" data-preview="company">Company</p>
+                                                <ul style="margin: 5px 0; padding-left: 20px; font-size: 12px;" data-preview="responsibilities">
+                                                    Your Responsibilities
+                                                </ul>
+                                            </div>
                                         </div>
                                     </section>
 
                                     <!-- Education Section -->
                                     <section>
                                         <h2 style="font-size: 14px; text-transform: uppercase; color: #666; margin-bottom: 10px;">Education</h2>
-                                        ' . $eduList . '
+                                        <div id="educationPreviewContainer">
+                                            <div class="education-preview" style="margin-bottom: 20px;">
+                                                <h3 style="font-size: 13px; margin: 0 0 5px 0;" data-preview="institution">Your Institution</h3>
+                                                <p style="margin: 0; font-size: 12px;" data-preview="degree">Degree</p>
+                                                <span style="margin: 0; font-size: 12px;" data-preview="eduStartDate">Start Date</span> - <span style="margin: 0; font-size: 12px;" data-preview="eduEndDate">End Date</span>
+                                            </div>
+                                        </div>
                                     </section>
                                 </div>
                             </div>

@@ -35,18 +35,18 @@ $(document).ready(function () {
     }
 
 
-
+    // IMPLEMENTING LIVE PREVIEW SYSTEM
     $(document).ready(function () {
-        $("input, textarea").on("input", function () {
-            let fieldId = $(this).attr("id");
-            let previewId = "#preview" + fieldId.charAt(0).toUpperCase() + fieldId.slice(1);
-            $(previewId).text($(this).val() || "Not provided");
+        $(document).on("input", "input, textarea", function () {
+            let fieldName = $(this).attr("name");
+            let value = $(this).val();
 
-            // Send data to the server via AJAX
+            $('[data-preview="' + fieldName + '"]').text(value || fieldName);
+
             $.ajax({
                 url: "update_preview.php",
                 type: "POST",
-                data: { [fieldId]: $(this).val() },
+                data: { [fieldName]: value },
                 success: function (response) {
                     console.log("Preview updated:", response);
                 },
@@ -55,32 +55,71 @@ $(document).ready(function () {
                 }
             });
         });
+
+
+        // CLONE MULTIPLE ENTRIES
+        function cloneEntry(sectionClass, containerId, previewClass, previewContainerId, fields) {
+            let count = $("." + sectionClass).length + 1;
+
+            const newEntry = $("." + sectionClass).last().clone(true, true);
+            newEntry.find("input, textarea").val("");
+            newEntry.find("input, textarea").each(function () {
+                let name = $(this).attr("name");
+                if (name) {
+                    $(this).attr("name", name + count);
+                }
+            });
+
+            $("#" + containerId).append(newEntry);
+
+            const newPreview = $("." + previewClass).last().clone(true, true);
+            fields.forEach(field => {
+                newPreview.find(`[data-preview='${field}']`).attr("data-preview", field + count).text("Not provided");
+            });
+
+            $("#" + previewContainerId).append(newPreview);
+        }
+
+
+        $("#addSkills").click(function () {
+            cloneEntry("skills-entry", "skillsContainer", "skills-preview", "skillsPreviewContainer", ["skills", "categories"]);
+        });
+
+        $("#addEducation").click(function () {
+            cloneEntry("education-entry", "educationContainer", "education-preview", "educationPreviewContainer", ["degree", "institution", "eduStartDate", "eduEndDate"]);
+        });
+
+        $("#addExperience").click(function () {
+            cloneEntry("experience-entry", "experienceContainer", "experience-preview", "experiencePreviewContainer", ["jobTitle", "company", "responsibilities", "expStartDate", "expEndDate"]);
+        });
     });
 
 
 
 
-    
+
+
+
     // Add education entry
-    $('#addEducation').click(function () {
-        const educationEntry = $('.education-entry').first().clone();
-        educationEntry.find('input').val('');
-        $('#educationContainer').append(educationEntry);
-    });
+    // $('#addEducation').click(function () {
+    //     const educationEntry = $('.education-entry').first().clone();
+    //     educationEntry.find('input').val('');
+    //     $('#educationContainer').append(educationEntry);
+    // });
 
-    // Add experience entry
-    $('#addExperience').click(function () {
-        const experienceEntry = $('.experience-entry').first().clone();
-        experienceEntry.find('input, textarea').val('');
-        $('#experienceContainer').append(experienceEntry);
-    });
+    // // Add experience entry
+    // $('#addExperience').click(function () {
+    //     const experienceEntry = $('.experience-entry').first().clone();
+    //     experienceEntry.find('input, textarea').val('');
+    //     $('#experienceContainer').append(experienceEntry);
+    // });
 
-    // Add skills entry
-    $('#addSkills').click(function () {
-        const skillsEntry = $('.skills-entry').first().clone();
-        skillsEntry.find('input, textarea').val('');
-        $('#skillsContainer').append(skillsEntry);
-    });
+    // // Add skills entry
+    // $('#addSkills').click(function () {
+    //     const skillsEntry = $('.skills-entry').first().clone();
+    //     skillsEntry.find('input, textarea').val('');
+    //     $('#skillsContainer').append(skillsEntry);
+    // });
 
     // Generate Resume
     $('#generateResume').click(function () {
@@ -109,29 +148,29 @@ $(document).ready(function () {
         // Collect education entries
         $('.education-entry').each(function () {
             formData.education.push({
-                degree: $(this).find('input[name="degree[]"]').val(),
-                institution: $(this).find('input[name="institution[]"]').val(),
-                startDate: $(this).find('input[name="eduStartDate[]"]').val(),
-                endDate: $(this).find('input[name="eduEndDate[]"]').val()
+                degree: $(this).find('input[name="degree"]').val(),
+                institution: $(this).find('input[name="institution"]').val(),
+                startDate: $(this).find('input[name="eduStartDate"]').val(),
+                endDate: $(this).find('input[name="eduEndDate"]').val()
             });
         });
 
         // Collect experience entries
         $('.experience-entry').each(function () {
             formData.experience.push({
-                jobTitle: $(this).find('input[name="jobTitle[]"]').val(),
-                company: $(this).find('input[name="company[]"]').val(),
-                startDate: $(this).find('input[name="expStartDate[]"]').val(),
-                endDate: $(this).find('input[name="expEndDate[]"]').val(),
-                responsibilities: $(this).find('textarea[name="responsibilities[]"]').val()
+                jobTitle: $(this).find('input[name="jobTitle"]').val(),
+                company: $(this).find('input[name="company"]').val(),
+                startDate: $(this).find('input[name="expStartDate"]').val(),
+                endDate: $(this).find('input[name="expEndDate"]').val(),
+                responsibilities: $(this).find('textarea[name="responsibilities"]').val()
             });
         });
 
         // Collect skills entries
         $('.skills-entry').each(function () {
             formData.skills.push({
-                skills: $(this).find('input[name="skills[]"]').val(),
-                categories: $(this).find('input[name="categories[]"]').val()
+                skills: $(this).find('input[name="skills"]').val(),
+                categories: $(this).find('input[name="categories"]').val()
             });
         });
 
