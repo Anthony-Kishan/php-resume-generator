@@ -34,146 +34,53 @@ $(document).ready(function () {
         $('.next-section').prop('disabled', currentStep === totalSteps);
     }
 
-
-    // IMPLEMENTING LIVE PREVIEW SYSTEM
-    $(document).ready(function () {
-        $(document).on("input", "input, textarea", function () {
-            let fieldName = $(this).attr("name");
-            let value = $(this).val();
-
-            $('[data-preview="' + fieldName + '"]').text(value || fieldName);
-
-            $.ajax({
-                url: "update_preview.php",
-                type: "POST",
-                data: { [fieldName]: value },
-                success: function (response) {
-                    console.log("Preview updated:", response);
-                },
-                error: function (xhr, status, error) {
-                    console.error("Error:", error);
-                }
-            });
-        });
-
-
-        // CLONE MULTIPLE ENTRIES
-        function cloneEntry(sectionClass, containerId, previewClass, previewContainerId, fields) {
-            let count = $("." + sectionClass).length + 1;
-
-            const newEntry = $("." + sectionClass).last().clone(true, true);
-            newEntry.find("input, textarea").val("");
-            newEntry.find("input, textarea").each(function () {
-                let name = $(this).attr("name");
-                if (name) {
-                    $(this).attr("name", name + count);
-                }
-            });
-
-            $("#" + containerId).append(newEntry);
-
-            const newPreview = $("." + previewClass).last().clone(true, true);
-            fields.forEach(field => {
-                newPreview.find(`[data-preview='${field}']`).attr("data-preview", field + count).text("Not provided");
-            });
-
-            $("#" + previewContainerId).append(newPreview);
-        }
-
-
-        $("#addSkills").click(function () {
-            cloneEntry("skills-entry", "skillsContainer", "skills-preview", "skillsPreviewContainer", ["skills", "categories"]);
-        });
-
-        $("#addEducation").click(function () {
-            cloneEntry("education-entry", "educationContainer", "education-preview", "educationPreviewContainer", ["degree", "institution", "eduStartDate", "eduEndDate"]);
-        });
-
-        $("#addExperience").click(function () {
-            cloneEntry("experience-entry", "experienceContainer", "experience-preview", "experiencePreviewContainer", ["jobTitle", "company", "responsibilities", "expStartDate", "expEndDate"]);
-        });
+    // LIVE PREVIEW SYSTEM
+    $(document).on("input", "input, textarea", function () {
+        let fieldName = $(this).attr("name");
+        let value = $(this).val();
+        $('[data-preview="' + fieldName + '"]').text(value || fieldName);
     });
 
-
-
-
-
-
-
-    // Add education entry
-    // $('#addEducation').click(function () {
-    //     const educationEntry = $('.education-entry').first().clone();
-    //     educationEntry.find('input').val('');
-    //     $('#educationContainer').append(educationEntry);
-    // });
-
-    // // Add experience entry
-    // $('#addExperience').click(function () {
-    //     const experienceEntry = $('.experience-entry').first().clone();
-    //     experienceEntry.find('input, textarea').val('');
-    //     $('#experienceContainer').append(experienceEntry);
-    // });
-
-    // // Add skills entry
-    // $('#addSkills').click(function () {
-    //     const skillsEntry = $('.skills-entry').first().clone();
-    //     skillsEntry.find('input, textarea').val('');
-    //     $('#skillsContainer').append(skillsEntry);
-    // });
-
-    // Generate Resume
+    // GENERATE RESUME AJAX REQUEST
     $('#generateResume').click(function () {
-        $generateResumeValue = $('#generateResume').val();
+        // Collect form data dynamically
+        // let formData = {};
+        // $("input, textarea").each(function () {
+        //     let name = $(this).attr("name");
+        //     let value = $(this).val();
+        //     if (name) {
+        //         formData[name] = value;
+        //     }
+        // });
 
-        // const selectedTemplate = $('.template-card.selected').data('template');
-        // if (!selectedTemplate) {
-        //     alert('Please select a template first');
-        //     return;
-        // }
-
-        const formData = {
-            // template: selectedTemplate,
+        let formData = {
             personalInfo: {
                 fullName: $('input[name="fullName"]').val(),
                 email: $('input[name="email"]').val(),
                 phone: $('input[name="phone"]').val(),
                 location: $('input[name="location"]').val(),
-                summary: $('textarea[name="summary"]').val()
+                summary: $('textarea[name="summary"]').val(),
             },
-            education: [],
-            experience: [],
-            skills: []
-        };
+            education: [{
+                degree: $('input[name="degree"]').val(),
+                institution: $('input[name="institution"]').val(),
+                startDate: $('input[name="eduStartDate"]').val(),
+                endDate: $('input[name="eduEndDate"]').val(),
+            }],
+            experience: [{
+                jobTitle: $('input[name="jobTitle"]').val(),
+                company: $('input[name="company"]').val(),
+                startDate: $('input[name="expStartDate"]').val(),
+                endDate: $('input[name="expEndDate"]').val(),
+                responsibilities: $('textarea[name="responsibilities"]').val(),
+            }],
+            skills: [{
+                skills: $('input[name="skills"]').val(),
+                categories: $('input[name="categories"]').val(),
+            }]
+        }
 
-        // Collect education entries
-        $('.education-entry').each(function () {
-            formData.education.push({
-                degree: $(this).find('input[name="degree"]').val(),
-                institution: $(this).find('input[name="institution"]').val(),
-                startDate: $(this).find('input[name="eduStartDate"]').val(),
-                endDate: $(this).find('input[name="eduEndDate"]').val()
-            });
-        });
-
-        // Collect experience entries
-        $('.experience-entry').each(function () {
-            formData.experience.push({
-                jobTitle: $(this).find('input[name="jobTitle"]').val(),
-                company: $(this).find('input[name="company"]').val(),
-                startDate: $(this).find('input[name="expStartDate"]').val(),
-                endDate: $(this).find('input[name="expEndDate"]').val(),
-                responsibilities: $(this).find('textarea[name="responsibilities"]').val()
-            });
-        });
-
-        // Collect skills entries
-        $('.skills-entry').each(function () {
-            formData.skills.push({
-                skills: $(this).find('input[name="skills"]').val(),
-                categories: $(this).find('input[name="categories"]').val()
-            });
-        });
-
+        console.log("Sending Data:", JSON.stringify(formData));
 
         // Show loading state
         $('#generateResume').prop('disabled', true).html('<i class="fas fa-spinner fa-spin me-2"></i>Generating...');
@@ -181,32 +88,63 @@ $(document).ready(function () {
         $.ajax({
             url: './controller/generate.php',
             method: 'POST',
-            contentType: 'application/json',
-            dataType: 'json',
-            data: JSON.stringify(formData),
+            data: JSON.stringify(formData), // Send as regular form data
             success: function (response) {
-                console.log("AJAX Response:", response); // Inspect the response here
+                console.log("AJAX Response:", response);
 
                 if (response.success === true) {
-                    console.log('Success response received');
                     $('#successModal').modal('show');
-                    $('#resumePreview').html(response.html);
-
+                    // $('#resumePreview').html(response.html);
                 } else {
-                    console.log('Error response:', response.message);
+                    console.log('Error:', response.message);
                     $(".error-modal-body").html(response.message);
                     $("#errorModal").modal('show');
                 }
             },
             error: function (xhr, status, error) {
-                // console.log("AJAX Error: ", error);
-                console.log("AJAX Error: ", xhr.responseText); // Log the full response for debugging
-                console.log("Status: ", status);
-                console.log("Error: ", error);
+                console.log("AJAX Error:", xhr.responseText);
+                console.log("Status:", status);
+                console.log("Error:", error);
             },
             complete: function () {
                 $('#generateResume').prop('disabled', false).html('<i class="fas fa-magic me-2"></i>Generate Resume');
             }
         });
+    });
+
+    // CLONE MULTIPLE ENTRIES FUNCTION
+    function cloneEntry(sectionClass, containerId, previewClass, previewContainerId, fields) {
+        let count = $("." + sectionClass).length + 1;
+
+        const newEntry = $("." + sectionClass).last().clone(true, true);
+        newEntry.find("input, textarea").val("");
+        newEntry.find("input, textarea").each(function () {
+            let name = $(this).attr("name");
+            if (name) {
+                $(this).attr("name", name + count);
+            }
+        });
+
+        $("#" + containerId).append(newEntry);
+
+        const newPreview = $("." + previewClass).last().clone(true, true);
+        fields.forEach(field => {
+            newPreview.find(`[data-preview='${field}']`).attr("data-preview", field + count).text("Not provided");
+        });
+
+        $("#" + previewContainerId).append(newPreview);
+    }
+
+    // ADDITIONAL ENTRIES HANDLERS
+    $("#addSkills").click(function () {
+        cloneEntry("skills-entry", "skillsContainer", "skills-preview", "skillsPreviewContainer", ["skills", "categories"]);
+    });
+
+    $("#addEducation").click(function () {
+        cloneEntry("education-entry", "educationContainer", "education-preview", "educationPreviewContainer", ["degree", "institution", "eduStartDate", "eduEndDate"]);
+    });
+
+    $("#addExperience").click(function () {
+        cloneEntry("experience-entry", "experienceContainer", "experience-preview", "experiencePreviewContainer", ["jobTitle", "company", "responsibilities", "expStartDate", "expEndDate"]);
     });
 });
