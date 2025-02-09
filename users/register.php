@@ -1,5 +1,5 @@
 <?php include('../config.php'); ?>
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -27,30 +27,29 @@
             </div>
             <button type="submit" class="btn btn-primary">Register</button>
         </form>
-    </div>
+    </div> -->
 
-    <?php
-    // Registration logic
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $name = $_POST['username'];
-        $email = $_POST['email'];
-        $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
+<?php
+// Registration logic
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $name = $_POST['username'];
+    $email = $_POST['email'];
+    $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
 
-        $stmt = $conn->prepare("INSERT INTO users (name, email, password) VALUES (?, ?, ?)");
-        $stmt->bind_param("sss", $name, $email, $password);
+    $stmt = $conn->prepare("INSERT INTO users (name, email, password) VALUES (?, ?, ?)");
+    $stmt->bind_param("sss", $name, $email, $password);
 
-        session_start();
-        $message = "";
-        if ($stmt->execute()) {
-            // Use a session variable to pass the message
-            $_SESSION['message'] = "Registration successful.";
-            header('Location: ./login.php?user_id=' . base64_encode($_SESSION['user_id']));
-            exit(); // Always call exit after a header redirect
-        } else {
-            echo "<div class='alert alert-danger mt-3'>Error: " . $conn->error . "</div>";
-        }
+    session_start();
+    $message = "";
+    if ($stmt->execute()) {
+        // Use a session variable to pass the message
+        $_SESSION['message'] = "Registration successful.";
+        header('Location: ./login.php?user_id=' . base64_encode($_SESSION['user_id']));
+        exit(); // Always call exit after a header redirect
+    } else {
+        echo "<div class='alert alert-danger mt-3'>Error: " . $conn->error . "</div>";
     }
-    ?>
-</body>
-
-</html>
+}
+?>
+<!-- </body>
+</html> -->
