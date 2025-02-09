@@ -74,26 +74,39 @@ $(document).ready(function () {
                 email: $('input[name="email"]').val(),
                 phone: $('input[name="phone"]').val(),
                 location: $('input[name="location"]').val(),
-                summary: $('textarea[name="summary"]').val(),
+                summary: $('textarea[name="summary"]').val()
             },
-            education: [{
+            education: [],
+            experience: [],
+            skills: []
+        };
+
+        // Collect education entries
+        $('.education-entry').each(function () {
+            formData.education.push({
                 degree: $('input[name="degree"]').val(),
                 institution: $('input[name="institution"]').val(),
                 startDate: $('input[name="eduStartDate"]').val(),
-                endDate: $('input[name="eduEndDate"]').val(),
-            }],
-            experience: [{
+                endDate: $('input[name="eduEndDate"]').val()
+            });
+        });
+        // Collect experience entries
+        $('.experience-entry').each(function () {
+            formData.experience.push({
                 jobTitle: $('input[name="jobTitle"]').val(),
                 company: $('input[name="company"]').val(),
                 startDate: $('input[name="expStartDate"]').val(),
                 endDate: $('input[name="expEndDate"]').val(),
-                responsibilities: $('textarea[name="responsibilities"]').val(),
-            }],
-            skills: [{
+                responsibilities: $('textarea[name="responsibilities"]').val()
+            });
+        });
+        // Collect skills entries
+        $('.skills-entry').each(function () {
+            formData.skills.push({
                 skills: $('input[name="skills"]').val(),
-                categories: $('input[name="categories"]').val(),
-            }]
-        }
+                categories: $('input[name="categories"]').val()
+            });
+        });
 
         console.log("Sending Data:", JSON.stringify(formData));
 
