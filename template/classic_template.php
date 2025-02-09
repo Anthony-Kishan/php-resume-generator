@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Curriculum Vitae - MD. ANTOR ALI</title>
+    <title><?= $personal_info['fullName'] ?> - Resume</title>
 </head>
 
 <body
@@ -12,10 +12,10 @@
     <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
         <div style="flex: 1;">
             <h1 style="text-align: left; margin: 0; font-size: 16px; font-weight: bold;">CURRICULUM VITAE</h1>
-            <h2 style="text-align: left; margin: 0 0 15px 0; font-size: 16px;">MD. ANTOR ALI</h2>
-            <div style="margin-bottom: 5px;">Cell: 01786-187314</div>
-            <div style="margin-bottom: 5px;">E-mail: Kakolifloral307@gmail.com</div>
-            <div style="margin-bottom: 5px;">Vill: Salna Para, Dist: Nijhumnur</div>
+            <h2 style="text-align: left; margin: 0 0 15px 0; font-size: 16px;"><?= $personal_info['fullName'] ?></h2>
+            <div style="margin-bottom: 5px;">Cell: <?= $personal_info['phone'] ?></div>
+            <div style="margin-bottom: 5px;">E-mail: <?= $personal_info['email'] ?></div>
+            <div style="margin-bottom: 5px;">Vill: <?= $personal_info['location'] ?></div>
         </div>
         <div style="margin-left: 20px;">
             <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/template_3-FYciMeRo60m7IP1uYYs1JbYHfTODCv.jpeg"
@@ -25,17 +25,15 @@
 
     <div style="margin-bottom: 20px;">
         <div style="font-weight: bold; border-bottom: 1px solid #000; margin-bottom: 5px;">CAREER OBJECTIVE</div>
-        <p style="margin: 5px 0; text-align: justify;">As a Retailer Relationship Officer at Bela Sun Company, I aim to
-            use my leadership, managerial, and communication skills to build strong relationships and drive success. I'm
-            passionate about taking on new challenges while contributing to team growth in a dynamic work environment.
+        <p style="margin: 5px 0; text-align: justify;"><?= $personal_info['summary'] ?>
         </p>
     </div>
 
     <div style="margin-bottom: 20px;">
         <div style="font-weight: bold; border-bottom: 1px solid #000; margin-bottom: 5px;">Job Experience</div>
-        <div style="margin: 5px 0;">Organization Name: Bela Sun Company</div>
-        <div style="margin: 5px 0;">Designation: RRO (Retailer Relationship Officer)</div>
-        <div style="margin: 5px 0;">Duration: July 2022 to Still Present</div>
+        <div style="margin: 5px 0;">Organization Name: <?= $exp['company'] ?></div>
+        <div style="margin: 5px 0;">Designation: <?= $exp['jobTitle'] ?></div>
+        <div style="margin: 5px 0;">Duration: <?= $startFormatted ?> to <?= $endFormatted ?></div>
     </div>
 
     <div style="margin-bottom: 20px;">

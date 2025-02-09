@@ -55,10 +55,6 @@ $(document).ready(function () {
         });
     });
 
-
-
-
-
     // LIVE PREVIEW SYSTEM
     $(document).on("input", "input, textarea", function () {
         let fieldName = $(this).attr("name");
@@ -90,6 +86,7 @@ $(document).ready(function () {
                 endDate: $('input[name="eduEndDate"]').val()
             });
         });
+
         // Collect experience entries
         $('.experience-entry').each(function () {
             formData.experience.push({
@@ -100,6 +97,7 @@ $(document).ready(function () {
                 responsibilities: $('textarea[name="responsibilities"]').val()
             });
         });
+        
         // Collect skills entries
         $('.skills-entry').each(function () {
             formData.skills.push({
