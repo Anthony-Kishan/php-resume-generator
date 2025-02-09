@@ -34,6 +34,31 @@ $(document).ready(function () {
         $('.next-section').prop('disabled', currentStep === totalSteps);
     }
 
+
+    // LIVE CHANGE RESUME TEMPLATE
+    $(".template-card").click(function () {
+        let selectedTemplate = $(this).data("template");
+        // let userId = $("#user_id").val(); // Get user ID from hidden input
+
+        $.ajax({
+            url: "../resume.php",
+            type: "POST",
+            data: { template: selectedTemplate },
+            success: function (response) {
+                $("#resumePreview").fadeOut(200, function () {
+                    $(this).html(response).fadeIn(200);
+                });
+            },
+            error: function () {
+                console.error("Error loading template.");
+            },
+        });
+    });
+
+
+
+
+
     // LIVE PREVIEW SYSTEM
     $(document).on("input", "input, textarea", function () {
         let fieldName = $(this).attr("name");
@@ -43,16 +68,6 @@ $(document).ready(function () {
 
     // GENERATE RESUME AJAX REQUEST
     $('#generateResume').click(function () {
-        // Collect form data dynamically
-        // let formData = {};
-        // $("input, textarea").each(function () {
-        //     let name = $(this).attr("name");
-        //     let value = $(this).val();
-        //     if (name) {
-        //         formData[name] = value;
-        //     }
-        // });
-
         let formData = {
             personalInfo: {
                 fullName: $('input[name="fullName"]').val(),

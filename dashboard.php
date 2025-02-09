@@ -55,10 +55,11 @@ $resumes = $stmt->get_result();
                         <td><?php echo htmlspecialchars($resume['template_type']); ?></td>
                         <td><?php echo htmlspecialchars($resume['created_at']); ?></td>
                         <td>
-                            <a href="resume.php?id=<?php echo base64_encode($resume['id']); ?>" target="_blank"
-                                class="btn btn-info text-white"><i class="fa-solid fa-eye"></i></a>
+                            <a href="./controller/resume_view.php?id=<?php echo base64_encode($resume['id']); ?>" class="btn btn-info text-white"><i class="fa-solid fa-eye"></i></a>
+
                             <a href="download.php?id=<?php echo $resume['id']; ?>" class="btn btn-success"><i
                                     class="fa-solid fa-download"></i></a>
+
                             <a href="javascript:void(0)" data-id="<?php echo base64_encode($resume['id']); ?>"
                                 class="btn btn-danger deleteBtn"><i class="fa-solid fa-trash"></i></a>
 

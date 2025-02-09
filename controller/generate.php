@@ -25,8 +25,6 @@ if (!isset($_SESSION['user_id'])) {
 
 $userId = $_SESSION['user_id'];
 
-
-
 validateFormData($data);
 
 function validateFormData($data)

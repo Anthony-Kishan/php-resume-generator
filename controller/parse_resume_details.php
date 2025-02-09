@@ -1,5 +1,9 @@
 <?php
 
+include ('../config.php');
+
+$userId = $_SESSION['user_id'];
+
 $queryShow = $conn->prepare("SELECT * FROM resumes WHERE `user_id` = $userId");
 $queryShow->execute();
 $result = $queryShow->get_result();
