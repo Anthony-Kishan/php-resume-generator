@@ -1,0 +1,4 @@
+Fix folder structure
+Add autoload
+Change routing (remove .php from url/headers)
+Try to use blade
