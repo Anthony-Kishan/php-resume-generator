@@ -1,4 +1,56 @@
 $(document).ready(function () {
+    $("#signup-form").on("submit", function (e) {
+        e.preventDefault();
+
+        var formData = $(this).serialize();
+
+        $.ajax({
+            type: "POST",
+            url: "./users/register.php",
+            data: formData,
+            success: function (response) {
+                if (response) {
+                    window.location.href = "./index.php";
+                    $('#loginFirstModal .modal-body').addClass('show-login');
+                } else {
+                    // alert(response);
+                }
+            }
+        });
+    });
+
+
+
+    $("#login-form").on("submit", function (e) {
+        e.preventDefault();
+
+        var formData = $(this).serialize();
+
+        $.ajax({
+            type: "POST",
+            url: "./users/login.php",
+            data: formData,
+            success: function (response) {
+                if (response) {
+                    window.location.href = "./index.php";
+                } else {
+                    // alert(response);
+                }
+            }
+        });
+    });
+
+    $('#show-login-form').click(function () {
+        $('#loginFirstModal .modal-body').addClass('show-login');
+    });
+
+    $('#show-signup-form').click(function () {
+        $('#loginFirstModal .modal-body').removeClass('show-login');
+    });
+});
+
+
+$(document).ready(function () {
     let currentStep = 1;
     const totalSteps = 4;
 
@@ -97,7 +149,7 @@ $(document).ready(function () {
                 responsibilities: $('textarea[name="responsibilities"]').val()
             });
         });
-        
+
         // Collect skills entries
         $('.skills-entry').each(function () {
             formData.skills.push({
