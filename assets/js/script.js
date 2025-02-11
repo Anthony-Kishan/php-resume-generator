@@ -119,7 +119,7 @@ $(document).ready(function () {
         let formData = {
             personalInfo: {
                 fullName: $('input[name="fullName"]').val(),
-                email: $('input[name="email"]').val(),
+                email: $('input[name="mail"]').val(),
                 phone: $('input[name="phone"]').val(),
                 location: $('input[name="location"]').val(),
                 summary: $('textarea[name="summary"]').val()

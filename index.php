@@ -158,7 +158,7 @@ $is_logged_in = isset($_SESSION['user_id']); ?>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label">Email</label>
-                                        <input type="email" class="form-control" name="email" id="email" required>
+                                        <input type="email" class="form-control" name="mail" id="mail" required>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label">Phone</label>
@@ -314,7 +314,7 @@ $is_logged_in = isset($_SESSION['user_id']); ?>
                                     DOB: 07 Feb 2003
                                 </p>
                                 <p style="margin: 5px 0;">
-                                    <a href="" data-preview="email"
+                                    <a href="" data-preview="mail"
                                         style="color: #0066cc; text-decoration: none;">Email</a> |
                                     <span data-preview="phone">Phone</span> |
                                     <a href="#" style="color: #0066cc; text-decoration: none;">Portfolio</a> |
