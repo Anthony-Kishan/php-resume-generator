@@ -256,15 +256,11 @@ $is_logged_in = isset($_SESSION['user_id']); ?>
                                     <div class="row g-3">
                                         <div class="skills-entry mb-3 p-3 border rounded">
                                             <label class="form-label">Skills (comma-separated)</label>
-                                            <!-- <textarea class="form-control" name="skills[]" rows="3" required
-                                                placeholder="e.g., Project Management, Team Leadership, Strategic Planning"></textarea> -->
                                             <input class="form-control" name="skills" id="skills" rows="3" required
                                                 placeholder="e.g., Project Management, Team Leadership, Strategic Planning">
 
                                             <div class="ms-4 mb-3">
                                                 <label class="form-label">Categories</label>
-                                                <!-- <textarea class="form-control" name="categories[]" rows="3" required
-                                                    placeholder="e.g., Project Management, Team Leadership, Strategic Planning"></textarea> -->
                                                 <input class="form-control" name="categories" id="categories" rows="3"
                                                     required
                                                     placeholder="e.g., Project Management, Team Leadership, Strategic Planning">
@@ -276,17 +272,6 @@ $is_logged_in = isset($_SESSION['user_id']); ?>
                                     <i class="fas fa-plus me-2"></i>Add Skills
                                 </button>
                             </div>
-
-                            <!-- <div class="mb-3">
-                                <label class="form-label">Languages</label>
-                                <textarea class="form-control" name="languages" rows="2"
-                                    placeholder="e.g., English (Native), Spanish (Intermediate)"></textarea>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Certifications</label>
-                                <textarea class="form-control" name="certifications" rows="2"
-                                    placeholder="e.g., PMP Certification, Scrum Master"></textarea>
-                            </div> -->
                         </form>
                     </div>
                 </div>
@@ -296,19 +281,11 @@ $is_logged_in = isset($_SESSION['user_id']); ?>
             <div class="col-lg-6">
                 <div class="card shadow-sm">
                     <div class="card-body preview-section" id="resumePreview">
-                        <!-- <div class="text-center py-5">
-                            <i class="fas fa-file-alt fa-3x text-muted mb-3"></i>
-                            <h5>Resume Preview</h5>
-                            <p class="text-muted">Your resume preview will appear here as you fill out the form.</p>
-                        </div> -->
-
-
                         <h5>Resume Preview</h5>
                         <div class="py-5">
                             <header style="text-align: center; margin-bottom: 30px;">
                                 <h1 style="margin: 0; font-size: 32px; font-weight: normal;">
                                     <span style="font-weight: normal;" data-preview="fullName">Your Name</span>
-                                    <!-- <span style="font-weight: bold;">' . htmlspecialchars($lastName) . '</span> -->
                                 </h1>
                                 <p style="margin: 10px 0; color: #666;">
                                     DOB: 07 Feb 2003
@@ -348,29 +325,8 @@ $is_logged_in = isset($_SESSION['user_id']); ?>
                                                 <ul style="margin: 5px 0; padding-left: 20px; font-size: 12px;">
                                                     <li data-preview="categories"></li>
                                                 </ul>
-                                                <!-- <p style="margin: 5px 0; color: #666; font-size: 12px;">Tools:</p>
-                                                <p style="margin: 0; font-size: 12px;">• HTML & CSS • Bootstrap • JavaScript</p> -->
                                             </div>
                                         </div>
-
-
-
-                                        <!-- <div style="margin-bottom: 20px;">
-                                            <h3 style="font-size: 13px; margin: 0 0 5px 0;">TECHNOLOGIES</h3>
-                                            <ul style="margin: 5px 0; padding-left: 20px; font-size: 12px;">
-                                                <li>Git • VS Code • Windows OS • JSON</li>
-                                                <li>Docker</li>
-                                            </ul>
-                                        </div>
-
-                                        <div style="margin-bottom: 20px;">
-                                            <h3 style="font-size: 13px; margin: 0 0 5px 0;">OTHERS</h3>
-                                            <ul style="margin: 5px 0; padding-left: 20px; font-size: 12px;">
-                                                <li>Graphics Design • Video Editing</li>
-                                                <li>3D Design • Animation</li>
-                                                <li>Electronics Device Making</li>
-                                            </ul>
-                                        </div> -->
                                     </section>
                                 </div>
 

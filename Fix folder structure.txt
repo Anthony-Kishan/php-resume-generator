@@ -1,3 +1,4 @@
+Make the project struture as MVC
 Fix folder structure
 Add autoload
 Change routing (remove .php from url/headers)
