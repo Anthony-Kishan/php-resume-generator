@@ -1,7 +1,0 @@
-# Ignore Hack files
-*.hack
-*.hh
-*.hhi
-
-# Don't ignore PHP files (if they are being mistakenly ignored)
-!*.php
