@@ -401,6 +401,8 @@ $is_logged_in = isset($_SESSION['user_id']); ?>
                 </div>
             </div>
         <?php endif; ?>
+        <?php
+        ?>
 
         <!-- Generate Button -->
 
