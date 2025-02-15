@@ -1,29 +1,26 @@
 <?php
 class Database
 {
-    private static $instance = null;
-    private $connection;
-
-    private $host = "localhost";
-    private $user = "root";
-    private $password = "";
-    private $database = "resume-generator";
-
-    private function __construct()
+    private function connect()
     {
-        $this->connection = new mysqli($this->host, $this->user, $this->password, $this->database);
+        $conn = new mysqli(DBHOST, DBUSER, DBPASS, DBNAME);
+        return $conn;
 
-        if ($this->connection->connect_error) {
-            die("Database connection failed: " . $this->connection->connect_error);
-        }
     }
 
-    public static function getConnection()
+    public function query($query, $data = [])
     {
-        if (self::$instance == null) {
-            self::$instance = new Database();
+        $conn = $this->connect();
+        $stm = $conn->prepare($query); // $stm - Statement
+
+        $check = $stm->execute($data);
+        if ($check) {
+            $result = $stm->get_result();
+            $result = $result->fetch_assoc();
+            if (is_array($result) && count($result)) {
+                return $result;
+            }
         }
-        return self::$instance->connection;
+        return false;
     }
 }
-?>
