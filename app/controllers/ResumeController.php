@@ -1,8 +1,13 @@
 <?php
-require_once "app/models/Resume.php";
 
-class ResumeController
+class ResumeController extends Controller
 {
+
+    public function index($a = '', $b = '', $c = '')
+    {
+        echo "From Resume controller";
+    }
+
     public function create()
     {
         require "app/views/resume/create.php";
