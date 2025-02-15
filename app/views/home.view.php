@@ -1,4 +1,4 @@
-<?php session_start();
+<?php
 $is_logged_in = isset($_SESSION['user_id']); ?>
 
 <!DOCTYPE html>
