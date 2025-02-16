@@ -10,7 +10,7 @@ $is_logged_in = isset($_SESSION['user_id']); ?>
     <title>Resume Generator</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="<?=ROOT?>/assets/css/style.css">
 </head>
 
 <body class="bg-light">
@@ -126,6 +126,9 @@ $is_logged_in = isset($_SESSION['user_id']); ?>
 
 
     <div class="container py-5">
+
+        <img src="<?=ROOT?>/assets/images/template_1.jpeg" alt="">
+
         <div class="row">
             <!-- Form Section -->
             <div class="col-lg-6">
@@ -413,7 +416,7 @@ $is_logged_in = isset($_SESSION['user_id']); ?>
         integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-    <script src="./assets/js/script.js"></script>
+    <script src="<?=ROOT?>/assets/js/script.js"></script>
 </body>
 
 </html>
