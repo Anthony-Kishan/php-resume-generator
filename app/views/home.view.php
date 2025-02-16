@@ -14,7 +14,7 @@ $is_logged_in = isset($_SESSION['user_id']); ?>
 </head>
 
 <body class="bg-light">
-    <?php include('navbar.php'); ?>
+    <?php include('navbar.view.php'); ?>
 
     <!-- SUCCESS MODAL -->
     <div class="modal fade" tabindex="-1" id="successModal">
@@ -127,7 +127,7 @@ $is_logged_in = isset($_SESSION['user_id']); ?>
 
     <div class="container py-5">
 
-        <img src="<?=ROOT?>/assets/images/template_1.jpeg" alt="">
+        <!-- <img src="<?=ROOT?>/assets/images/template_1.jpeg" alt=""> -->
 
         <div class="row">
             <!-- Form Section -->

@@ -6,3 +6,6 @@ require "../app/core/init.php";
 
 $app = new App;
 $app->loadController();
+
+// $NavBarController = new NavBarController();
+// $NavBarController->index();
