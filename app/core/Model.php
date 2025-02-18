@@ -1,8 +1,9 @@
 <?php
 # Main Model
 
-class Model extends Database
+class Model
 {
+    use Database;
     protected $table = 'users';
     protected $limit = 10;
     protected $offset = 0;
@@ -59,7 +60,13 @@ class Model extends Database
     function insert($data)
     {
         $keys = array_keys($data);
-        $query = "INSERT INTO $this->table () VALUE ()";
+
+        $query = "INSERT INTO $this->table (" . implode(",", $keys) . ") VALUES (";
+
+        $placeholders = array_fill(0, count($keys), "?");
+        $query .= implode(",", $placeholders) . ")";
+
+        return $this->query($query, array_values($data));
     }
 
     function update($id, $data, $id_column = 'id')
