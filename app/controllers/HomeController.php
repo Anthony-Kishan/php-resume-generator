@@ -6,11 +6,11 @@ class HomeController extends Controller
     public function index($a = '', $b = '', $c = '')
     {
         $model = new Model;
-        $arr['id'] = 5;
-        $arr['name'] = "Anthony";
-        $arr['email'] = "anthony@yopmail.com";
-        $arr['password'] = "anthony@yopmail.com";
-        $result = $model->insert($arr);
+        $arr['id'] = 6;
+        // $arr['name'] = "Modhu Kishan";
+        // $arr['email'] = "modhukishan@yopmail.com";
+        // $arr['password'] = "modhukishan@yopmail.com";
+        $result = $model->where($arr);
 
         show($result);
         $this->view('home');
