@@ -23,13 +23,11 @@ class Model
         }
 
         $query = rtrim($query, " AND ");
-
         $query .= " LIMIT $this->limit OFFSET $this->offset";
 
         $values = array_merge(array_values($data), array_values($data_not));
         return $this->query($query, $values);
     }
-
 
     function first($data, $data_not = [])
     {
@@ -46,7 +44,6 @@ class Model
         }
 
         $query = rtrim($query, " AND ");
-
         $query .= " LIMIT $this->limit OFFSET $this->offset";
 
         $values = array_merge(array_values($data), array_values($data_not));
@@ -60,26 +57,38 @@ class Model
     function insert($data)
     {
         $keys = array_keys($data);
-
         $query = "INSERT INTO $this->table (" . implode(",", $keys) . ") VALUES (";
-
         $placeholders = array_fill(0, count($keys), "?");
         $query .= implode(",", $placeholders) . ")";
+        $this->query($query, array_values($data));
 
-        return $this->query($query, array_values($data));
+        // Return the last inserted ID
+        return $this->connect()->insert_id;
     }
 
     function update($id, $data, $id_column = 'id')
     {
-        $query = "SELECT * FROM `resumes`";
-        $result = $this->query($query);
-        show($result);
+        $keys = array_keys($data);
+        $query = "UPDATE $this->table SET ";
+
+        foreach ($keys as $key) {
+            $query .= "$key = ?, ";
+        }
+
+        $query = rtrim($query, ", ");
+
+        $query .= " WHERE $id_column = ?";
+
+        $values = array_merge(array_values($data), [$id]);
+
+        return $this->query($query, $values);
     }
 
     function delete($id, $id_column = 'id')
     {
-        $query = "SELECT * FROM `resumes`";
-        $result = $this->query($query);
-        show($result);
+        $query = "DELETE FROM $this->table WHERE $id_column = ?";
+
+        return $this->query($query, [$id]);
     }
 }
+
