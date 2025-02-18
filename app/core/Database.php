@@ -1,5 +1,5 @@
 <?php
-class Database
+trait Database
 {
     private function connect()
     {
