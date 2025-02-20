@@ -1,10 +1,10 @@
 <?php
 # Main Model
 
-class Model
+trait Model
 {
     use Database;
-    protected $table = 'users';
+    // protected $table = 'users';
     protected $limit = 10;
     protected $offset = 0;
 
