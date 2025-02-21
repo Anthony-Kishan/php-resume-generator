@@ -14,14 +14,6 @@ class HomeController extends Controller
 
         // $result = $user->update($id, $arr);
         // $result = $user->findAll();
-
-        
-        // $arr['name'] = "Aorpi";
-        // $arr['email'] = "aorpi@yopmail.com";
-        // $arr['password'] = "aorpi@yopmail.com";
-
-        // $result = $user->update($id, $arr);
-        // $result = $user->findAll();
         $result = $user->where( $arr);
         // $result = $user->insert($arr);
 
