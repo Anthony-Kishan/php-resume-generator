@@ -1,7 +1,10 @@
 <?php
 
 spl_autoload_register(function ($classname) {
-    require $filename = "../app/models/" . ucfirst($classname) . ".php";
+    $filename = "../app/models/" . ucfirst($classname) . ".php";
+    if (file_exists($filename)) {
+        require $filename;
+    }
 });
 
 require 'config.php';

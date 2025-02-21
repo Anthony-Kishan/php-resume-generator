@@ -7,6 +7,14 @@ trait Model
     // protected $table = 'users';
     protected $limit = 10;
     protected $offset = 0;
+    protected $order_type = "DESC";
+    protected $order_column = "id";
+
+    function findAll()
+    {
+        $query = "SELECT * FROM $this->table ORDER BY $this->order_column $this->order_type LIMIT $this->limit OFFSET $this->offset";
+        return $this->query($query);
+    }
 
     function where($data, $data_not = [])
     {

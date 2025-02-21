@@ -17,3 +17,8 @@ if ($_SERVER['SERVER_NAME'] == 'localhost') {
 
     define('ROOT', 'https://www.php-resume-generator.com');
 }
+
+define('APP_NAME', 'My Website');
+define('APP_DESC', 'Resume Generator');
+
+define('DEBUG', false);

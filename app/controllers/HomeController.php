@@ -6,15 +6,16 @@ class HomeController extends Controller
     public function index($a = '', $b = '', $c = '')
     {
         $user = new User;
-        // $id = 6;
-        $arr['id'] = 5;
-        // $arr['name'] = "Kishan Modhu";
-        // $arr['email'] = "kishanmodhu@yopmail.com";
-        // $arr['password'] = "kishanmodhu@yopmail.com";
+        // $id = 5;
+        $arr['id'] = 6;
+        // $arr['name'] = "Aorpi";
+        // $arr['email'] = "aorpi@yopmail.com";
+        // $arr['password'] = "aorpi@yopmail.com";
 
-        // $result = $model->update($id, $arr);
-        // $result = $model->where( $arr);
-        $result = $user->where($arr);
+        // $result = $user->update($id, $arr);
+        // $result = $user->findAll();
+        $result = $user->where( $arr);
+        // $result = $user->insert($arr);
 
         show($result);
         $this->view('home');

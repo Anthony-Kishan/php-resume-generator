@@ -18,10 +18,20 @@ trait Database
             // Check if the query is a SELECT statement
             if (stripos($query, 'SELECT') === 0) {
                 $result = $stm->get_result();
-                $result = $result->fetch_assoc();
-                if (is_array($result) && count($result)) {
-                    return $result;
+
+                $rows = [];
+
+                while ($row = $result->fetch_assoc()){
+                    $rows[] = $row; 
                 }
+
+                if(is_array($rows) && count($rows)){
+                    return $rows;
+                }
+
+                // if (is_array($result) && count($result)) {
+                //     return $result;
+                // }
             }
             return true;  // For INSERT/UPDATE/DELETE queries
         }

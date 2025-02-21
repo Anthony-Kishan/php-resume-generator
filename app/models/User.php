@@ -8,10 +8,7 @@ class User
 
     protected $allowedColumns = [
         'name',
-        'age',
     ];
-
-
 
 
     public static function is_logged_in()
