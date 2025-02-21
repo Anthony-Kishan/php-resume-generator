@@ -6,7 +6,7 @@
         </a>
         <div class="ms-auto">
             <?php if (!$is_logged_in): ?>
-                <a class="btn btn-success" href="./users/login.php"><i class="fa-solid fa-arrow-right-to-bracket"></i> Login</a>
+                <a class="btn btn-success" href="<?=ROOT?>/login"><i class="fa-solid fa-arrow-right-to-bracket"></i> Login</a>
                 <a class="btn btn-danger" href="./users/register.php"><i class="fa-solid fa-user-plus"></i> Register</a>
             <?php else: ?>
                 <a class="btn btn-danger" href="./dashboard.php"><i class="fa-solid fa-chart-line"></i> Dashboard</a>

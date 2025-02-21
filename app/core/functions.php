@@ -7,6 +7,13 @@ function show($stuff)
     echo "</pre>";
 }
 
-function esc($str){
+function esc($str)
+{
     return htmlspecialchars($str);
+}
+
+function redirect($path)
+{
+    header("Location: " . ROOT . "/" . $path);
+    die();
 }

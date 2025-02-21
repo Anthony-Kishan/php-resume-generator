@@ -9,6 +9,7 @@ trait Model
     protected $offset = 0;
     protected $order_type = "DESC";
     protected $order_column = "id";
+    public $errors = [];
 
     function findAll()
     {
