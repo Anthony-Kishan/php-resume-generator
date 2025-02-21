@@ -17,7 +17,13 @@ class HomeController extends Controller
         $result = $user->where( $arr);
         // $result = $user->insert($arr);
 
-        show($result);
+        show("From the index method of HomeController");
+        $this->view('home');
+    }
+
+    public function edit($a = '', $b = '', $c = '')
+    {
+        show("From the edit method of HomeController");
         $this->view('home');
     }
 }
