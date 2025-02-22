@@ -38,7 +38,7 @@ trait Model
         return $this->query($query, $values);
     }
 
-    function first($data, $data_not = [])
+    function first($data, $data_not = []): mixed
     {
         $keys = array_keys($data);
         $keys_not = array_keys($data_not);
@@ -63,16 +63,18 @@ trait Model
         return false;
     }
 
-    function insert($data)
+    function insert($data): bool
     {
         $keys = array_keys($data);
         $query = "INSERT INTO $this->table (" . implode(",", $keys) . ") VALUES (";
         $placeholders = array_fill(0, count($keys), "?");
         $query .= implode(",", $placeholders) . ")";
-        $this->query($query, array_values($data));
+        $result = $this->query($query, array_values($data));
 
-        // Return the last inserted ID
-        return $this->connect()->insert_id;
+        if ($result) {
+            return true;
+        }
+        return false;
     }
 
     function update($id, $data, $id_column = 'id')
@@ -100,4 +102,3 @@ trait Model
         return $this->query($query, [$id]);
     }
 }
-

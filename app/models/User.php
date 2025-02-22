@@ -11,35 +11,46 @@ class User
     ];
 
 
-    public static function is_logged_in()
+    /**
+     * Checks if the email already exists in the database.
+     * 
+     * @param string $email The email to check.
+     * @return bool True if the email exists, false otherwise.
+     */
+    public function emailExists($email)
     {
-        return isset($_SESSION['user_id']);
+        $result = $this->first(['email' => $email]);
+        if (!empty($result)) {
+            return true;
+        }
+        return false;
     }
 
-    public function validate($data)
+
+    /**
+     * Checks if the username already exists in the database.
+     * 
+     * @param string $username The username to check.
+     * @return bool True if the username exists, false otherwise.
+     */
+    public function usernameExists($username)
     {
-        $this->errors = [];
-        
-        if (empty($data['email'])) {
-            $this->errors['email'] = 'Email is required';
-        }else{
-            if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
-                $this->errors['email'] = 'Invalid email format';
-            }
-        }
-
-        if (empty($data['password'])) {
-            $this->errors['password'] = 'Password is required';
-        }
-
-        
-        if (empty($this->errors)) {
+        $result = $this->first(['name' => $username]);
+        if (!empty($result)) {
             return true;
         }
 
         return false;
-
     }
 
 
+    /**
+     * Checks if a user is logged in based on session data.
+     * 
+     * @return bool True if the user is logged in, false otherwise.
+     */
+    public static function is_logged_in()
+    {
+        return isset($_SESSION['USER']['id']);
+    }
 }

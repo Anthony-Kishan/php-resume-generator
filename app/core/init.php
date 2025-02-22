@@ -1,9 +1,13 @@
 <?php
 
 spl_autoload_register(function ($classname) {
-    $filename = "../app/models/" . ucfirst($classname) . ".php";
-    if (file_exists($filename)) {
-        require $filename;
+    $modelFilename = "../app/models/" . ucfirst($classname) . ".php";
+    $controllerFilename = "../app/controllers/" . ucfirst($classname) . "Controller.php";
+
+    if (file_exists($modelFilename)) {
+        require $modelFilename;
+    } elseif (file_exists($controllerFilename)) {
+        require $controllerFilename;
     }
 });
 
