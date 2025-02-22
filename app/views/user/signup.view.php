@@ -10,10 +10,12 @@
 
     <!-- Add the necessary CSS files -->
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/sweetalert2.min.css">
 
     <!-- Add the necessary JavaScript files -->
     <script src="<?= ROOT ?>/assets/js/jquery.min.js"></script>
     <script src="<?= ROOT ?>/assets/js/bootstrap.min.js"></script>
+    <script src="<?= ROOT ?>/assets/js/sweetalert2.min.js"></script>
 </head>
 
 <body>
@@ -42,14 +44,18 @@
     </div>
 
     <!-- Trigger modal if needed -->
-    <?php if (isset($showModal) && $showModal): ?>
+    <?php if (isset($showModal) && $showModal && isset($errors) && is_array($errors)): ?>
         <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                var modal = new bootstrap.Modal(document.getElementById('errorModal'));
-                modal.show();
+            document.addEventListener('DOMContentLoaded', function () {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    html: '<?php echo implode("<br>", array_map("htmlspecialchars", $errors)); ?>'
+                });
             });
         </script>
     <?php endif; ?>
+
 
 
     <!-- Sign-up form -->
