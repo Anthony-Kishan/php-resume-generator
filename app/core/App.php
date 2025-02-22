@@ -12,6 +12,7 @@ class App
         return $URL;
     }
 
+    /** * Loads Controllers and their Methods */
     public function loadController()
     {
         $URL = $this->splitURL();

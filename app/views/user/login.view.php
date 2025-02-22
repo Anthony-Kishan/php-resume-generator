@@ -19,45 +19,18 @@
             unset($_SESSION['message']);
         }
         ?>
-        <form action="login.php" method="POST">
+        <form method="POST">
             <div class="form-group">
                 <label for="email">Email:</label>
-                <input type="email" class="form-control" id="email" name="email" required>
+                <input type="email" class="form-control" id="email" name="email">
             </div>
             <div class="form-group">
                 <label for="password">Password:</label>
-                <input type="password" class="form-control" id="password" name="password" required>
+                <input type="password" class="form-control" id="password" name="password">
             </div>
             <button type="submit" class="btn btn-primary">Login</button>
         </form>
     </div>
-
-    <?php
-    // Login logic
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $email = $_POST['email'];
-        $password = $_POST['password'];
-
-        $stmt = $conn->prepare("SELECT * FROM users WHERE email = ?");
-        $stmt->bind_param("s", $email);
-        $stmt->execute();
-        $result = $stmt->get_result();
-
-        if ($result->num_rows > 0) {
-            $user = $result->fetch_assoc();
-            if (password_verify($password, $user['password'])) {
-                $_SESSION['user_id'] = $user['id'];
-                $_SESSION['username'] = $user['username'];
-                header('Location: ../index.php?user_id=' . base64_encode($_SESSION['user_id'])); // Return to home page
-                exit();
-            } else {
-                echo "<div class='alert alert-danger mt-3'>Incorrect password.</div>";
-            }
-        } else {
-            echo "<div class='alert alert-danger mt-3'>User not found.</div>";
-        }
-    }
-    ?>
 </body>
 
 </html>

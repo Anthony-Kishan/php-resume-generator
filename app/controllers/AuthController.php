@@ -7,36 +7,38 @@ class AuthController extends Controller
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            $email = $_POST['email'] ?? '';
-            $password = $_POST['password'] ?? '';
+            $user = new User();
+            $arr['email'] = $_POST['email'];
 
-            $userModel = new User();
-            $user = $userModel->first($email);
+            $row = $user->first($arr);
 
-            if ($user && $user['password'] == $password) {
-                session_start();
-                $_SESSION['user'] = $user['user'];
-
-                // header('Location: /home');
-                redirect('home');
-                exit; // Ensure the script stops here
+            if ($row) {
+                if ($row['email'] && password_verify($_POST['password'], $row['password'])) {
+                    session_start();
+                    $_SESSION['USER'] = $row;
+                    redirect('home');
+                    exit;
+                } else {
+                    $this->index('user/login', $b = 'login', ['error' => 'Invalid username or password.']);
+                }
+            } else {
+                $this->index('user/login', $b = 'login', ['error' => 'Invalid username or password.']);
             }
-
-
-            // $this->view('user/login', ['error' => 'Invalid username or password.']);
-            $this->index('user/login', ['error' => 'Invalid username or password.']);
         } else {
-            // $this->view('user/login');
-            $this->index($a = 'user/login');
+            $this->index('user/login', $b = 'login');
         }
     }
 
     public function index($a = '', $b = '', $c = '', $d = [])
     {
-        // $this->view('user/login');
-        show($a);
-        show($d);
-
-        $this->view($a, $d);
+        if ($b == 'login') {
+            $this->view($a, $d);
+        }
+        if ($b == 'signup') {
+            $this->view($a, $d);
+        }
+        if ($b == 'logout') {
+            $this->view($a, $d);
+        }
     }
 }
