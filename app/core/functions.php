@@ -1,4 +1,79 @@
 <?php
+// Helper class for validation
+
+/**
+ * Checks if a field is empty.
+ * 
+ * @param mixed $field The field to check.
+ * @param string $fieldName The name of the field.
+ * @return string|null Error message if the field is empty, otherwise null.
+ */
+function checkFieldEmpty($field, $fieldName)
+{
+    if (empty($field)) {
+        return "$fieldName is required.";
+    }
+    return null;
+}
+
+/**
+ * Validates the email format.
+ * 
+ * @param string $email The email to validate.
+ * @return string|null Error message if the email format is invalid, otherwise null.
+ */
+function validateEmail($email)
+{
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        return "Invalid email format.";
+    }
+    return null;
+}
+
+/**
+ * Checks if the password is strong enough.
+ * 
+ * @param string $password The password to check.
+ * @return string|null Error message if the password is not strong enough, otherwise null.
+ */
+function checkPassword($password)
+{
+    if (strlen($password) < 6) {
+        return "Password must be at least 6 characters long.";
+    }
+    return null;
+}
+
+/**
+ * Checks if the email already exists in the database.
+ * 
+ * @param string $email The email to check.
+ * @return string|null Error message if the email exists, otherwise null.
+ */
+function checkEmailExists($email)
+{
+    $user = new User();
+    if ($user->emailExists($email)) {
+        return "Email is already taken.";
+    }
+    return null;
+}
+
+/**
+ * Checks if the username already exists in the database.
+ * 
+ * @param string $username The username to check.
+ * @return string|null Error message if the username exists, otherwise null.
+ */
+function checkUsernameExists($username)
+{
+    $user = new User();
+    if ($user->usernameExists($username)) {
+        return "Username is already taken.";
+    }
+    return null;
+}
+
 
 /**
  * Displays a variable in a readable format for debugging.
@@ -55,5 +130,6 @@ function esc($str)
 function redirect($path)
 {
     header("Location: " . ROOT . "/" . $path);
+    exit;
     die();
 }
