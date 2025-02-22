@@ -7,7 +7,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Add the necessary CSS files -->
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/bootstrap.min.css">
+
+    <!-- Add the necessary JavaScript files -->
+    <script src="<?= ROOT ?>/assets/js/jquery.min.js"></script>
+    <script src="<?= ROOT ?>/assets/js/bootstrap.min.js"></script>
 </head>
 
 <body>

@@ -6,9 +6,9 @@ class AuthController extends Controller
     public function signup()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $name = $_POST['username'];
-            $email = $_POST['email'];
-            $password = $_POST['password'];
+            $name = htmlspecialchars($_POST['username'], ENT_QUOTES, 'UTF-8');
+            $email = htmlspecialchars($_POST['email'], ENT_QUOTES, 'UTF-8');
+            $password = htmlspecialchars($_POST['password'], ENT_QUOTES, 'UTF-8');
 
             $errors = [];
 
@@ -24,10 +24,10 @@ class AuthController extends Controller
                 return !is_null($value);
             });
 
-            show($errors);
+            // show($errors);
 
             if (!empty($errors)) {
-                $this->index('user/signup', 'signup', $d = "Hello");
+                $this->index('user/signup', 'signup', ['errors' => $errors, 'showModal' => true]);
                 return;
             }
 
@@ -44,12 +44,12 @@ class AuthController extends Controller
 
             if ($inserted) {
                 $_SESSION['message'] = "Registration Successful.";
-                redirect('home');
+                redirect('auth/login');
                 exit;
             }
 
             // If insertion fails, show an error message
-            // $this->index('user/signup', 'signup', ['error' => 'Registration failed. Please try again.']);
+            $this->index('user/signup', 'signup', ['error' => 'Registration failed. Please try again.']);
         } else {
             // Show the signup form
             $this->index('user/signup', 'signup');
@@ -89,13 +89,12 @@ class AuthController extends Controller
     }
 
 
-    public function index($a = '', $b = '', $c = '', $d = [])
+    public function index($a = '', $b = '', $d = [])
     {
         if ($b == 'login') {
             $this->view($a, $d);
         }
         if ($b == 'signup') {
-            echo $d;
             $this->view($a, $d);
         }
     }

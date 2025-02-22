@@ -7,50 +7,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Add the necessary CSS files -->
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/bootstrap.min.css">
+
+    <!-- Add the necessary JavaScript files -->
+    <script src="<?= ROOT ?>/assets/js/jquery.min.js"></script>
+    <script src="<?= ROOT ?>/assets/js/bootstrap.min.js"></script>
 </head>
 
 <body>
-    <!-- Modal for displaying errors -->
-    <?php if (isset($showModal) && $showModal): ?>
-        <script>
-            $(document).ready(function() {
-                console.log("Hello");
-                $('#errorModal').modal('show');
-            });
-        </script>
-    <?php endif; ?>
-
-
-    <?php if (!empty($errors)): ?>
-        <script>
-            console.log("Hello");
-        </script>
-    <?php endif; ?>
-
-    <!-- Modal structure -->
-    <div id="errorModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+    <!-- Bootstrap Modal -->
+    <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="errorModalLabel">Error</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <ul>
-                        <?php foreach ($errors as $error): ?>
-                            <li><?= htmlspecialchars($error) ?></li>
-                        <?php endforeach; ?>
+                        <?php if (isset($errors) && is_array($errors)): ?>
+                            <?php foreach ($errors as $error): ?>
+                                <li><?php echo htmlspecialchars($error); ?></li>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </ul>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Trigger modal if needed -->
+    <?php if (isset($showModal) && $showModal): ?>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                var modal = new bootstrap.Modal(document.getElementById('errorModal'));
+                modal.show();
+            });
+        </script>
+    <?php endif; ?>
+
 
     <!-- Sign-up form -->
     <div class="container mt-5">
@@ -72,9 +72,7 @@
         </form>
     </div>
 
-    <!-- Add the necessary JavaScript files -->
-    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js" integrity="sha512-ykZ1QQr0Jy/4ZkvKuqWn4iF3lqPZyij9iRv6sGqLRdTPkY69YX6+7wvVGmsdBbiIfN/8OdsI7HABjvEok6ZopQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 </body>
 
 </html>
