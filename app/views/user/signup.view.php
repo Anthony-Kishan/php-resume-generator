@@ -7,74 +7,87 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Add the necessary CSS files -->
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/sweetalert2.min.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/signup.css">
+
+    <!-- Add the necessary JavaScript files -->
+    <script src="<?= ROOT ?>/assets/js/jquery.min.js"></script>
+    <script src="<?= ROOT ?>/assets/js/bootstrap.min.js"></script>
+    <script src="<?= ROOT ?>/assets/js/sweetalert2.min.js"></script>
 </head>
 
 <body>
-    <!-- Modal for displaying errors -->
-    <?php if (isset($showModal) && $showModal): ?>
-        <script>
-            $(document).ready(function() {
-                console.log("Hello");
-                $('#errorModal').modal('show');
-            });
-        </script>
-    <?php endif; ?>
-
-
-    <?php if (!empty($errors)): ?>
-        <script>
-            console.log("Hello");
-        </script>
-    <?php endif; ?>
-
-    <!-- Modal structure -->
-    <div id="errorModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+    <!-- Bootstrap Modal -->
+    <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="errorModalLabel">Error</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <ul>
-                        <?php foreach ($errors as $error): ?>
-                            <li><?= htmlspecialchars($error) ?></li>
-                        <?php endforeach; ?>
+                        <?php if (isset($errors) && is_array($errors)): ?>
+                            <?php foreach ($errors as $error): ?>
+                                <li><?php echo htmlspecialchars($error); ?></li>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </ul>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Trigger modal if needed -->
+    <?php if (isset($showModal) && $showModal && isset($errors) && is_array($errors)): ?>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    html: '<?php echo implode("<br>", array_map(function ($error) {
+                        return "<li>" . htmlspecialchars($error) . "</li>";
+                    }, $errors)); ?>'
+                });
+            });
+        </script>
+    <?php endif; ?>
+
+
     <!-- Sign-up form -->
     <div class="container mt-5">
         <h2>Sign Up</h2>
         <form method="POST">
-            <div class="form-group">
-                <label for="username">Username:</label>
-                <input type="text" class="form-control" id="username" name="username">
+            <div class="mb-3">
+                <label for="username" class="form-label">Username:</label>
+                <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username">
             </div>
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" class="form-control" id="email" name="email">
+            <div class="mb-3">
+                <label for="email" class="form-label">Email:</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email">
             </div>
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" class="form-control" id="password" name="password">
+            <div class="mb-3">
+                <label for="password" class="form-label">Password:</label>
+                <input type="password" class="form-control" id="password" name="password"
+                    placeholder="Enter your password">
             </div>
-            <button type="submit" class="btn btn-primary">Register</button>
+            <div class="mb-3">
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="terms" name="terms">
+                    <label class="form-check-label" for="terms">I agree to the <span class="terms">terms and
+                            conditions</span></label>
+                </div>
+            </div>
+            <button type="submit" class="btn">Sign Up</button>
         </form>
+        <p class="footer-text">Already have an account? <a href="<?= ROOT ?>/auth/login">Login</a></p>
     </div>
-
-    <!-- Add the necessary JavaScript files -->
-    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js" integrity="sha512-ykZ1QQr0Jy/4ZkvKuqWn4iF3lqPZyij9iRv6sGqLRdTPkY69YX6+7wvVGmsdBbiIfN/8OdsI7HABjvEok6ZopQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>
 
 </html>

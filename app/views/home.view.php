@@ -8,9 +8,17 @@ $is_logged_in = isset($_SESSION['user_id']); ?>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resume Generator</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Add the necessary CSS files -->
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/navbar.css">
+
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="<?=ROOT?>/assets/css/style.css">
+
+    <!-- Add the necessary JavaScript files -->
+    <script src="<?= ROOT ?>/assets/js/jquery.min.js"></script>
+    <script src="<?= ROOT ?>/assets/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/style.css">
 </head>
 
 <body class="bg-light">
@@ -127,7 +135,7 @@ $is_logged_in = isset($_SESSION['user_id']); ?>
 
     <div class="container py-5">
 
-        <!-- <img src="<?=ROOT?>/assets/images/template_1.jpeg" alt=""> -->
+        <!-- <img src="<?= ROOT ?>/assets/images/template_1.jpeg" alt=""> -->
 
         <div class="row">
             <!-- Form Section -->
@@ -416,7 +424,7 @@ $is_logged_in = isset($_SESSION['user_id']); ?>
         integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-    <script src="<?=ROOT?>/assets/js/script.js"></script>
+    <script src="<?= ROOT ?>/assets/js/script.js"></script>
 </body>
 
 </html>
