@@ -10,6 +10,7 @@
 
     <!-- Add the necessary CSS files -->
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/signup.css">
 
     <!-- Add the necessary JavaScript files -->
     <script src="<?= ROOT ?>/assets/js/jquery.min.js"></script>
@@ -19,23 +20,28 @@
 <body>
     <div class="container mt-5">
         <h2>Login</h2>
+
         <?php
         if (isset($_SESSION['message'])) {
             echo "<div class='alert alert-success mt-3'>" . $_SESSION['message'] . "</div>";
             unset($_SESSION['message']);
         }
         ?>
+
         <form method="POST">
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" class="form-control" id="email" name="email">
+            <div class="mb-3">
+                <label for="email" class="form-label">Email:</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email">
             </div>
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" class="form-control" id="password" name="password">
+            <div class="mb-3">
+                <label for="password" class="form-label">Password:</label>
+                <input type="password" class="form-control" id="password" name="password"
+                    placeholder="Enter your password">
             </div>
-            <button type="submit" class="btn btn-primary">Login</button>
+            <button type="submit" class="btn">Login</button>
         </form>
+
+        <p class="footer-text">Don't have an account? <a href="<?= ROOT ?>/auth/signup">Sign Up</a></p>
     </div>
 </body>
 

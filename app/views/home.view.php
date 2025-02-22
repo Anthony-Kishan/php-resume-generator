@@ -10,6 +10,8 @@ $is_logged_in = isset($_SESSION['user_id']); ?>
     <title>Resume Generator</title>
     <!-- Add the necessary CSS files -->
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/navbar.css">
+
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
     <!-- Add the necessary JavaScript files -->
