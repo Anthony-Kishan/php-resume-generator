@@ -58,7 +58,3 @@ class ResumeController extends Controller
         }
     }
 }
-
-// Instantiate the controller and handle the request
-$controller = new GenerateController($conn);
-$controller->handleRequest();
