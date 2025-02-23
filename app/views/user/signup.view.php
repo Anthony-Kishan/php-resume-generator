@@ -20,49 +20,18 @@
 </head>
 
 <body>
-    <!-- Bootstrap Modal -->
-    <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="errorModalLabel">Error</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <ul>
-                        <?php if (isset($errors) && is_array($errors)): ?>
-                            <?php foreach ($errors as $error): ?>
-                                <li><?php echo htmlspecialchars($error); ?></li>
-                            <?php endforeach; ?>
-                        <?php endif; ?>
-                    </ul>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Trigger modal if needed -->
-    <?php if (isset($showModal) && $showModal && isset($errors) && is_array($errors)): ?>
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    html: '<?php echo implode("<br>", array_map(function ($error) {
-                        return "<li>" . htmlspecialchars($error) . "</li>";
-                    }, $errors)); ?>'
-                });
-            });
-        </script>
-    <?php endif; ?>
-
-
     <!-- Sign-up form -->
     <div class="container mt-5">
         <h2>Sign Up</h2>
+
+        <?php if (isset($showModal) && $showModal && isset($errors) && is_array($errors)): ?>
+            <div class='alert alert-danger mt-3'>
+                <?php echo implode("<br>", array_map(function ($error) {
+                    return "<li>" . htmlspecialchars($error) . "</li>";
+                }, $errors)); ?>
+            </div>
+        <?php endif; ?>
+
         <form method="POST">
             <div class="mb-3">
                 <label for="username" class="form-label">Username:</label>

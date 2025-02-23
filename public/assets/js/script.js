@@ -1,53 +1,71 @@
-$(document).ready(function () {
-    $("#signup-form").on("submit", function (e) {
-        e.preventDefault();
+// SHOW LOGIN AND SIGNUP MODAL
+// $(document).ready(function () {
+//     $("#signup-form").on("submit", function (e) {
+//         e.preventDefault();
 
-        var formData = $(this).serialize();
+//         var formData = $(this).serialize();
 
-        $.ajax({
-            type: "POST",
-            url: "./users/register.php",
-            data: formData,
-            success: function (response) {
-                if (response) {
-                    window.location.href = "./index.php";
-                    $('#loginFirstModal .modal-body').addClass('show-login');
-                } else {
-                    // alert(response);
-                }
-            }
-        });
+//         $.ajax({
+//             type: "POST",
+//             url: "./users/register.php",
+//             data: formData,
+//             success: function (response) {
+//                 if (response) {
+//                     window.location.href = "./index.php";
+//                     $('#loginFirstModal .modal-body').addClass('show-login');
+//                 } else {
+//                     // alert(response);
+//                 }
+//             }
+//         });
+//     });
+
+
+
+//     $("#login-form").on("submit", function (e) {
+//         e.preventDefault();
+
+//         var formData = $(this).serialize();
+
+//         $.ajax({
+//             type: "POST",
+//             url: "./users/login.php",
+//             data: formData,
+//             success: function (response) {
+//                 if (response) {
+//                     window.location.href = "./index.php";
+//                 } else {
+//                     // alert(response);
+//                 }
+//             }
+//         });
+//     });
+
+//     $('#show-login-form').click(function () {
+//         $('#loginFirstModal .modal-body').addClass('show-login');
+//     });
+
+//     $('#show-signup-form').click(function () {
+//         $('#loginFirstModal .modal-body').removeClass('show-login');
+//     });
+// });
+
+
+function showLoginAlert() {
+    Swal.fire({
+        title: 'You need to log in first!',
+        text: 'Please log in to generate your resume.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Login',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Open the login modal or redirect to login page
+            window.location.href = '../public/auth/login';
+        }
     });
-
-
-
-    $("#login-form").on("submit", function (e) {
-        e.preventDefault();
-
-        var formData = $(this).serialize();
-
-        $.ajax({
-            type: "POST",
-            url: "./users/login.php",
-            data: formData,
-            success: function (response) {
-                if (response) {
-                    window.location.href = "./index.php";
-                } else {
-                    // alert(response);
-                }
-            }
-        });
-    });
-
-    $('#show-login-form').click(function () {
-        $('#loginFirstModal .modal-body').addClass('show-login');
-    });
-
-    $('#show-signup-form').click(function () {
-        $('#loginFirstModal .modal-body').removeClass('show-login');
-    });
-});
+}
 
 
 $(document).ready(function () {
