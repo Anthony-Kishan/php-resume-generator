@@ -45,24 +45,34 @@
     </div>
 
     <!-- Trigger modal if needed -->
-    <?php if (isset($showModal) && $showModal && isset($errors) && is_array($errors)): ?>
+    <!-- <?php if (isset($showModal) && $showModal && isset($errors) && is_array($errors)): ?>
         <script>
-            document.addEventListener('DOMContentLoaded', function () {
+            document.addEventListener('DOMContentLoaded', function() {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
                     html: '<?php echo implode("<br>", array_map(function ($error) {
-                        return "<li>" . htmlspecialchars($error) . "</li>";
-                    }, $errors)); ?>'
+                                return "<li>" . htmlspecialchars($error) . "</li>";
+                            }, $errors)); ?>'
                 });
             });
         </script>
-    <?php endif; ?>
+    <?php endif; ?> -->
+
 
 
     <!-- Sign-up form -->
     <div class="container mt-5">
         <h2>Sign Up</h2>
+
+        <?php if (isset($showModal) && $showModal && isset($errors) && is_array($errors)): ?>
+            <div class='alert alert-danger mt-3'>
+                <?php echo implode("<br>", array_map(function ($error) {
+                    return "<li>" . htmlspecialchars($error) . "</li>";
+                }, $errors)); ?>
+            </div>
+        <?php endif; ?>
+
         <form method="POST">
             <div class="mb-3">
                 <label for="username" class="form-label">Username:</label>

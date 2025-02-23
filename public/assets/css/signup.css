@@ -48,6 +48,7 @@ h2 {
 }
 
 .btn:hover {
+    color: white;
     background-color: #45a049;
 }
 

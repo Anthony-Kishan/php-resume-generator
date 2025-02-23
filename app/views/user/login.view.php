@@ -27,6 +27,15 @@
             unset($_SESSION['message']);
         }
         ?>
+        
+        <!-- Trigger modal if needed -->
+        <?php if (isset($showModal) && $showModal && isset($errors) && is_array($errors)): ?>
+            <div class='alert alert-danger mt-3'>
+                <?php echo implode("<br>", array_map(function ($error) {
+                    return "<li>" . htmlspecialchars($error) . "</li>";
+                }, $errors)); ?>
+            </div>
+        <?php endif; ?>
 
         <form method="POST">
             <div class="mb-3">
