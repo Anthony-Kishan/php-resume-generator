@@ -6,6 +6,12 @@ class Resume
 {
     use Model;
 
+    protected $table = 'resumes';
+
+    protected $allowedColumns = [
+        'name',
+    ];
+
     public function saveResume($userId, $data)
     {
         $resumeData = [
@@ -17,5 +23,10 @@ class Resume
         ];
 
         return $this->insert($resumeData);
+    }
+
+    public function getUserResumes($userId)
+    {
+        return $this->where(['user_id' => $userId]);
     }
 }

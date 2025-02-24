@@ -2,6 +2,8 @@
 
 # ResumeController.php
 
+header('Content-Type: application/json');
+
 class ResumeController extends Controller
 {
     public function generate()
@@ -20,7 +22,7 @@ class ResumeController extends Controller
         }
 
         $data = json_decode(file_get_contents('php://input'), true);
-        
+
         if (!$data) {
             http_response_code(400);
             echo json_encode(['error' => 'Invalid data']);

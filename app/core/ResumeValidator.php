@@ -5,13 +5,12 @@ class ResumeValidator
 {
     public function validate($data)
     {
-        $errors = [];
-
         // Validate personal info
         $requiredPersonalFields = ['fullName', 'email', 'phone', 'location', 'summary'];
         foreach ($requiredPersonalFields as $field) {
             if (empty($data['personalInfo'][$field])) {
-                return ['success' => false, 'message' => "Personal Info field '$field' is empty."];
+                $formattedField = formatFieldName($field); // Convert field to readable format
+                return ['success' => false, 'message' => "Personal Info field '$formattedField' is empty."];
             }
         }
 
@@ -21,7 +20,8 @@ class ResumeValidator
                 $requiredEducationFields = ['degree', 'institution', 'startDate', 'endDate'];
                 foreach ($requiredEducationFields as $field) {
                     if (empty($education[$field])) {
-                        return ['success' => false, 'message' => "Education field '$field' is empty."];
+                        $formattedField = formatFieldName($field); // Convert field to readable format
+                        return ['success' => false, 'message' => "Education field '$formattedField' is empty."];
                     }
                 }
             }
@@ -33,7 +33,8 @@ class ResumeValidator
                 $requiredExperienceFields = ['jobTitle', 'company', 'startDate', 'endDate', 'responsibilities'];
                 foreach ($requiredExperienceFields as $field) {
                     if (empty($experience[$field])) {
-                        return ['success' => false, 'message' => "Experience field '$field' is empty."];
+                        $formattedField = formatFieldName($field); // Convert field to readable format
+                        return ['success' => false, 'message' => "Experience field '$formattedField' is empty."];
                     }
                 }
             }
@@ -45,7 +46,8 @@ class ResumeValidator
                 $requiredSkillFields = ['skills', 'categories'];
                 foreach ($requiredSkillFields as $field) {
                     if (empty($skill[$field])) {
-                        return ['success' => false, 'message' => "Skills field '$field' is empty."];
+                        $formattedField = formatFieldName($field); // Convert field to readable format
+                        return ['success' => false, 'message' => "Skills field '$formattedField' is empty."];
                     }
                 }
             }

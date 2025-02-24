@@ -134,6 +134,97 @@ $(document).ready(function () {
     });
 
     // GENERATE RESUME AJAX REQUEST
+    // $('#generateResume').click(function () {
+    //     let formData = {
+    //         personalInfo: {
+    //             fullName: $('input[name="fullName"]').val(),
+    //             email: $('input[name="mail"]').val(),
+    //             phone: $('input[name="phone"]').val(),
+    //             location: $('input[name="location"]').val(),
+    //             summary: $('textarea[name="summary"]').val()
+    //         },
+    //         education: [],
+    //         experience: [],
+    //         skills: []
+    //     };
+
+    //     // Collect education entries
+    //     $('.education-entry').each(function () {
+    //         formData.education.push({
+    //             degree: $('input[name="degree"]').val(),
+    //             institution: $('input[name="institution"]').val(),
+    //             startDate: $('input[name="eduStartDate"]').val(),
+    //             endDate: $('input[name="eduEndDate"]').val()
+    //         });
+    //     });
+
+    //     // Collect experience entries
+    //     $('.experience-entry').each(function () {
+    //         formData.experience.push({
+    //             jobTitle: $('input[name="jobTitle"]').val(),
+    //             company: $('input[name="company"]').val(),
+    //             startDate: $('input[name="expStartDate"]').val(),
+    //             endDate: $('input[name="expEndDate"]').val(),
+    //             responsibilities: $('textarea[name="responsibilities"]').val()
+    //         });
+    //     });
+
+    //     // Collect skills entries
+    //     $('.skills-entry').each(function () {
+    //         formData.skills.push({
+    //             skills: $('input[name="skills"]').val(),
+    //             categories: $('input[name="categories"]').val()
+    //         });
+    //     });
+
+    //     // console.log("Sending Data:", JSON.stringify(formData));
+
+    //     // Show loading state
+    //     $('#generateResume').prop('disabled', true).html('<i class="fas fa-spinner fa-spin me-2"></i>Generating...');
+
+
+    //     // Get the ROOT value from the data attribute
+    //     var rootElement = document.getElementById('config');
+    //     var ROOT = rootElement.getAttribute('data-root');
+    //     // console.log(ROOT);
+
+    //     $.ajax({
+    //         url: ROOT + "/resume/generate",
+    //         method: 'POST',
+    //         data: JSON.stringify(formData), // Send as regular form data
+    //         success: function (response) {
+    //             console.log("AJAX Response:", response);
+    //             if (response.success) {
+    //                 Swal.fire({
+    //                     icon: 'success',
+    //                     title: 'Success!',
+    //                     text: response.message,
+    //                     timer: 3000,
+    //                     confirmButtonText: 'OK',
+    //                 });
+
+    //             } else {
+    //                 console.log('Error:', response.message);
+    //                 Swal.fire({
+    //                     icon: 'error',
+    //                     title: 'Oops...',
+    //                     text: response.message,
+    //                     confirmButtonText: 'Try Again',
+    //                 });
+    //             }
+    //         },
+    //         error: function (xhr, status, error) {
+    //             console.log("AJAX Error:", xhr.responseText);
+    //             console.log("Status:", status);
+    //             console.log("Error:", error);
+    //         },
+    //         complete: function () {
+    //             $('#generateResume').prop('disabled', false).html('<i class="fas fa-magic me-2"></i>Generate Resume');
+    //         }
+    //     });
+    // });
+
+
     $('#generateResume').click(function () {
         let formData = {
             personalInfo: {
@@ -151,64 +242,55 @@ $(document).ready(function () {
         // Collect education entries
         $('.education-entry').each(function () {
             formData.education.push({
-                degree: $('input[name="degree"]').val(),
-                institution: $('input[name="institution"]').val(),
-                startDate: $('input[name="eduStartDate"]').val(),
-                endDate: $('input[name="eduEndDate"]').val()
+                degree: $(this).find('input[name^="degree"]').val(),
+                institution: $(this).find('input[name^="institution"]').val(),
+                startDate: $(this).find('input[name^="eduStartDate"]').val(),
+                endDate: $(this).find('input[name^="eduEndDate"]').val()
             });
         });
 
         // Collect experience entries
         $('.experience-entry').each(function () {
             formData.experience.push({
-                jobTitle: $('input[name="jobTitle"]').val(),
-                company: $('input[name="company"]').val(),
-                startDate: $('input[name="expStartDate"]').val(),
-                endDate: $('input[name="expEndDate"]').val(),
-                responsibilities: $('textarea[name="responsibilities"]').val()
+                jobTitle: $(this).find('input[name^="jobTitle"]').val(),
+                company: $(this).find('input[name^="company"]').val(),
+                startDate: $(this).find('input[name^="expStartDate"]').val(),
+                endDate: $(this).find('input[name^="expEndDate"]').val(),
+                responsibilities: $(this).find('textarea[name^="responsibilities"]').val()
             });
         });
 
         // Collect skills entries
         $('.skills-entry').each(function () {
             formData.skills.push({
-                skills: $('input[name="skills"]').val(),
-                categories: $('input[name="categories"]').val()
+                skills: $(this).find('input[name^="skills"]').val(),
+                categories: $(this).find('input[name^="categories"]').val()
             });
         });
-
-        console.log("Sending Data:", JSON.stringify(formData));
 
         // Show loading state
         $('#generateResume').prop('disabled', true).html('<i class="fas fa-spinner fa-spin me-2"></i>Generating...');
 
-
         // Get the ROOT value from the data attribute
         var rootElement = document.getElementById('config');
         var ROOT = rootElement.getAttribute('data-root');
-        console.log(ROOT);
 
         $.ajax({
             url: ROOT + "/resume/generate",
             method: 'POST',
-            data: JSON.stringify(formData), // Send as regular form data
+            data: JSON.stringify(formData), // Send as JSON data
             success: function (response) {
                 console.log("AJAX Response:", response);
-
-                if (response.success === true) {
-                    // $('#successModal').modal('show');
-                    // $('#resumePreview').html(response.html);
+                if (response.success) {
                     Swal.fire({
                         icon: 'success',
-                        title: 'Oops...',
+                        title: 'Success!',
                         text: response.message,
-                        confirmButtonText: 'Try Again',
+                        timer: 3000,
+                        confirmButtonText: 'OK',
                     });
                 } else {
                     console.log('Error:', response.message);
-                    // $(".error-modal-body").html(response.message);
-                    // $("#errorModal").modal('show');
-
                     Swal.fire({
                         icon: 'error',
                         title: 'Oops...',
@@ -227,6 +309,7 @@ $(document).ready(function () {
             }
         });
     });
+
 
     // CLONE MULTIPLE ENTRIES FUNCTION
     function cloneEntry(sectionClass, containerId, previewClass, previewContainerId, fields) {

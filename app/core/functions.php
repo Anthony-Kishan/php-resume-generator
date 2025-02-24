@@ -131,5 +131,23 @@ function redirect($path)
 {
     header("Location: " . ROOT . "/" . $path);
     exit;
-    die();
+}
+
+
+
+/**
+ * Converts a camelCase or mixed-case string into a human-readable format with spaces and capitalized words.
+ *
+ * This function takes a string in camelCase or a similar format and converts it into a format where
+ * each word is separated by a space, and the first letter of each word is capitalized. 
+ * It helps transform field names like 'fullName' into 'Full Name' or 'phoneNumber' into 'Phone Number'.
+ *
+ * @param string $field The field name in camelCase or similar format.
+ * @return string The formatted field name with spaces and capitalized words.
+ */
+function formatFieldName($field)
+{
+    // Add spaces before uppercase letters and capitalize the first letter of each word
+    $formatted = preg_replace('/([a-z0-9])([A-Z])/', '$1 $2', $field);
+    return ucfirst($formatted);
 }
