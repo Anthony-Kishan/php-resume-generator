@@ -177,7 +177,7 @@ $(document).ready(function () {
             });
         });
 
-        console.log("Sending Data:", JSON.stringify(formData));
+        // console.log("Sending Data:", JSON.stringify(formData));
 
         // Show loading state
         $('#generateResume').prop('disabled', true).html('<i class="fas fa-spinner fa-spin me-2"></i>Generating...');
@@ -194,21 +194,17 @@ $(document).ready(function () {
             data: JSON.stringify(formData), // Send as regular form data
             success: function (response) {
                 console.log("AJAX Response:", response);
+                if (response.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: response.message,
+                        timer: 3000,
+                        confirmButtonText: 'OK',
+                    });
 
-                if (response.success === true) {
-                    $('#successModal').modal('show');
-                    // $('#resumePreview').html(response.html);
-                    // Swal.fire({
-                    //     icon: 'success',
-                    //     title: 'Oops...',
-                    //     text: response.message,
-                    //     confirmButtonText: 'Try Again',
-                    // });
                 } else {
                     console.log('Error:', response.message);
-                    // $("#errorModal").modal('show');
-                    // $(".error-modal-body").html(response.message);
-
                     Swal.fire({
                         icon: 'error',
                         title: 'Oops...',

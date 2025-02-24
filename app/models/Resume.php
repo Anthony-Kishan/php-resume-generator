@@ -6,6 +6,12 @@ class Resume
 {
     use Model;
 
+    protected $table = 'resumes';
+
+    protected $allowedColumns = [
+        'name',
+    ];
+
     public function saveResume($userId, $data)
     {
         $resumeData = [
