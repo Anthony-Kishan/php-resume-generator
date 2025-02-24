@@ -24,4 +24,9 @@ class Resume
 
         return $this->insert($resumeData);
     }
+
+    public function getUserResumes($userId)
+    {
+        return $this->where(['user_id' => $userId]);
+    }
 }

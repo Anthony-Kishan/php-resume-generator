@@ -36,7 +36,7 @@ $is_logged_in = User::is_logged_in();
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                         <li>
-                            <a class="dropdown-item" href="#">
+                            <a class="dropdown-item" href="<?= ROOT ?>/dashboard/">
                                 <i class="fas fa-chart-line"></i>
                                 Dashboard
                             </a>
