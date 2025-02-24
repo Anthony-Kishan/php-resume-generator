@@ -132,9 +132,6 @@ $is_logged_in = User::is_logged_in();
 
 
     <div class="container py-5">
-
-        <!-- <img src="<?= ROOT ?>/assets/images/template_1.jpeg" alt=""> -->
-
         <div class="row">
             <!-- Form Section -->
             <div class="col-lg-6">
@@ -391,7 +388,6 @@ $is_logged_in = User::is_logged_in();
         </div>
 
 
-
         <?php if (!$is_logged_in): ?>
             <div class="row mt-4">
                 <div class="col-12 text-center">
@@ -411,6 +407,7 @@ $is_logged_in = User::is_logged_in();
         <?php endif; ?>
     </div>
 
+    <div id="config" data-root="<?php echo ROOT; ?>"></div>
 
     <!-- Add the necessary JavaScript files -->
     <script src="<?= ROOT ?>/assets/js/jquery.min.js"></script>

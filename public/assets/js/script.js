@@ -51,6 +51,7 @@
 // });
 
 
+
 function showLoginAlert() {
     Swal.fire({
         title: 'You need to log in first!',
@@ -181,20 +182,39 @@ $(document).ready(function () {
         // Show loading state
         $('#generateResume').prop('disabled', true).html('<i class="fas fa-spinner fa-spin me-2"></i>Generating...');
 
+
+        // Get the ROOT value from the data attribute
+        var rootElement = document.getElementById('config');
+        var ROOT = rootElement.getAttribute('data-root');
+        console.log(ROOT);
+
         $.ajax({
-            url: './controller/generate.php',
+            url: ROOT + "/resume/generate",
             method: 'POST',
             data: JSON.stringify(formData), // Send as regular form data
             success: function (response) {
                 console.log("AJAX Response:", response);
 
                 if (response.success === true) {
-                    $('#successModal').modal('show');
+                    // $('#successModal').modal('show');
                     // $('#resumePreview').html(response.html);
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Oops...',
+                        text: response.message,
+                        confirmButtonText: 'Try Again',
+                    });
                 } else {
                     console.log('Error:', response.message);
-                    $(".error-modal-body").html(response.message);
-                    $("#errorModal").modal('show');
+                    // $(".error-modal-body").html(response.message);
+                    // $("#errorModal").modal('show');
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: response.message,
+                        confirmButtonText: 'Try Again',
+                    });
                 }
             },
             error: function (xhr, status, error) {
