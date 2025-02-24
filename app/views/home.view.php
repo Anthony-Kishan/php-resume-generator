@@ -132,9 +132,6 @@ $is_logged_in = User::is_logged_in();
 
 
     <div class="container py-5">
-
-        <!-- <img src="<?= ROOT ?>/assets/images/template_1.jpeg" alt=""> -->
-
         <div class="row">
             <!-- Form Section -->
             <div class="col-lg-6">
@@ -389,7 +386,6 @@ $is_logged_in = User::is_logged_in();
                 </div>
             </div>
         </div>
-
 
 
         <?php if (!$is_logged_in): ?>

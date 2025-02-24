@@ -196,12 +196,25 @@ $(document).ready(function () {
                 console.log("AJAX Response:", response);
 
                 if (response.success === true) {
-                    $('#successModal').modal('show');
+                    // $('#successModal').modal('show');
                     // $('#resumePreview').html(response.html);
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Oops...',
+                        text: response.message,
+                        confirmButtonText: 'Try Again',
+                    });
                 } else {
                     console.log('Error:', response.message);
-                    $(".error-modal-body").html(response.message);
-                    $("#errorModal").modal('show');
+                    // $(".error-modal-body").html(response.message);
+                    // $("#errorModal").modal('show');
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: response.message,
+                        confirmButtonText: 'Try Again',
+                    });
                 }
             },
             error: function (xhr, status, error) {
