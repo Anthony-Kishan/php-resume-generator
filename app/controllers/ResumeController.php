@@ -2,6 +2,8 @@
 
 # ResumeController.php
 
+header('Content-Type: application/json');
+
 class ResumeController extends Controller
 {
     public function generate()

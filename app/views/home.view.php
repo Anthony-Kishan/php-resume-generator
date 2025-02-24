@@ -412,8 +412,9 @@ $is_logged_in = User::is_logged_in();
     <!-- Add the necessary JavaScript files -->
     <script src="<?= ROOT ?>/assets/js/jquery.min.js"></script>
     <script src="<?= ROOT ?>/assets/js/sweetalert2.min.js"></script>
-    <script src="<?= ROOT ?>/assets/js/bootstrap.bundle.min.js"></script>
-    <!-- <script src="<?= ROOT ?>/assets/js/bootstrap.min.js"></script> -->
+    <!-- <script src="<?= ROOT ?>/assets/js/bootstrap.bundle.min.js"></script> -->
+    <script src="<?= ROOT ?>/assets/js/popper.min.js"></script>
+    <script src="<?= ROOT ?>/assets/js/bootstrap.min.js"></script>
 
     <script src="<?= ROOT ?>/assets/js/script.js"></script>
 </body>

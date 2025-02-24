@@ -186,7 +186,7 @@ $(document).ready(function () {
         // Get the ROOT value from the data attribute
         var rootElement = document.getElementById('config');
         var ROOT = rootElement.getAttribute('data-root');
-        console.log(ROOT);
+        // console.log(ROOT);
 
         $.ajax({
             url: ROOT + "/resume/generate",
@@ -196,18 +196,18 @@ $(document).ready(function () {
                 console.log("AJAX Response:", response);
 
                 if (response.success === true) {
-                    // $('#successModal').modal('show');
+                    $('#successModal').modal('show');
                     // $('#resumePreview').html(response.html);
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Oops...',
-                        text: response.message,
-                        confirmButtonText: 'Try Again',
-                    });
+                    // Swal.fire({
+                    //     icon: 'success',
+                    //     title: 'Oops...',
+                    //     text: response.message,
+                    //     confirmButtonText: 'Try Again',
+                    // });
                 } else {
                     console.log('Error:', response.message);
-                    // $(".error-modal-body").html(response.message);
                     // $("#errorModal").modal('show');
+                    // $(".error-modal-body").html(response.message);
 
                     Swal.fire({
                         icon: 'error',
