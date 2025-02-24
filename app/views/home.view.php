@@ -411,6 +411,7 @@ $is_logged_in = User::is_logged_in();
         <?php endif; ?>
     </div>
 
+    <div id="config" data-root="<?php echo ROOT; ?>"></div>
 
     <!-- Add the necessary JavaScript files -->
     <script src="<?= ROOT ?>/assets/js/jquery.min.js"></script>

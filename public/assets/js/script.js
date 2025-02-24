@@ -51,6 +51,7 @@
 // });
 
 
+
 function showLoginAlert() {
     Swal.fire({
         title: 'You need to log in first!',
@@ -181,8 +182,14 @@ $(document).ready(function () {
         // Show loading state
         $('#generateResume').prop('disabled', true).html('<i class="fas fa-spinner fa-spin me-2"></i>Generating...');
 
+
+        // Get the ROOT value from the data attribute
+        var rootElement = document.getElementById('config');
+        var ROOT = rootElement.getAttribute('data-root');
+        console.log(ROOT);
+
         $.ajax({
-            url: './controller/generate.php',
+            url: ROOT + "/resume/generate",
             method: 'POST',
             data: JSON.stringify(formData), // Send as regular form data
             success: function (response) {

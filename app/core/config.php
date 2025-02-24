@@ -22,3 +22,5 @@ define('APP_NAME', 'My Website');
 define('APP_DESC', 'Resume Generator');
 
 define('DEBUG', false);
+
+// $test = "Hello";
