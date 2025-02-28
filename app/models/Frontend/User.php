@@ -1,5 +1,10 @@
 <?php
-# User Model
+# app/models/Frontend/User.php
+
+namespace App\Models\Frontend;
+
+use App\Core\Model; // Import the Model trait
+
 class User
 {
     use Model;
@@ -9,7 +14,6 @@ class User
     protected $allowedColumns = [
         'name',
     ];
-
 
     /**
      * Checks if the email already exists in the database.
@@ -26,7 +30,6 @@ class User
         return false;
     }
 
-
     /**
      * Checks if the username already exists in the database.
      * 
@@ -42,7 +45,6 @@ class User
 
         return false;
     }
-
 
     /**
      * Checks if a user is logged in based on session data.

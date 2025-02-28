@@ -1,5 +1,7 @@
-<?php session_start();
-$is_logged_in = isset($_SESSION['user_id']); ?>
+<?php
+use App\Models\Frontend\User;
+$is_logged_in = User::is_logged_in();
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -8,13 +10,18 @@ $is_logged_in = isset($_SESSION['user_id']); ?>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resume Generator</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Add the necessary CSS files -->
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/sweetalert2.min.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/navbar.css">
+
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="./assets/css/style.css">
+
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/style.css">
 </head>
 
 <body class="bg-light">
-    <?php include('navbar.php'); ?>
+    <?php include('navbar.view.php'); ?>
 
     <!-- SUCCESS MODAL -->
     <div class="modal fade" tabindex="-1" id="successModal">
@@ -58,7 +65,7 @@ $is_logged_in = isset($_SESSION['user_id']); ?>
     </div>
 
     <!-- LOGIN FIRST -->
-    <div class="modal fade" tabindex="-1" id="loginFirstModal">
+    <!-- <div class="modal fade" tabindex="-1" id="loginFirstModal">
         <div class="modal-dialog">
             <div class="modal-content loginFirstModal-Content" style="border: 2px solid rgb(4, 94, 167);">
                 <div class="modal-header">
@@ -68,7 +75,7 @@ $is_logged_in = isset($_SESSION['user_id']); ?>
                 </div>
 
                 <div class="modal-body loginFirst-modal-body">
-                    <!-- Sign Up Form (this will be inside the modal) -->
+                    Sign Up Form (this will be inside the modal)
                     <div class="form-container sign-up-container">
                         <h2 class="text-center">Sign Up</h2>
                         <form id="signup-form" method="POST">
@@ -93,7 +100,7 @@ $is_logged_in = isset($_SESSION['user_id']); ?>
                         </form>
                     </div>
 
-                    <!-- Login Form (this will be inside the modal) -->
+                    Login Form (this will be inside the modal)
                     <div class="form-container login-container">
                         <h2 class="text-center">Login</h2>
                         <form id="login-form" method="POST">
@@ -122,7 +129,7 @@ $is_logged_in = isset($_SESSION['user_id']); ?>
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
 
     <div class="container py-5">
@@ -382,12 +389,10 @@ $is_logged_in = isset($_SESSION['user_id']); ?>
         </div>
 
 
-
         <?php if (!$is_logged_in): ?>
             <div class="row mt-4">
                 <div class="col-12 text-center">
-                    <button type="button" class="btn btn-success btn-lg" data-bs-toggle="modal"
-                        data-bs-target="#loginFirstModal">
+                    <button type="button" class="btn btn-success btn-lg" onclick="showLoginAlert()">
                         <i class=" fas fa-magic me-2"></i>Generate Resume
                     </button>
                 </div>
@@ -401,19 +406,18 @@ $is_logged_in = isset($_SESSION['user_id']); ?>
                 </div>
             </div>
         <?php endif; ?>
-        <?php
-        ?>
-
-        <!-- Generate Button -->
-
     </div>
 
+    <div id="config" data-root="<?php echo ROOT; ?>"></div>
 
-    <script src="https://code.jquery.com/jquery-3.7.1.js"
-        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Add the necessary JavaScript files -->
+    <script src="<?= ROOT ?>/assets/js/jquery.min.js"></script>
+    <script src="<?= ROOT ?>/assets/js/sweetalert2.min.js"></script>
+    <!-- <script src="<?= ROOT ?>/assets/js/bootstrap.bundle.min.js"></script> -->
+    <script src="<?= ROOT ?>/assets/js/popper.min.js"></script>
+    <script src="<?= ROOT ?>/assets/js/bootstrap.min.js"></script>
 
-    <script src="./assets/js/script.js"></script>
+    <script src="<?= ROOT ?>/assets/js/script.js"></script>
 </body>
 
 </html>

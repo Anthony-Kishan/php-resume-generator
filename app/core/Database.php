@@ -1,4 +1,7 @@
 <?php
+
+namespace App\Core;
+
 trait Database
 {
     private function connect()

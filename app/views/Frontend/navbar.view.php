@@ -1,4 +1,5 @@
 <?php
+use App\Models\Frontend\User;
 $is_logged_in = User::is_logged_in();
 ?>
 
