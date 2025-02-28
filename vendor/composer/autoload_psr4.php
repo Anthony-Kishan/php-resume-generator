@@ -11,5 +11,7 @@ return array(
     'Masterminds\\' => array($vendorDir . '/masterminds/html5/src'),
     'FontLib\\' => array($vendorDir . '/dompdf/php-font-lib/src/FontLib'),
     'Dompdf\\' => array($vendorDir . '/dompdf/dompdf/src'),
+    'App\\Controllers\\Frontend\\' => array($baseDir . '/app/controllers/Frontend'),
+    'App\\Controllers\\Backend\\' => array($baseDir . '/app/controllers/Backend'),
     'App\\' => array($baseDir . '/app'),
 );

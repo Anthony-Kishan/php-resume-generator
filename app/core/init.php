@@ -16,5 +16,7 @@ require 'functions.php';
 require 'Database.php';
 require 'Model.php';
 require 'Controller.php';
-require 'App.php';
+// require 'App.php';
+require 'Route.php';
+require 'web.php';
 require 'ResumeValidator.php';

@@ -2,11 +2,38 @@
 # app/core/App.php
 
 namespace App\Core;
+use App\Controllers\Frontend\User\AuthController;
+use App\Controllers\Frontend\HomeController;
 
+// NEW
+class App
+{
+    public function __construct()
+    {
+        Route::add('home', HomeController::class, 'index');
+        Route::add('auth/logout', AuthController::class, 'logout');
+        Route::add('auth/login', AuthController::class, 'login');
+    }
+
+    public function loadController()
+    {
+        $url = $_GET['url'] ?? 'home'; // Get the URL from the query string
+        // show($url);
+        Route::handle($url);  // Route the request
+    }
+}
+
+
+
+
+
+
+// LATEST
 class App
 {
     private $controller = 'HomeController';
     private $method = 'index';
+    private $param = [];
 
     private function splitURL()
     {
@@ -20,20 +47,28 @@ class App
         $URL = $this->splitURL();
         $controllerName = ucfirst($URL[0]) . "Controller";
 
-        // Define paths for Frontend & Backend controllers
-        $frontendPath = "../app/controllers/Frontend/{$controllerName}.php";
-        $backendPath = "../app/controllers/Backend/{$controllerName}.php";
+        // Check if the controller exists in the Frontend or Backend namespaces dynamically
+        $frontendControllerClass = "App\\Controllers\\Frontend\\$controllerName";
+        $frontendControllerClass1 = "App\\Controllers\\Frontend\\user\\$controllerName";
 
-        // Check if the controller exists in Frontend or Backend
-        if (file_exists($frontendPath)) {
-            require_once $frontendPath;
-            $this->controller = "App\\Controllers\\Frontend\\$controllerName"; // Use the correct namespace
-        } elseif (file_exists($backendPath)) {
-            require_once $backendPath;
-            $this->controller = "App\\Controllers\\Backend\\$controllerName"; // Use the correct namespace
+        $backendControllerClass = "App\\Controllers\\Backend\\$controllerName";
+        $backendControllerClass1 = "App\\Controllers\\Backend\\user\\$controllerName";
+
+
+        if (class_exists($frontendControllerClass) || class_exists($frontendControllerClass1)) {
+            if (class_exists($frontendControllerClass1)) {
+                $this->controller = $frontendControllerClass1;
+            } else
+                $this->controller = $frontendControllerClass;
+
+        } elseif (class_exists($backendControllerClass) || class_exists($backendControllerClass1)) {
+            if (class_exists($backendControllerClass1)) {
+                $this->controller = $backendControllerClass1;
+            } else
+                $this->controller = $backendControllerClass;
+
         } else {
-            require "../app/controllers/_404.php";
-            $this->controller = "App\\Controllers\\_404"; // Use the correct namespace
+            $this->controller = "App\\Controllers\\Frontend\\_404";
         }
 
         $controller = new $this->controller;
@@ -50,8 +85,7 @@ class App
 
 
 
-
-
+// OLD
 // class App
 // {
 //     private $controller = 'Home';
