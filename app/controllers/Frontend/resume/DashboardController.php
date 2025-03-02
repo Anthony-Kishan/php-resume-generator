@@ -1,6 +1,10 @@
 <?php
-
 # DashboardController.php
+
+namespace App\Controllers\Frontend\Resume;
+
+use App\Core\Controller;
+use App\Models\Frontend\Resume;
 
 class DashboardController extends Controller
 {
@@ -16,7 +20,7 @@ class DashboardController extends Controller
 
         $resumes = $resumeModel->getUserResumes($userId);
 
-        $this->view('/resume/dashboard', ['resumes' => $resumes]);
+        $this->view('/dashboard', ['resumes' => $resumes]);
 
     }
 }

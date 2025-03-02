@@ -2,6 +2,10 @@
 
 # Resume Model
 
+namespace App\Models\Frontend;
+
+use App\Core\Model; // Import the Model trait
+
 class Resume
 {
     use Model;
