@@ -4,6 +4,7 @@
 namespace App\Controllers\Frontend\User;
 
 use App\Core\Controller;
+use App\Models\Frontend\User;
 
 class AuthController extends Controller
 {

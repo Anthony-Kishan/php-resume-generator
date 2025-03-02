@@ -2,86 +2,52 @@
 # app/core/App.php
 
 namespace App\Core;
-use App\Controllers\Frontend\User\AuthController;
-use App\Controllers\Frontend\HomeController;
 
-// NEW
 class App
 {
+    private $controller = "HomeController";
+    private $method = "index";
+    private $params = [];
+
     public function __construct()
     {
-        Route::add('home', HomeController::class, 'index');
-        Route::add('auth/logout', AuthController::class, 'logout');
-        Route::add('auth/login', AuthController::class, 'login');
-    }
+        $url = $this->parseURL();
 
-    public function loadController()
-    {
-        $url = $_GET['url'] ?? 'home'; // Get the URL from the query string
-        // show($url);
-        Route::handle($url);  // Route the request
-    }
-}
+        // Check if the controller exists
+        $controllerClass = $this->getControllerClass($url[0] ?? "home");
 
-
-
-
-
-
-// LATEST
-class App
-{
-    private $controller = 'HomeController';
-    private $method = 'index';
-    private $param = [];
-
-    private function splitURL()
-    {
-        $URL = $_GET['url'] ?? 'home';
-        return explode("/", trim($URL, "/"));
-    }
-
-    /** * Loads Controllers and their Methods */
-    public function loadController()
-    {
-        $URL = $this->splitURL();
-        $controllerName = ucfirst($URL[0]) . "Controller";
-
-        // Check if the controller exists in the Frontend or Backend namespaces dynamically
-        $frontendControllerClass = "App\\Controllers\\Frontend\\$controllerName";
-        $frontendControllerClass1 = "App\\Controllers\\Frontend\\user\\$controllerName";
-
-        $backendControllerClass = "App\\Controllers\\Backend\\$controllerName";
-        $backendControllerClass1 = "App\\Controllers\\Backend\\user\\$controllerName";
-
-
-        if (class_exists($frontendControllerClass) || class_exists($frontendControllerClass1)) {
-            if (class_exists($frontendControllerClass1)) {
-                $this->controller = $frontendControllerClass1;
-            } else
-                $this->controller = $frontendControllerClass;
-
-        } elseif (class_exists($backendControllerClass) || class_exists($backendControllerClass1)) {
-            if (class_exists($backendControllerClass1)) {
-                $this->controller = $backendControllerClass1;
-            } else
-                $this->controller = $backendControllerClass;
-
+        if (class_exists($controllerClass)) {
+            $this->controller = new $controllerClass;
+            unset($url[0]);
         } else {
-            $this->controller = "App\\Controllers\\Frontend\\_404";
+            $this->controller = new \App\Controllers\Frontend\_404;
         }
 
-        $controller = new $this->controller;
-
-        /** SELECT METHOD */
-        if (!empty($URL[1]) && method_exists($controller, $URL[1])) {
-            $this->method = $URL[1];
-            unset($URL[1]);
+        // Check if method exists
+        if (!empty($url[1]) && method_exists($this->controller, $url[1])) {
+            $this->method = $url[1];
+            unset($url[1]);
         }
 
-        call_user_func_array([$controller, $this->method], $URL);
+        $this->params = array_values($url);
+        call_user_func_array([$this->controller, $this->method], $this->params);
+    }
+
+    private function parseURL()
+    {
+        return explode("/", trim($_GET['url'] ?? "home", "/"));
+    }
+
+    private function getControllerClass($name)
+    {
+        $controllerName = ucfirst($name) . "Controller";
+        $frontendClass = "App\\Controllers\\Frontend\\$controllerName";
+        $backendClass = "App\\Controllers\\Backend\\$controllerName";
+
+        return class_exists($frontendClass) ? $frontendClass : (class_exists($backendClass) ? $backendClass : null);
     }
 }
+
 
 
 

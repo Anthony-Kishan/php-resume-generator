@@ -7,7 +7,7 @@ trait Database
 {
     private function connect()
     {
-        $conn = new mysqli(DBHOST, DBUSER, DBPASS, DBNAME);
+        $conn = new \mysqli(DBHOST, DBUSER, DBPASS, DBNAME);
         return $conn;
 
     }

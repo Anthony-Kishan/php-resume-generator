@@ -26,8 +26,6 @@ class ComposerStaticInit00da199c24f69d4e39903c3676bfe248
         ),
         'A' => 
         array (
-            'App\\Controllers\\Frontend\\' => 25,
-            'App\\Controllers\\Backend\\' => 24,
             'App\\' => 4,
         ),
     );
@@ -52,14 +50,6 @@ class ComposerStaticInit00da199c24f69d4e39903c3676bfe248
         'Dompdf\\' => 
         array (
             0 => __DIR__ . '/..' . '/dompdf/dompdf/src',
-        ),
-        'App\\Controllers\\Frontend\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/app/controllers/Frontend',
-        ),
-        'App\\Controllers\\Backend\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/app/controllers/Backend',
         ),
         'App\\' => 
         array (
