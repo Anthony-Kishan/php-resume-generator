@@ -21,4 +21,4 @@ if ($_SERVER['SERVER_NAME'] == 'localhost') {
 define('APP_NAME', 'My Website');
 define('APP_DESC', 'Resume Generator');
 
-define('DEBUG', false);
+define('DEBUG', true);

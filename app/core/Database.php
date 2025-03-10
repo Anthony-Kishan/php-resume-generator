@@ -1,9 +1,13 @@
 <?php
+# app/core/Database.php
+
+namespace App\Core;
+
 trait Database
 {
     private function connect()
     {
-        $conn = new mysqli(DBHOST, DBUSER, DBPASS, DBNAME);
+        $conn = new \mysqli(DBHOST, DBUSER, DBPASS, DBNAME);
         return $conn;
 
     }

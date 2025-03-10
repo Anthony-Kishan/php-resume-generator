@@ -1,6 +1,8 @@
 <?php
 # Main Model
 
+namespace App\Core;
+
 trait Model
 {
     use Database;
